@@ -54,11 +54,11 @@
                 </a>
                 <a class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-primary/5 transition-colors" href="/app/explore/map.html">
                     <span class="material-symbols-outlined">explore</span>
-                    <span class="text-sm font-medium">Khám phá</span>
+                    <span class="text-sm font-medium" data-i18n="explore">Khám phá</span>
                 </a>
                 <a class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-primary/5 transition-colors" href="/public/community-stories.html">
                     <span class="material-symbols-outlined">auto_stories</span>
-                    <span class="text-sm font-medium">Stories</span>
+                    <span class="text-sm font-medium" data-i18n="stories">Stories</span>
                 </a>
             </nav>
             <div class="p-4 border-t border-primary/10">
@@ -168,6 +168,7 @@
 
         const TYPE_ICONS = { hotel: 'hotel', food: 'restaurant', sightseeing: 'explore', nature: 'park', shopping: 'shopping_bag', cafe: 'coffee', entertainment: 'theater_comedy' };
         const TYPE_LABELS = { hotel: 'Khách sạn', food: 'Ẩm thực', sightseeing: 'Tham quan', nature: 'Thiên nhiên', shopping: 'Mua sắm', cafe: 'Cà phê', entertainment: 'Giải trí' };
+        const getLabel = (type) => window.t ? window.t(type) : (TYPE_LABELS[type] || type);
         const mapToken = window.WanderTaleConfig?.MAPBOX_ACCESS_TOKEN || '';
         const PLACEHOLDER_IMG = window.WanderTaleConfig?.PLACEHOLDER_IMG || 'https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=400&h=300&fit=crop';
 
@@ -244,7 +245,8 @@
             }
             if (noData) noData.classList.add('hidden');
 
-            let html = '<div class="flex items-center gap-2 mb-6"><span class="material-symbols-outlined text-primary text-2xl">auto_awesome</span><h2 class="text-2xl font-bold">Hành trình: ' + (destination || itinerary.trip_summary?.destination || '') + '</h2></div>';
+            const itineraryText = window.t ? window.t('itinerary') : 'Hành trình';
+            let html = '<div class="flex items-center gap-2 mb-6"><span class="material-symbols-outlined text-primary text-2xl">auto_awesome</span><h2 class="text-2xl font-bold">' + itineraryText + ': ' + (destination || itinerary.trip_summary?.destination || '') + '</h2></div>';
 
             if (itinerary.hotel) {
                 const h = itinerary.hotel;
@@ -264,7 +266,7 @@
                     + '      <div class="p-4 flex-1">'
                     + '        <div class="flex items-center gap-2 mb-1">'
                     + '          <span class="material-symbols-outlined text-primary">hotel</span>'
-                    + '          <h3 class="font-bold">Khách sạn</h3>'
+                    + '          <h3 class="font-bold">' + (window.t ? window.t('hotel') : 'Khách sạn') + '</h3>'
                     +            (hasCoords ? '<span class="material-symbols-outlined text-primary text-sm ml-auto">location_on</span>' : '')
                     + '        </div>'
                     + '        <h4 class="font-bold text-slate-900 dark:text-white">' + (h.name || '') + '</h4>'
@@ -279,7 +281,7 @@
                     + '                   data-type="hotel"'
                     + '                   data-marker-id="' + markerId + '"'
                     + '                   value="' + (price || '') + '"'
-                    + '                   placeholder="Chi phí ước tính"/>'
+                    + '                   placeholder="' + (window.t ? window.t('estimatedCost') : 'Chi phí ước tính') + '"/>'
                     + '          </div>'
                     + '        </div>'
                     + '        <button type="button"'
@@ -287,7 +289,7 @@
                     + '                data-type="hotel"'
                     + '                data-marker-id="' + markerId + '">'
                     + '          <span class="material-symbols-outlined text-sm">shuffle</span>'
-                    + '          Đổi khách sạn khác'
+                    + '          ' + (window.t ? window.t('changeHotel') : 'Đổi khách sạn khác')
                     + '        </button>'
                     + '      </div>'
                     + '    </div>'
@@ -298,11 +300,12 @@
 
             if (itinerary.days && itinerary.days.length) {
                 html += '<div class="space-y-6 relative"><div class="absolute left-5 top-8 bottom-0 w-0.5 bg-primary/20"></div>';
+                const dayText = window.t ? window.t('day') : 'Ngày';
                 itinerary.days.forEach((d, i) => {
-                    html += '<div class="relative"><div class="flex items-center gap-3 mb-3"><div class="w-10 h-10 rounded-full bg-primary flex items-center justify-center text-white font-bold z-10 text-sm">' + (d.day || i + 1) + '</div><h3 class="text-lg font-bold">Ngày ' + (d.day || i + 1) + (d.area ? ': ' + d.area : '') + '</h3></div><div class="ml-14 space-y-3">';
+                    html += '<div class="relative"><div class="flex items-center gap-3 mb-3"><div class="w-10 h-10 rounded-full bg-primary flex items-center justify-center text-white font-bold z-10 text-sm">' + (d.day || i + 1) + '</div><h3 class="text-lg font-bold">' + dayText + ' ' + (d.day || i + 1) + (d.area ? ': ' + d.area : '') + '</h3></div><div class="ml-14 space-y-3">';
                     (d.activities || []).forEach((a, ai) => {
                         const icon = TYPE_ICONS[a.type] || 'place';
-                        const label = TYPE_LABELS[a.type] || a.type || '';
+                        const label = getLabel(a.type);
                         const imgUrl = getImageUrl(a);
                         const costValue = a.estimated_cost_vnd || '';
                         const hasCoords = a.lng && a.lat;
@@ -322,7 +325,7 @@
                             + '          <span class="text-primary font-bold text-sm shrink-0">' + (a.time || '') + '</span>'
                             + '        </div>'
                             + '        <p class="text-xs text-slate-500 mt-0.5 line-clamp-2">' + (a.description || '') + '</p>'
-                            +          (a.estimated_duration_minutes ? '<span class="text-xs text-slate-400">~' + a.estimated_duration_minutes + ' phút</span>' : '')
+                            +          (a.estimated_duration_minutes ? '<span class="text-xs text-slate-400">~' + a.estimated_duration_minutes + ' ' + (window.t ? window.t('minutes') : 'phút') + '</span>' : '')
                             + '        <div class="mt-1 flex flex-wrap items-center gap-2">'
                             + '          <div class="flex items-center gap-1 text-xs text-green-700 dark:text-green-400">'
                             + '            <span class="material-symbols-outlined text-sm">payments</span>'
@@ -331,7 +334,7 @@
                             + '                   data-type="activity"'
                             + '                   data-marker-id="' + markerId + '"'
                             + '                   value="' + costValue + '"'
-                            + '                   placeholder="Chi phí ước tính"/>'
+                            + '                   placeholder="' + (window.t ? window.t('estimatedCost') : 'Chi phí ước tính') + '"/>'
                             + '          </div>'
                             +            (label ? '<span class="inline-block mt-1 text-[9px] px-1.5 py-0.5 rounded bg-primary/20 text-primary font-bold uppercase">' + label + '</span>' : '')
                             +            (hasCoords ? '<span class="material-symbols-outlined text-primary text-sm mt-1">location_on</span>' : '')
@@ -343,7 +346,7 @@
                             + '                data-day-index="' + i + '"'
                             + '                data-activity-index="' + ai + '">'
                             + '          <span class="material-symbols-outlined text-sm">shuffle</span>'
-                            + '          Đổi địa điểm khác'
+                            + '          ' + (window.t ? window.t('changePlace') : 'Đổi địa điểm khác')
                             + '        </button>'
                             + '      </div>'
                             + '    </div>'
@@ -860,6 +863,13 @@
                 errorEl.textContent = result.message || 'Không thể chia sẻ kế hoạch';
                 errorEl.classList.remove('hidden');
             }
+        });
+
+        window.addEventListener('languageChanged', () => {
+            if (currentTrip && currentTrip.itinerary) {
+                renderItinerary(currentTrip.itinerary, currentTrip.destination);
+            }
+            updateShareUI();
         });
 
         initPage();

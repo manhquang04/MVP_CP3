@@ -312,7 +312,10 @@ window.i18n = {
             roleEditor: 'Editor',
             inviteBtn: 'Invite',
             noPlanYet: 'No plan yet.',
-            createNewTrip: 'Create new trip'
+            createNewTrip: 'Create new trip',
+            estimatedCost: 'Estimated cost',
+            changeHotel: 'Change hotel',
+            changePlace: 'Change place'
         },
 
         vi: {
@@ -622,7 +625,10 @@ window.i18n = {
             roleEditor: 'Được chỉnh sửa',
             inviteBtn: 'Mời',
             noPlanYet: 'Chưa có kế hoạch.',
-            createNewTrip: 'Tạo chuyến đi mới'
+            createNewTrip: 'Tạo chuyến đi mới',
+            estimatedCost: 'Chi phí ước tính',
+            changeHotel: 'Đổi khách sạn khác',
+            changePlace: 'Đổi địa điểm khác'
         }
     },
 
