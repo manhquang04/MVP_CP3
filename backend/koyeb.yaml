@@ -1,0 +1,6 @@
+web:
+  command: node server.js
+  port: 3000
+  healthCheck:
+    path: /api/health
+    interval: 30s

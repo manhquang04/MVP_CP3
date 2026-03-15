@@ -11,7 +11,7 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-mongoose.connect(process.env.MONGO_URI, {
+mongoose.connect(process.env.MONGODB_URI || process.env.MONGO_URI, {
     serverSelectionTimeoutMS: 15000,
     socketTimeoutMS: 45000,
     connectTimeoutMS: 15000,
@@ -28,6 +28,11 @@ mongoose.connect(process.env.MONGO_URI, {
 
 app.get('/', (req, res) => {
     res.json({ message: 'WanderTale API is running' });
+});
+
+// Health check endpoint for deployment platforms
+app.get('/api/health', (req, res) => {
+    res.json({ status: 'ok', timestamp: new Date().toISOString() });
 });
 
 const authRoutes = require('./routes/auth');
