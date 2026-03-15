@@ -87,6 +87,53 @@ const ComponentLoader = {
             // Run once on init so state matches current scroll position
             handleScroll();
         }
+
+        // Auth gate: intercept protected nav links for unauthenticated users
+        if (!isAuth) {
+            this.initAuthGate();
+        }
+    },
+
+    // Auth gate modal for protected routes
+    initAuthGate() {
+        const protectedPaths = ['/app/explore', '/app/planner', '/app/profile'];
+        const modal = document.getElementById('auth-gate-modal');
+        if (!modal) return;
+
+        const content = document.getElementById('auth-gate-content');
+        const closeBtn = document.getElementById('auth-gate-close');
+        const backdrop = document.getElementById('auth-gate-backdrop');
+
+        const openModal = () => {
+            modal.classList.remove('opacity-0', 'pointer-events-none');
+            modal.classList.add('opacity-100', 'pointer-events-auto');
+            if (content) content.classList.replace('scale-95', 'scale-100');
+            document.body.style.overflow = 'hidden';
+        };
+
+        const closeModal = () => {
+            modal.classList.add('opacity-0', 'pointer-events-none');
+            modal.classList.remove('opacity-100', 'pointer-events-auto');
+            if (content) content.classList.replace('scale-100', 'scale-95');
+            document.body.style.overflow = '';
+        };
+
+        if (closeBtn) closeBtn.addEventListener('click', closeModal);
+        if (backdrop) backdrop.addEventListener('click', closeModal);
+
+        // Intercept protected nav links
+        document.querySelectorAll('#main-header a').forEach(link => {
+            const href = link.getAttribute('href');
+            if (href && protectedPaths.some(p => href.startsWith(p))) {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    openModal();
+                });
+            }
+        });
+
+        // Store openModal globally for reuse
+        window.showAuthGate = openModal;
     },
 
     setupDropdown(btn, dropdown) {
