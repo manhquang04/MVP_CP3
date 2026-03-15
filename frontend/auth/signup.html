@@ -56,16 +56,16 @@
             <main class="flex-1 flex flex-col lg:flex-row items-stretch">
                 <div class="hidden lg:flex flex-1 relative flex-col justify-center px-20 py-12 bg-primary/5">
                     <div class="relative z-10 max-w-md">
-                        <span class="inline-block px-3 py-1 rounded-full bg-accent-teal/10 text-accent-teal text-xs font-bold uppercase tracking-wider mb-6">Welcome to the fold</span>
-                        <h1 class="text-5xl font-black leading-tight mb-6">Your next story <span class="text-primary">starts here.</span></h1>
+                        <span class="inline-block px-3 py-1 rounded-full bg-accent-teal/10 text-accent-teal text-xs font-bold uppercase tracking-wider mb-6" data-i18n="welcomeToFold">Welcome to the fold</span>
+                        <h1 class="text-5xl font-black leading-tight mb-6" data-i18n-html="yourNextStory">Your next story <span class="text-primary">starts here.</span></h1>
                         <div class="space-y-8 mt-12">
                             <div class="flex gap-4">
                                 <div class="size-16 rounded-full bg-white dark:bg-slate-800 shadow-sm flex items-center justify-center shrink-0 overflow-hidden">
                                     <img class="w-full h-full object-cover" alt="AI Travel Planning" src="https://img.freepik.com/hinh-chup-mien-phi/tho-hoat-hoa-do-ai-tao-ra-de-thuong_23-2150288868.jpg" onerror="this.onerror=null; this.parentElement.innerHTML='<span class=\'material-symbols-outlined text-3xl text-primary\'>auto_awesome</span>'; this.parentElement.classList.remove('overflow-hidden');"/>
                                 </div>
                                 <div>
-                                    <h4 class="font-bold text-lg">AI Travel Planning</h4>
-                                    <p class="opacity-70 text-sm">Generate personalized itineraries in seconds based on your vibes.</p>
+                                    <h4 class="font-bold text-lg" data-i18n="aiTravelPlanning">AI Travel Planning</h4>
+                                    <p class="opacity-70 text-sm" data-i18n="aiTravelPlanningDesc">Generate personalized itineraries in seconds based on your vibes.</p>
                                 </div>
                             </div>
                             <div class="flex gap-4">
@@ -73,8 +73,8 @@
                                     <img class="w-full h-full object-cover" alt="Shared Stories" src="https://techcrunch.com/wp-content/uploads/2021/03/Cappuccino-Player.png?w=1024" onerror="this.onerror=null; this.parentElement.innerHTML='<span class=\'material-symbols-outlined text-3xl text-accent-teal\'>forum</span>'; this.parentElement.classList.remove('overflow-hidden');"/>
                                 </div>
                                 <div>
-                                    <h4 class="font-bold text-lg">Shared Stories</h4>
-                                    <p class="opacity-70 text-sm">Connect with a global community and share your hidden gems.</p>
+                                    <h4 class="font-bold text-lg" data-i18n="sharedStories">Shared Stories</h4>
+                                    <p class="opacity-70 text-sm" data-i18n="sharedStoriesDesc">Connect with a global community and share your hidden gems.</p>
                                 </div>
                             </div>
                             <div class="flex gap-4">
@@ -82,8 +82,8 @@
                                     <img class="w-full h-full object-cover" alt="Offline Maps" src="https://play-lh.googleusercontent.com/gYv11bYAKOgrDsasbrKh_y1FFtkcZOsl1FNQ8ovuZK5M0wP8w95NV97nx8FaKj2bdq4=w480-h960-rw" onerror="this.onerror=null; this.parentElement.innerHTML='<span class=\'material-symbols-outlined text-3xl text-primary\'>map</span>'; this.parentElement.classList.remove('overflow-hidden');"/>
                                 </div>
                                 <div>
-                                    <h4 class="font-bold text-lg">Offline Maps</h4>
-                                    <p class="opacity-70 text-sm">Never get lost again with our premium offline navigation tools.</p>
+                                    <h4 class="font-bold text-lg" data-i18n="offlineMaps">Offline Maps</h4>
+                                    <p class="opacity-70 text-sm" data-i18n="offlineMapsDesc">Never get lost again with our premium offline navigation tools.</p>
                                 </div>
                             </div>
                         </div>
@@ -136,7 +136,7 @@
                         </div>
                         <div class="relative mb-8">
                             <div class="absolute inset-0 flex items-center"><div class="w-full border-t border-slate-200 dark:border-slate-700"></div></div>
-                            <div class="relative flex justify-center text-xs uppercase"><span class="bg-background-light dark:bg-background-dark px-2 text-slate-500 font-bold" data-i18n="orContinueWith">Or continue with email</span></div>
+                            <div class="relative flex justify-center text-xs uppercase"><span class="bg-background-light dark:bg-background-dark px-2 text-slate-500 font-bold" data-i18n="orContinueWithEmail">Or continue with email</span></div>
                         </div>
                         <div id="error-message" class="hidden mb-4 p-4 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-xl">
                             <p class="text-sm text-red-600 dark:text-red-400 font-medium"></p>
@@ -165,12 +165,12 @@
                                         <span class="material-symbols-outlined text-xl">visibility_off</span>
                                     </button>
                                 </div>
-                                <p class="mt-2 text-[10px] text-slate-500">Must be at least 8 characters with a mix of letters and numbers.</p>
+                                <p class="mt-2 text-[10px] text-slate-500" data-i18n="passwordHint">Must be at least 8 characters with a mix of letters and numbers.</p>
                             </div>
                             <div class="flex items-start gap-3 py-2">
                                 <input class="mt-1 rounded border-slate-300 text-primary focus:ring-primary" id="terms" type="checkbox" required/>
                                 <label class="text-xs text-slate-500 leading-relaxed" for="terms">
-                                    I agree to WanderTale's <a class="text-primary font-bold" href="#">Terms of Service</a> and <a class="text-primary font-bold" href="#">Privacy Policy</a>.
+                                    <span data-i18n="termsAgree">I agree to WanderTale's</span> <a class="text-primary font-bold" href="#" data-i18n="termsOfService">Terms of Service</a> <span data-i18n="termsAnd">and</span> <a class="text-primary font-bold" href="#" data-i18n="privacyPolicy">Privacy Policy</a>.
                                 </label>
                             </div>
                             <button id="signup-btn" class="w-full h-14 bg-primary text-slate-900 font-black rounded-xl hover:shadow-lg hover:shadow-primary/20 transition-all flex items-center justify-center gap-2 group" type="submit">
@@ -184,15 +184,15 @@
                             </button>
                         </form>
                         <div class="mt-12 lg:hidden space-y-4 pt-8 border-t border-slate-200 dark:border-slate-700">
-                            <h5 class="text-sm font-bold uppercase tracking-widest text-primary">Why join?</h5>
+                            <h5 class="text-sm font-bold uppercase tracking-widest text-primary" data-i18n="whyJoin">Why join?</h5>
                             <ul class="space-y-3">
                                 <li class="flex items-center gap-3 text-sm">
                                     <span class="material-symbols-outlined text-accent-teal text-lg">check_circle</span>
-                                    Free AI Travel Itineraries
+                                    <span data-i18n="freeAIItineraries">Free AI Travel Itineraries</span>
                                 </li>
                                 <li class="flex items-center gap-3 text-sm">
                                     <span class="material-symbols-outlined text-accent-teal text-lg">check_circle</span>
-                                    Connect with 5,000+ Explorers
+                                    <span data-i18n="connectExplorers">Connect with 5,000+ Explorers</span>
                                 </li>
                             </ul>
                         </div>
@@ -204,8 +204,8 @@
                     <img class="w-full h-full object-cover" alt="Stunning cliffside ocean view for travel inspiration" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCmKzNCSdaJ7jVbJM3qJBy6wycJsTbrr7Xq20ERA5bODPWQb-0675cPp0NoJym2gyoHSMpZSI1eiNzkCPLV917sd7ZsE8mwKZ6XticHwUr4Ax9C7VDi8wfsycBZYwELcUo3qJ8xfq5AqTABBftBjJjR4-1oVP9GlSUO3C7PDaLhbgupDxgg8rlT7Y2EGiGJxy8iT36PWbIjH2qcEl1n2CNKkU4uEtm4PK-u1IqTNImfxZGT2AFix4fSKxrvgYjp8JRHhn0qL8rRtjjf"/>
                 </div>
                 <div>
-                    <p class="text-sm font-bold">"WanderTale changed how I travel!"</p>
-                    <p class="text-xs opacity-60">— Elena, Digital Nomad</p>
+                    <p class="text-sm font-bold" data-i18n="signupTestimonial">"WanderTale changed how I travel!"</p>
+                    <p class="text-xs opacity-60" data-i18n="signupTestimonialAuthor">— Elena, Digital Nomad</p>
                 </div>
             </div>
         </div>
