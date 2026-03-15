@@ -265,7 +265,37 @@ window.i18n = {
             signupFailed: 'Signup failed. Please try again.',
             required: 'This field is required',
             invalidEmail: 'Please enter a valid email address',
-            agreeTerms: 'Please agree to the Terms of Service and Privacy Policy'
+            agreeTerms: 'Please agree to the Terms of Service and Privacy Policy',
+
+            // Auth Gate
+            authGateTitle: 'Sign in to continue',
+            authGateDesc: 'Please log in or create an account to access this feature.',
+
+            // Login page
+            loginHeroTitle: 'Explore the <span class="text-primary italic">unseen</span> side of Vietnam.',
+            loginHeroSubtitle: 'Connect with locals, find hidden gems, and write your own travel narrative.',
+            liveNow: 'Live Now',
+
+            // Signup page
+            welcomeToFold: 'Welcome to the fold',
+            yourNextStory: 'Your next story <span class="text-primary">starts here.</span>',
+            aiTravelPlanning: 'AI Travel Planning',
+            aiTravelPlanningDesc: 'Generate personalized itineraries in seconds based on your vibes.',
+            sharedStories: 'Shared Stories',
+            sharedStoriesDesc: 'Connect with a global community and share your hidden gems.',
+            offlineMaps: 'Offline Maps',
+            offlineMapsDesc: 'Never get lost again with our premium offline navigation tools.',
+            passwordHint: 'Must be at least 8 characters with a mix of letters and numbers.',
+            termsAgree: 'I agree to WanderTale\'s',
+            termsOfService: 'Terms of Service',
+            privacyPolicy: 'Privacy Policy',
+            termsAnd: 'and',
+            whyJoin: 'Why join?',
+            freeAIItineraries: 'Free AI Travel Itineraries',
+            connectExplorers: 'Connect with 5,000+ Explorers',
+            signupTestimonial: '"WanderTale changed how I travel!"',
+            signupTestimonialAuthor: '— Elena, Digital Nomad',
+            alreadyHaveAccountQ: 'Already have an account?'
         },
 
         vi: {
@@ -528,7 +558,37 @@ window.i18n = {
             signupFailed: 'Đăng ký thất bại. Vui lòng thử lại.',
             required: 'Trường này là bắt buộc',
             invalidEmail: 'Vui lòng nhập email hợp lệ',
-            agreeTerms: 'Vui lòng đồng ý với Điều khoản dịch vụ và Chính sách bảo mật'
+            agreeTerms: 'Vui lòng đồng ý với Điều khoản dịch vụ và Chính sách bảo mật',
+
+            // Auth Gate
+            authGateTitle: 'Đăng nhập để tiếp tục',
+            authGateDesc: 'Vui lòng đăng nhập hoặc tạo tài khoản để sử dụng tính năng này.',
+
+            // Login page
+            loginHeroTitle: 'Khám phá <span class="text-primary italic">những điều chưa thấy</span> của Việt Nam.',
+            loginHeroSubtitle: 'Kết nối với người dân địa phương, tìm những viên ngọc ẩn và viết câu chuyện du lịch của riêng bạn.',
+            liveNow: 'Đang mở',
+
+            // Signup page
+            welcomeToFold: 'Chào mừng bạn đến',
+            yourNextStory: 'Câu chuyện tiếp theo <span class="text-primary">bắt đầu từ đây.</span>',
+            aiTravelPlanning: 'Lên kế hoạch bằng AI',
+            aiTravelPlanningDesc: 'Tạo lịch trình cá nhân hóa trong vài giây dựa trên phong cách của bạn.',
+            sharedStories: 'Chia sẻ câu chuyện',
+            sharedStoriesDesc: 'Kết nối với cộng đồng toàn cầu và chia sẻ những viên ngọc ẩn.',
+            offlineMaps: 'Bản đồ ngoại tuyến',
+            offlineMapsDesc: 'Không bao giờ lạc đường với công cụ điều hướng ngoại tuyến cao cấp.',
+            passwordHint: 'Tối thiểu 8 ký tự, bao gồm cả chữ và số.',
+            termsAgree: 'Tôi đồng ý với',
+            termsOfService: 'Điều khoản dịch vụ',
+            privacyPolicy: 'Chính sách bảo mật',
+            termsAnd: 'và',
+            whyJoin: 'Tại sao tham gia?',
+            freeAIItineraries: 'Lịch trình du lịch AI miễn phí',
+            connectExplorers: 'Kết nối với 5.000+ nhà khám phá',
+            signupTestimonial: '"WanderTale đã thay đổi cách tôi du lịch!"',
+            signupTestimonialAuthor: '— Elena, Du mục kỹ thuật số',
+            alreadyHaveAccountQ: 'Đã có tài khoản?'
         }
     },
 
@@ -549,6 +609,13 @@ window.i18n = {
             const key = el.dataset.i18n;
             const text = this.t(key);
             if (text) el.textContent = text;
+        });
+
+        // Update all HTML translatable elements (supports inline HTML like <span>)
+        document.querySelectorAll('[data-i18n-html]').forEach(el => {
+            const key = el.dataset.i18nHtml;
+            const text = this.t(key);
+            if (text) el.innerHTML = text;
         });
 
         // Update all placeholder elements
