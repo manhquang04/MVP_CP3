@@ -345,26 +345,29 @@
     <div id="header-slot"></div>
 
     <!-- Section 1: Hero Section -->
-    <section id="hero" class="relative flex h-screen min-h-screen w-full flex-col overflow-hidden">
+    <section id="hero" class="relative flex min-h-screen w-full flex-col overflow-hidden">
         <div class="absolute inset-0 z-0">
             <div class="w-full h-full bg-cover bg-center hero-bg" style="background-image: url('/assets/images/home.png');">
                 <div class="absolute inset-0 bg-gradient-to-b from-black/50 via-black/40 to-black/60"></div>
             </div>
         </div>
-        <div class="relative z-10 flex-1 flex flex-col items-center justify-center px-6 text-center">
-            <div class="max-w-6xl mx-auto flex flex-col items-center gap-8">
-                <h1 class="hero-title text-white text-4xl sm:text-6xl md:text-7xl lg:text-[5.5rem] font-serif font-bold leading-[1.1] tracking-wide uppercase flex flex-col items-center">
-                    <span data-i18n="heroTurnJourney">Turn your journey</span>
-                    <span><span data-i18n="heroIntoStory">into a </span><span class="font-artistic text-primary tracking-normal" style="font-size: 1.5em; line-height: 0.7; margin-left: -0.1em; display: inline-block; transform: translateY(12px); font-weight: 400; text-transform: none;" data-i18n="storyWord">Story</span></span>
+        <div class="relative z-10 flex-1 flex flex-col items-center justify-center px-4 sm:px-6 text-center pt-32 pb-32">
+            <div class="max-w-6xl mx-auto flex flex-col items-center gap-6 sm:gap-8">
+                <h1 class="hero-title text-white text-[2rem] sm:text-5xl md:text-6xl lg:text-7xl font-serif font-bold leading-[1.1] sm:leading-[1.15] tracking-wide uppercase flex flex-col items-center">
+                    <span data-i18n="heroTurnJourney" class="whitespace-nowrap">Turn your journey</span>
+                    <span class="flex flex-wrap justify-center items-center gap-2 sm:gap-4 mt-2 sm:mt-0">
+                        <span data-i18n="heroIntoStory">into a </span>
+                        <span class="font-artistic text-primary tracking-normal" style="font-size: 1.5em; line-height: 0.7; transform: translateY(4px); font-weight: 400; text-transform: none;" data-i18n="storyWord">Story</span>
+                    </span>
                 </h1>
-                <p class="hero-subtitle text-white/90 text-lg md:text-2xl font-light max-w-2xl leading-relaxed mt-6" data-i18n="heroSubtitleCopy">
+                <p class="hero-subtitle text-white/90 text-base sm:text-lg md:text-2xl font-light max-w-2xl leading-relaxed mt-4 sm:mt-6" data-i18n="heroSubtitleCopy">
                     Thoughtfully crafted journeys for modern explorers. Discover freely, travel deeply, share beautifully.
                 </p>
-                <div class="hero-buttons flex flex-col sm:flex-row gap-6 mt-12 w-full sm:w-auto justify-center">
-                    <a href="/auth/signup.html" class="flex cursor-pointer items-center justify-center rounded-full h-14 px-10 bg-primary text-white text-lg font-bold tracking-wide transition-all duration-300 ease-out w-full sm:w-auto hover:brightness-95 hover:shadow-lg" data-i18n="startAdventure">
+                <div class="hero-buttons flex flex-col sm:flex-row gap-4 sm:gap-6 mt-8 sm:mt-12 w-full sm:w-auto justify-center">
+                    <a href="/auth/signup.html" class="flex cursor-pointer items-center justify-center rounded-full h-12 sm:h-14 px-8 sm:px-10 bg-primary text-white text-base sm:text-lg font-bold tracking-wide transition-all duration-300 ease-out w-full sm:w-auto hover:brightness-95 hover:shadow-lg" data-i18n="startAdventure">
                         Start your adventure
                     </a>
-                    <a href="#features" class="flex cursor-pointer items-center justify-center rounded-full h-14 px-10 bg-transparent text-white text-lg font-medium tracking-wide transition-all duration-300 ease-out border-2 border-white w-full sm:w-auto hover:bg-white hover:text-slate-900" data-i18n="exploreFeatures">
+                    <a href="#features" class="flex cursor-pointer items-center justify-center rounded-full h-12 sm:h-14 px-8 sm:px-10 bg-transparent text-white text-base sm:text-lg font-medium tracking-wide transition-all duration-300 ease-out border-2 border-white w-full sm:w-auto hover:bg-white hover:text-slate-900" data-i18n="exploreFeatures">
                         Explore Features
                     </a>
                 </div>
@@ -373,8 +376,8 @@
         <!-- Scroll indicator -->
         <div class="absolute bottom-8 left-0 right-0 w-full flex justify-center z-20 animate-bounce">
             <a href="#features" class="flex flex-col items-center gap-2 text-white/70 hover:text-white transition-colors">
-                <span class="text-sm font-medium text-center" data-i18n="scrollToExplore">Scroll to explore</span>
-                <span class="material-symbols-outlined text-3xl">keyboard_arrow_down</span>
+                <span class="text-xs sm:text-sm font-medium text-center" data-i18n="scrollToExplore">Scroll to explore</span>
+                <span class="material-symbols-outlined text-2xl sm:text-3xl">keyboard_arrow_down</span>
             </a>
         </div>
     </section>
