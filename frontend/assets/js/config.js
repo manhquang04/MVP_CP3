@@ -1,7 +1,7 @@
 // WanderTale Config & API Base
 window.WanderTaleConfig = {
-    API_URL: 'http://localhost:3000',
-    API_BASE_URL: 'http://localhost:3000/api',
+    API_URL: 'https://surprised-olimpia-0manhquang0-6c9e70d9.koyeb.app',
+    API_BASE_URL: 'https://surprised-olimpia-0manhquang0-6c9e70d9.koyeb.app/api',
     MAPBOX_ACCESS_TOKEN: window.__MAPBOX_TOKEN__ || '',
     PLACEHOLDER_IMG: 'https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=400&h=300&fit=crop'
 };
