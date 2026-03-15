@@ -44,7 +44,7 @@
             <div class="px-4 mb-4">
                 <a href="/app/trips/create.html" class="w-full bg-primary hover:bg-primary/90 text-white font-bold py-3 px-4 rounded-xl flex items-center justify-center gap-2 transition-all block">
                     <span class="material-symbols-outlined">add_circle</span>
-                    <span>Tạo chuyến đi mới</span>
+                    <span data-i18n="createNewTrip">Tạo chuyến đi mới</span>
                 </a>
             </div>
             <nav class="flex-1 overflow-y-auto px-4 no-scrollbar space-y-2">
@@ -79,21 +79,21 @@
                 <div class="flex items-center gap-4">
                 <a href="/app/trips/create.html" class="flex items-center gap-2 text-slate-600 dark:text-slate-400 hover:text-primary transition-colors font-medium text-sm">
                     <span class="material-symbols-outlined text-lg">arrow_back</span>
-                    Tạo chuyến đi mới
+                    <span data-i18n="createNewTrip">Tạo chuyến đi mới</span>
                 </a>
                 <a href="/app/planner.html" class="flex items-center gap-2 text-slate-600 dark:text-slate-400 hover:text-primary transition-colors font-medium text-sm">
                     <span class="material-symbols-outlined text-sm">schedule</span>
-                    Planner
+                    <span data-i18n="planner">Planner</span>
                 </a>
                 </div>
                 <div class="flex items-center gap-3">
                     <button id="share-trip-btn" class="hidden md:inline-flex items-center gap-1 px-3 py-2 rounded-xl border border-primary/20 text-xs font-bold text-primary hover:bg-primary/5 transition-colors">
                         <span class="material-symbols-outlined text-sm">group_add</span>
-                        Chia sẻ kế hoạch
+                        <span data-i18n="sharePlanLabel">Chia sẻ kế hoạch</span>
                     </button>
                     <button id="save-trip-btn" class="inline-flex items-center gap-1 px-3 py-2 rounded-xl bg-primary text-white text-xs font-bold shadow hover:bg-primary/90 transition-colors">
                         <span class="material-symbols-outlined text-sm">save</span>
-                        <span id="save-trip-label">Lưu kế hoạch</span>
+                        <span id="save-trip-label" data-i18n="savePlan">Lưu kế hoạch</span>
                     </button>
                 </div>
             </header>
@@ -104,25 +104,25 @@
                     <div class="flex items-center justify-between gap-2 mb-3">
                         <div class="flex items-center gap-2">
                             <span class="material-symbols-outlined text-primary text-lg">group</span>
-                            <h3 class="text-sm font-bold">Người tham gia kế hoạch</h3>
+                            <h3 class="text-sm font-bold" data-i18n="planParticipants">Người tham gia kế hoạch</h3>
                         </div>
                         <span id="trip-role-badge" class="text-[11px] px-2 py-0.5 rounded-full bg-primary/10 text-primary font-semibold uppercase tracking-wide"></span>
                     </div>
-                    <div id="share-owner-note" class="text-[11px] text-slate-500 mb-2 hidden">
+                    <div id="share-owner-note" class="text-[11px] text-slate-500 mb-2 hidden" data-i18n="ownerOnlyNote">
                         Chỉ người tạo kế hoạch mới có quyền mời người khác và chỉnh vai trò (chỉ xem / được sửa).
                     </div>
                     <div id="share-form" class="flex flex-col sm:flex-row gap-2 mb-3 hidden">
-                        <input id="share-email-input" type="email" placeholder="Nhập email người bạn muốn mời"
+                        <input id="share-email-input" type="email" placeholder="Nhập email người bạn muốn mời" data-i18n-placeholder="emailInvitePlaceholder"
                                class="flex-1 px-3 py-2 rounded-xl border border-primary/20 bg-slate-50 dark:bg-slate-900 text-xs focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none"/>
                         <select id="share-role-select"
                                 class="px-3 py-2 rounded-xl border border-primary/20 bg-slate-50 dark:bg-slate-900 text-xs focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none">
-                            <option value="viewer">Chỉ xem</option>
-                            <option value="editor">Được chỉnh sửa</option>
+                            <option value="viewer" data-i18n="roleViewer">Chỉ xem</option>
+                            <option value="editor" data-i18n="roleEditor">Được chỉnh sửa</option>
                         </select>
                         <button id="share-submit-btn"
                                 class="inline-flex items-center justify-center gap-1 px-3 py-2 rounded-xl bg-primary text-white text-xs font-bold shadow hover:bg-primary/90 transition-colors">
                             <span class="material-symbols-outlined text-sm">person_add</span>
-                            Mời
+                            <span data-i18n="inviteBtn">Mời</span>
                         </button>
                     </div>
                     <div id="share-error" class="hidden text-[11px] text-red-500 mb-2"></div>
@@ -132,7 +132,7 @@
                 </div>
                 <div id="no-data" class="hidden text-center py-20">
                     <span class="material-symbols-outlined text-6xl text-slate-300 mb-4">map</span>
-                    <p class="text-slate-500">Chưa có kế hoạch. <a href="/app/trips/create.html" class="text-primary font-bold hover:underline">Tạo chuyến đi mới</a></p>
+                    <p class="text-slate-500"><span data-i18n="noPlanYet">Chưa có kế hoạch.</span> <a href="/app/trips/create.html" class="text-primary font-bold hover:underline" data-i18n="createNewTrip">Tạo chuyến đi mới</a></p>
                 </div>
             </section>
 
@@ -649,19 +649,19 @@
 
             if (roleBadge) {
                 if (currentRole === 'owner') {
-                    roleBadge.textContent = 'Người tạo';
+                    roleBadge.textContent = window.t ? window.t('owner') || 'Người tạo' : 'Người tạo';
                 } else if (currentRole === 'editor') {
-                    roleBadge.textContent = 'Được chỉnh sửa';
+                    roleBadge.textContent = window.t ? window.t('roleEditor') || 'Được chỉnh sửa' : 'Được chỉnh sửa';
                 } else {
-                    roleBadge.textContent = 'Chỉ xem';
+                    roleBadge.textContent = window.t ? window.t('roleViewer') || 'Chỉ xem' : 'Chỉ xem';
                 }
             }
 
             if (saveBtn && saveLabel) {
                 if (currentTripId) {
-                    saveLabel.textContent = 'Lưu thay đổi';
+                    saveLabel.textContent = window.t ? window.t('saveChangesLabel') || 'Lưu thay đổi' : 'Lưu thay đổi';
                 } else {
-                    saveLabel.textContent = 'Lưu kế hoạch';
+                    saveLabel.textContent = window.t ? window.t('savePlan') || 'Lưu kế hoạch' : 'Lưu kế hoạch';
                 }
                 if (currentRole === 'viewer') {
                     saveBtn.disabled = true;

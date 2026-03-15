@@ -295,7 +295,24 @@ window.i18n = {
             connectExplorers: 'Connect with 5,000+ Explorers',
             signupTestimonial: '"WanderTale changed how I travel!"',
             signupTestimonialAuthor: '— Elena, Digital Nomad',
-            alreadyHaveAccountQ: 'Already have an account?'
+            alreadyHaveAccountQ: 'Already have an account?',
+            
+            // New Create & Itinerary
+            travelersLabel: 'Travelers',
+            notesLabel: 'Additional Notes (Optional)',
+            notesPlaceholder: 'e.g. Want to visit night markets, traveling with kids...',
+            mapHint: 'Enter destination to view on map',
+            aiPlanning: 'AI is planning your trip',
+            aiAnalyzing: 'Analyzing destination and creating optimal itinerary...',
+            sharePlanLabel: 'Share Plan',
+            planParticipants: 'Trip Participants',
+            ownerOnlyNote: 'Only the trip creator can invite others and change roles (view/edit).',
+            emailInvitePlaceholder: 'Enter email to invite',
+            roleViewer: 'Viewer',
+            roleEditor: 'Editor',
+            inviteBtn: 'Invite',
+            noPlanYet: 'No plan yet.',
+            createNewTrip: 'Create new trip'
         },
 
         vi: {
@@ -588,7 +605,24 @@ window.i18n = {
             connectExplorers: 'Kết nối với 5.000+ nhà khám phá',
             signupTestimonial: '"WanderTale đã thay đổi cách tôi du lịch!"',
             signupTestimonialAuthor: '— Elena, Du mục kỹ thuật số',
-            alreadyHaveAccountQ: 'Đã có tài khoản?'
+            alreadyHaveAccountQ: 'Đã có tài khoản?',
+            
+            // New Create & Itinerary
+            travelersLabel: 'Số người đi',
+            notesLabel: 'Ghi chú thêm (tùy chọn)',
+            notesPlaceholder: 'VD: Muốn thăm chợ đêm, có trẻ em đi cùng...',
+            mapHint: 'Nhập điểm đến để xem vị trí trên bản đồ',
+            aiPlanning: 'AI đang lên kế hoạch',
+            aiAnalyzing: 'Đang phân tích điểm đến và tạo hành trình tối ưu...',
+            sharePlanLabel: 'Chia sẻ kế hoạch',
+            planParticipants: 'Người tham gia kế hoạch',
+            ownerOnlyNote: 'Chỉ người tạo kế hoạch mới có quyền mời người khác và chỉnh vai trò (chỉ xem / được sửa).',
+            emailInvitePlaceholder: 'Nhập email người bạn muốn mời',
+            roleViewer: 'Chỉ xem',
+            roleEditor: 'Được chỉnh sửa',
+            inviteBtn: 'Mời',
+            noPlanYet: 'Chưa có kế hoạch.',
+            createNewTrip: 'Tạo chuyến đi mới'
         }
     },
 
