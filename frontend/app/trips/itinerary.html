@@ -1,0 +1,867 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Kế hoạch chuyến đi | WanderTale</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    <link href="https://api.mapbox.com/mapbox-gl-js/v3.0.1/mapbox-gl.css" rel="stylesheet"/>
+    <script src="https://api.mapbox.com/mapbox-gl-js/v3.0.1/mapbox-gl.js"></script>
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: { "primary": "#f48c25", "background-light": "#f8f7f5", "background-dark": "#221910" },
+                    fontFamily: { "display": ["Space Grotesk"] },
+                    borderRadius: {"DEFAULT": "1rem", "lg": "2rem", "xl": "3rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+    <style>
+        body { font-family: 'Space Grotesk', sans-serif; }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        #itinerary-map .mapboxgl-ctrl-attrib, #itinerary-map .mapboxgl-ctrl-logo { display: none !important; }
+        #itinerary-map .mapboxgl-popup-close-button { display: none !important; }
+        #itinerary-map .mapboxgl-popup-content { padding: 12px; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.15); }
+        .location-card { transition: all 0.2s ease; cursor: pointer; }
+        .location-card:hover { transform: translateX(4px); box-shadow: 0 4px 12px rgba(244, 140, 37, 0.15); }
+        .location-card.active { border-color: #f48c25 !important; background: rgba(244, 140, 37, 0.1) !important; }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100">
+    <div class="flex h-screen overflow-hidden">
+        <aside class="w-72 flex-shrink-0 border-r border-primary/10 flex flex-col bg-background-light dark:bg-background-dark">
+            <a href="/app/planner.html" class="p-6 flex items-center gap-3 hover:opacity-90 transition-opacity">
+                <div class="bg-primary p-2 rounded-lg text-white"><span class="material-symbols-outlined block">explore</span></div>
+                <h1 class="text-xl font-bold tracking-tight text-primary">WanderTale</h1>
+            </a>
+            <div class="px-4 mb-4">
+                <a href="/app/trips/create.html" class="w-full bg-primary hover:bg-primary/90 text-white font-bold py-3 px-4 rounded-xl flex items-center justify-center gap-2 transition-all block">
+                    <span class="material-symbols-outlined">add_circle</span>
+                    <span>Tạo chuyến đi mới</span>
+                </a>
+            </div>
+            <nav class="flex-1 overflow-y-auto px-4 no-scrollbar space-y-2">
+                <a class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-primary/5 transition-colors" href="/app/planner.html">
+                    <span class="material-symbols-outlined">schedule</span>
+                    <span class="text-sm font-medium">Planner</span>
+                </a>
+                <a class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-primary/5 transition-colors" href="/app/explore/map.html">
+                    <span class="material-symbols-outlined">explore</span>
+                    <span class="text-sm font-medium">Khám phá</span>
+                </a>
+                <a class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-primary/5 transition-colors" href="/public/community-stories.html">
+                    <span class="material-symbols-outlined">auto_stories</span>
+                    <span class="text-sm font-medium">Stories</span>
+                </a>
+            </nav>
+            <div class="p-4 border-t border-primary/10">
+                <a href="/app/profile/profile.html" class="flex items-center gap-3 hover:opacity-90 transition-opacity">
+                    <div id="user-avatar" class="w-10 h-10 rounded-full bg-primary/20 flex items-center justify-center overflow-hidden bg-cover bg-center">
+                        <span class="material-symbols-outlined text-primary" id="avatar-fallback">person</span>
+                    </div>
+                    <div>
+                        <p class="text-sm font-bold" id="user-name">User</p>
+                        <p class="text-xs text-slate-500" id="user-email">@username</p>
+                    </div>
+                </a>
+            </div>
+        </aside>
+
+        <main class="flex-1 flex flex-col min-w-0 overflow-hidden">
+            <header class="shrink-0 flex items-center justify-between gap-4 px-6 py-3 border-b border-primary/10 bg-background-light/95 dark:bg-background-dark/95">
+                <div class="flex items-center gap-4">
+                <a href="/app/trips/create.html" class="flex items-center gap-2 text-slate-600 dark:text-slate-400 hover:text-primary transition-colors font-medium text-sm">
+                    <span class="material-symbols-outlined text-lg">arrow_back</span>
+                    Tạo chuyến đi mới
+                </a>
+                <a href="/app/planner.html" class="flex items-center gap-2 text-slate-600 dark:text-slate-400 hover:text-primary transition-colors font-medium text-sm">
+                    <span class="material-symbols-outlined text-sm">schedule</span>
+                    Planner
+                </a>
+                </div>
+                <div class="flex items-center gap-3">
+                    <button id="share-trip-btn" class="hidden md:inline-flex items-center gap-1 px-3 py-2 rounded-xl border border-primary/20 text-xs font-bold text-primary hover:bg-primary/5 transition-colors">
+                        <span class="material-symbols-outlined text-sm">group_add</span>
+                        Chia sẻ kế hoạch
+                    </button>
+                    <button id="save-trip-btn" class="inline-flex items-center gap-1 px-3 py-2 rounded-xl bg-primary text-white text-xs font-bold shadow hover:bg-primary/90 transition-colors">
+                        <span class="material-symbols-outlined text-sm">save</span>
+                        <span id="save-trip-label">Lưu kế hoạch</span>
+                    </button>
+                </div>
+            </header>
+            <div class="flex-1 flex min-w-0 overflow-hidden">
+            <section class="w-1/2 overflow-y-auto no-scrollbar p-6">
+                <div id="itinerary-content"></div>
+                <div id="share-panel" class="mt-6 hidden rounded-2xl border border-primary/15 bg-white/90 dark:bg-slate-900/90 backdrop-blur px-4 py-3">
+                    <div class="flex items-center justify-between gap-2 mb-3">
+                        <div class="flex items-center gap-2">
+                            <span class="material-symbols-outlined text-primary text-lg">group</span>
+                            <h3 class="text-sm font-bold">Người tham gia kế hoạch</h3>
+                        </div>
+                        <span id="trip-role-badge" class="text-[11px] px-2 py-0.5 rounded-full bg-primary/10 text-primary font-semibold uppercase tracking-wide"></span>
+                    </div>
+                    <div id="share-owner-note" class="text-[11px] text-slate-500 mb-2 hidden">
+                        Chỉ người tạo kế hoạch mới có quyền mời người khác và chỉnh vai trò (chỉ xem / được sửa).
+                    </div>
+                    <div id="share-form" class="flex flex-col sm:flex-row gap-2 mb-3 hidden">
+                        <input id="share-email-input" type="email" placeholder="Nhập email người bạn muốn mời"
+                               class="flex-1 px-3 py-2 rounded-xl border border-primary/20 bg-slate-50 dark:bg-slate-900 text-xs focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none"/>
+                        <select id="share-role-select"
+                                class="px-3 py-2 rounded-xl border border-primary/20 bg-slate-50 dark:bg-slate-900 text-xs focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none">
+                            <option value="viewer">Chỉ xem</option>
+                            <option value="editor">Được chỉnh sửa</option>
+                        </select>
+                        <button id="share-submit-btn"
+                                class="inline-flex items-center justify-center gap-1 px-3 py-2 rounded-xl bg-primary text-white text-xs font-bold shadow hover:bg-primary/90 transition-colors">
+                            <span class="material-symbols-outlined text-sm">person_add</span>
+                            Mời
+                        </button>
+                    </div>
+                    <div id="share-error" class="hidden text-[11px] text-red-500 mb-2"></div>
+                    <div id="collaborators-list" class="space-y-1 text-xs text-slate-600 dark:text-slate-300">
+                        <!-- filled by JS -->
+                    </div>
+                </div>
+                <div id="no-data" class="hidden text-center py-20">
+                    <span class="material-symbols-outlined text-6xl text-slate-300 mb-4">map</span>
+                    <p class="text-slate-500">Chưa có kế hoạch. <a href="/app/trips/create.html" class="text-primary font-bold hover:underline">Tạo chuyến đi mới</a></p>
+                </div>
+            </section>
+
+            <section class="w-1/2 relative">
+                <div id="itinerary-map" class="absolute inset-0"></div>
+            </section>
+            </div>
+        </main>
+    </div>
+
+    <script src="/assets/js/config.js"></script>
+    <script src="/assets/js/i18n.js"></script>
+    <script src="/assets/js/auth.js"></script>
+    <script src="/assets/js/trips-api.js"></script>
+    <script>
+        if (!AuthGuard.isAuthenticated()) {
+            window.location.href = '/auth/login.html?redirect=' + encodeURIComponent('/app/trips/itinerary.html');
+        }
+
+        const user = AuthGuard.getUser();
+        if (user) {
+            const nameEl = document.getElementById('user-name');
+            const emailEl = document.getElementById('user-email');
+            const avatarEl = document.getElementById('user-avatar');
+            const fallbackEl = document.getElementById('avatar-fallback');
+            if (nameEl) nameEl.textContent = user.fullName || 'User';
+            if (emailEl) emailEl.textContent = '@' + (user.username || (user.email ? user.email.split('@')[0] : 'user'));
+            if (user.avatar && avatarEl) {
+                avatarEl.style.backgroundImage = `url('${user.avatar}')`;
+                if (fallbackEl) fallbackEl.style.display = 'none';
+            }
+        }
+
+        const TYPE_ICONS = { hotel: 'hotel', food: 'restaurant', sightseeing: 'explore', nature: 'park', shopping: 'shopping_bag', cafe: 'coffee', entertainment: 'theater_comedy' };
+        const TYPE_LABELS = { hotel: 'Khách sạn', food: 'Ẩm thực', sightseeing: 'Tham quan', nature: 'Thiên nhiên', shopping: 'Mua sắm', cafe: 'Cà phê', entertainment: 'Giải trí' };
+        const mapToken = window.WanderTaleConfig?.MAPBOX_ACCESS_TOKEN || '';
+        const PLACEHOLDER_IMG = window.WanderTaleConfig?.PLACEHOLDER_IMG || 'https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=400&h=300&fit=crop';
+
+        // Global map instance and markers (keyed by unique ID, not coordinates)
+        let mapInstance = null;
+        let currentPopup = null; // Track currently open popup
+        const locationMarkers = {}; // { 'hotel-0': marker, 'activity-0-0': marker, ... }
+        let currentTripId = null;
+        let currentTrip = null;
+        let currentRole = 'owner'; // 'owner' | 'editor' | 'viewer'
+        const aiPlaceSuggestions = {}; // lưu danh sách gợi ý địa điểm cho từng markerId
+
+        function getImageUrl(item) {
+            return (item && item.image_url) || PLACEHOLDER_IMG;
+        }
+
+        // Close all popups
+        function closeAllPopups() {
+            Object.values(locationMarkers).forEach(marker => {
+                const popup = marker.getPopup();
+                if (popup && popup.isOpen()) {
+                    popup.remove();
+                }
+            });
+            currentPopup = null;
+            
+            // Remove active class from all cards
+            document.querySelectorAll('.location-card').forEach(card => {
+                card.classList.remove('active');
+            });
+        }
+
+        // Fly to location on map and show popup
+        function flyToLocation(markerId) {
+            if (!mapInstance || !markerId) return;
+            
+            const marker = locationMarkers[markerId];
+            if (!marker) return;
+
+            // Close any open popup first
+            closeAllPopups();
+
+            // Get marker position and fly there
+            const lngLat = marker.getLngLat();
+            mapInstance.flyTo({
+                center: [lngLat.lng, lngLat.lat],
+                zoom: 16,
+                duration: 800,
+                essential: true
+            });
+
+            // Open popup for this marker shortly after starting flight
+            setTimeout(() => {
+                const popup = marker.getPopup();
+                if (popup) {
+                    popup.addTo(mapInstance);
+                    currentPopup = popup;
+                }
+            }, 400);
+
+            // Add active class to clicked card
+            const card = document.querySelector(`[data-marker-id="${markerId}"]`);
+            if (card) {
+                card.classList.add('active');
+            }
+        }
+
+        function renderItinerary(itinerary, destination) {
+            const container = document.getElementById('itinerary-content');
+            const noData = document.getElementById('no-data');
+            if (!container || !itinerary) {
+                if (noData) noData.classList.remove('hidden');
+                return;
+            }
+            if (noData) noData.classList.add('hidden');
+
+            let html = '<div class="flex items-center gap-2 mb-6"><span class="material-symbols-outlined text-primary text-2xl">auto_awesome</span><h2 class="text-2xl font-bold">Hành trình: ' + (destination || itinerary.trip_summary?.destination || '') + '</h2></div>';
+
+            if (itinerary.hotel) {
+                const h = itinerary.hotel;
+                const imgUrl = getImageUrl(h);
+                const price = h.estimated_price_vnd || h.price_level || '';
+                const hasCoords = h.lng && h.lat;
+                const markerId = 'hotel-0';
+                html += ''
+                    + '<div class="mb-6">'
+                    + '  <div class="rounded-2xl bg-primary/5 border border-primary/20 overflow-hidden location-card ' + (hasCoords ? '' : 'opacity-70') + '"'
+                    + '       data-marker-id="' + markerId + '"'
+                    +        (hasCoords ? ' onclick="flyToLocation(\'' + markerId + '\')"' : '') + '>'
+                    + '    <div class="flex flex-col md:flex-row">'
+                    + '      <div class="md:w-48 shrink-0">'
+                    + '        <img src="' + imgUrl + '" alt="' + (h.name || '').replace(/"/g, '&quot;') + '" class="w-full h-32 md:h-full object-cover"/>'
+                    + '      </div>'
+                    + '      <div class="p-4 flex-1">'
+                    + '        <div class="flex items-center gap-2 mb-1">'
+                    + '          <span class="material-symbols-outlined text-primary">hotel</span>'
+                    + '          <h3 class="font-bold">Khách sạn</h3>'
+                    +            (hasCoords ? '<span class="material-symbols-outlined text-primary text-sm ml-auto">location_on</span>' : '')
+                    + '        </div>'
+                    + '        <h4 class="font-bold text-slate-900 dark:text-white">' + (h.name || '') + '</h4>'
+                    + '        <p class="text-xs text-slate-500 mt-1">' + (h.address || '') + '</p>'
+                    + '        <p class="text-sm text-slate-600 dark:text-slate-400 mt-1">' + (h.description || '') + '</p>'
+                    + '        <div class="flex flex-wrap items-center gap-2 mt-2">'
+                    +              (h.price_level ? '<span class="text-xs px-2 py-0.5 rounded bg-primary/20 text-primary font-bold">' + h.price_level + '</span>' : '')
+                    + '          <div class="flex items-center gap-1 text-xs text-green-700 dark:text-green-400">'
+                    + '            <span class="material-symbols-outlined text-sm">payments</span>'
+                    + '            <input type="text"'
+                    + '                   class="cost-input w-32 px-2 py-1 rounded border border-green-200 bg-white/80 dark:bg-slate-900/60 text-[11px] focus:outline-none focus:ring-1 focus:ring-green-400"'
+                    + '                   data-type="hotel"'
+                    + '                   data-marker-id="' + markerId + '"'
+                    + '                   value="' + (price || '') + '"'
+                    + '                   placeholder="Chi phí ước tính"/>'
+                    + '          </div>'
+                    + '        </div>'
+                    + '        <button type="button"'
+                    + '                class="change-place-btn mt-3 inline-flex items-center gap-1 px-3 py-1 rounded-full border border-primary/30 text-[11px] font-bold text-primary bg-white/80 hover:bg-primary/5"'
+                    + '                data-type="hotel"'
+                    + '                data-marker-id="' + markerId + '">'
+                    + '          <span class="material-symbols-outlined text-sm">shuffle</span>'
+                    + '          Đổi khách sạn khác'
+                    + '        </button>'
+                    + '      </div>'
+                    + '    </div>'
+                    + '  </div>'
+                    + '  <div class="ml-10 mt-3 space-y-2" data-alt-container="' + markerId + '"></div>'
+                    + '</div>';
+            }
+
+            if (itinerary.days && itinerary.days.length) {
+                html += '<div class="space-y-6 relative"><div class="absolute left-5 top-8 bottom-0 w-0.5 bg-primary/20"></div>';
+                itinerary.days.forEach((d, i) => {
+                    html += '<div class="relative"><div class="flex items-center gap-3 mb-3"><div class="w-10 h-10 rounded-full bg-primary flex items-center justify-center text-white font-bold z-10 text-sm">' + (d.day || i + 1) + '</div><h3 class="text-lg font-bold">Ngày ' + (d.day || i + 1) + (d.area ? ': ' + d.area : '') + '</h3></div><div class="ml-14 space-y-3">';
+                    (d.activities || []).forEach((a, ai) => {
+                        const icon = TYPE_ICONS[a.type] || 'place';
+                        const label = TYPE_LABELS[a.type] || a.type || '';
+                        const imgUrl = getImageUrl(a);
+                        const costValue = a.estimated_cost_vnd || '';
+                        const hasCoords = a.lng && a.lat;
+                        const markerId = 'activity-' + i + '-' + ai;
+                        html += ''
+                            + '<div class="mb-3">'
+                            + '  <div class="p-0 rounded-xl bg-white dark:bg-slate-800 shadow-sm border border-primary/5 overflow-hidden location-card ' + (hasCoords ? '' : 'opacity-70') + '"'
+                            + '       data-marker-id="' + markerId + '"'
+                            +        (hasCoords ? ' onclick="flyToLocation(\'' + markerId + '\')"' : '') + '>'
+                            + '    <div class="flex">'
+                            + '      <div class="w-28 shrink-0 h-24">'
+                            + '        <img src="' + imgUrl + '" alt="' + (a.title || '').replace(/"/g, '&quot;') + '" class="w-full h-full object-cover"/>'
+                            + '      </div>'
+                            + '      <div class="p-3 flex-1">'
+                            + '        <div class="flex justify-between items-start">'
+                            + '          <h4 class="font-bold text-sm">' + (a.title || '') + '</h4>'
+                            + '          <span class="text-primary font-bold text-sm shrink-0">' + (a.time || '') + '</span>'
+                            + '        </div>'
+                            + '        <p class="text-xs text-slate-500 mt-0.5 line-clamp-2">' + (a.description || '') + '</p>'
+                            +          (a.estimated_duration_minutes ? '<span class="text-xs text-slate-400">~' + a.estimated_duration_minutes + ' phút</span>' : '')
+                            + '        <div class="mt-1 flex flex-wrap items-center gap-2">'
+                            + '          <div class="flex items-center gap-1 text-xs text-green-700 dark:text-green-400">'
+                            + '            <span class="material-symbols-outlined text-sm">payments</span>'
+                            + '            <input type="text"'
+                            + '                   class="cost-input w-32 px-2 py-1 rounded border border-green-200 bg-white/80 dark:bg-slate-900/60 text-[11px] focus:outline-none focus:ring-1 focus:ring-green-400"'
+                            + '                   data-type="activity"'
+                            + '                   data-marker-id="' + markerId + '"'
+                            + '                   value="' + costValue + '"'
+                            + '                   placeholder="Chi phí ước tính"/>'
+                            + '          </div>'
+                            +            (label ? '<span class="inline-block mt-1 text-[9px] px-1.5 py-0.5 rounded bg-primary/20 text-primary font-bold uppercase">' + label + '</span>' : '')
+                            +            (hasCoords ? '<span class="material-symbols-outlined text-primary text-sm mt-1">location_on</span>' : '')
+                            + '        </div>'
+                            + '        <button type="button"'
+                            + '                class="change-place-btn mt-2 inline-flex items-center gap-1 px-3 py-1 rounded-full border border-primary/30 text-[11px] font-bold text-primary bg-white/80 hover:bg-primary/5"'
+                            + '                data-type="activity"'
+                            + '                data-marker-id="' + markerId + '"'
+                            + '                data-day-index="' + i + '"'
+                            + '                data-activity-index="' + ai + '">'
+                            + '          <span class="material-symbols-outlined text-sm">shuffle</span>'
+                            + '          Đổi địa điểm khác'
+                            + '        </button>'
+                            + '      </div>'
+                            + '    </div>'
+                            + '  </div>'
+                            + '  <div class="ml-10 mt-2 space-y-2" data-alt-container="' + markerId + '"></div>'
+                            + '</div>';
+                    });
+                    html += '</div></div>';
+                });
+                html += '</div>';
+            }
+            container.innerHTML = html;
+
+            // Gắn event cho nút Đổi khác + input chi phí
+            attachItineraryEvents();
+        }
+
+        // Gắn event sau khi render HTML
+        function attachItineraryEvents() {
+            const container = document.getElementById('itinerary-content');
+            if (!container) return;
+
+            // Delegate click cho nút đổi địa điểm (lazy-loading khi user ấn)
+            container.addEventListener('click', async (e) => {
+                const btn = e.target.closest('.change-place-btn');
+                if (!btn) return;
+                e.stopPropagation();
+
+                if (!currentTrip || !currentTrip.itinerary) return;
+                if (currentRole === 'viewer') {
+                    alert('Bạn chỉ có quyền xem, không được chỉnh sửa kế hoạch.');
+                    return;
+                }
+
+                const type = btn.getAttribute('data-type');
+                const markerId = btn.getAttribute('data-marker-id');
+                const dayIndex = parseInt(btn.getAttribute('data-day-index') || '-1', 10);
+                const activityIndex = parseInt(btn.getAttribute('data-activity-index') || '-1', 10);
+
+                await handleChangePlace(type, markerId, dayIndex, activityIndex, btn);
+            });
+
+            // Delegate input cho trường chi phí
+            container.addEventListener('input', (e) => {
+                const input = e.target.closest('.cost-input');
+                if (!input || !currentTrip || !currentTrip.itinerary) return;
+                if (currentRole === 'viewer') {
+                    input.value = input.getAttribute('value') || '';
+                    return;
+                }
+
+                const type = input.getAttribute('data-type');
+                const markerId = input.getAttribute('data-marker-id');
+                const value = input.value;
+
+                if (type === 'hotel' && currentTrip.itinerary.hotel) {
+                    currentTrip.itinerary.hotel.estimated_price_vnd = value;
+                } else if (type === 'activity') {
+                    const parts = markerId.split('-'); // activity-day-idx-activity-idx
+                    if (parts.length === 3 && currentTrip.itinerary.days) {
+                        const di = parseInt(parts[1], 10);
+                        const ai = parseInt(parts[2], 10);
+                        if (!Number.isNaN(di) && !Number.isNaN(ai) && currentTrip.itinerary.days[di]?.activities?.[ai]) {
+                            currentTrip.itinerary.days[di].activities[ai].estimated_cost_vnd = value;
+                        }
+                    }
+                }
+            });
+        }
+
+        async function handleChangePlace(type, markerId, dayIndex, activityIndex, buttonEl) {
+            if (!currentTrip || !currentTrip.itinerary) return;
+
+            const altContainer = document.querySelector(`[data-alt-container="${markerId}"]`);
+            if (!altContainer) return;
+
+            const originalText = buttonEl.textContent;
+            buttonEl.disabled = true;
+            buttonEl.innerHTML = '<span class="material-symbols-outlined text-sm animate-spin">progress_activity</span> Đang tải gợi ý...';
+
+            altContainer.innerHTML = `
+                <div class="pl-3 border-l-2 border-dashed border-primary/40 text-xs text-slate-500">
+                    <div class="flex items-center gap-2">
+                        <span class="material-symbols-outlined text-primary text-sm">place</span>
+                        <span>Đang tìm các địa điểm gần đó phù hợp...</span>
+                    </div>
+                </div>
+            `;
+
+            try {
+                // Xác định toạ độ làm tâm tìm kiếm
+                let baseLat = null;
+                let baseLng = null;
+                if (type === 'hotel' && currentTrip.itinerary.hotel?.lat && currentTrip.itinerary.hotel?.lng) {
+                    baseLat = currentTrip.itinerary.hotel.lat;
+                    baseLng = currentTrip.itinerary.hotel.lng;
+                } else if (type === 'activity' && dayIndex >= 0 && activityIndex >= 0) {
+                    const a = currentTrip.itinerary.days?.[dayIndex]?.activities?.[activityIndex];
+                    if (a?.lat && a?.lng) {
+                        baseLat = a.lat;
+                        baseLng = a.lng;
+                    }
+                }
+                // fallback: không có toạ độ, bỏ luôn (không gọi API)
+                if (baseLat == null || baseLng == null) {
+                    altContainer.innerHTML = `
+                        <div class="pl-3 border-l-2 border-dashed border-red-400 text-xs text-red-500">
+                            Không có toạ độ để tìm địa điểm lân cận. Vui lòng thêm vị trí cho địa điểm này trước.
+                        </div>
+                    `;
+                    return;
+                }
+
+                const body = {
+                    lat: baseLat,
+                    lng: baseLng,
+                    type: type === 'activity'
+                        ? (currentTrip.itinerary.days?.[dayIndex]?.activities?.[activityIndex]?.type || 'activity')
+                        : 'hotel'
+                };
+
+                const res = await window.api.post('/api/ai/suggest-places', body);
+
+                if (!res || !res.success) {
+                    altContainer.innerHTML = `
+                        <div class="pl-3 border-l-2 border-dashed border-red-400 text-xs text-red-500">
+                            Không thể tải gợi ý địa điểm. Vui lòng thử lại sau.
+                        </div>
+                    `;
+                    return;
+                }
+
+                const suggestions = Array.isArray(res.suggestions) ? res.suggestions : [];
+                aiPlaceSuggestions[markerId] = suggestions;
+
+                if (!suggestions.length) {
+                    altContainer.innerHTML = `
+                        <div class="pl-3 border-l-2 border-dashed border-primary/40 text-xs text-slate-500">
+                            Không tìm thấy địa điểm nào phù hợp quanh khu vực này.
+                        </div>
+                    `;
+                    return;
+                }
+
+                // Render list dọc, lệch phải để user chọn
+                const listHtml = suggestions
+                    .map((p, idx) => {
+                        const reason = p.reason || 'Địa điểm gần đó do Geoapify đề xuất.';
+                        return `
+                            <div class="relative rounded-xl border border-primary/30 bg-white dark:bg-slate-900/70 shadow-sm p-3">
+                                <div class="absolute -left-3 top-3 w-6 h-6 rounded-full bg-primary text-white flex items-center justify-center text-[10px] font-bold">
+                                    ${idx + 1}
+                                </div>
+                                <div class="flex flex-col gap-1">
+                                    <p class="font-bold text-sm truncate">${p.name || 'Địa điểm'}</p>
+                                    <p class="text-[11px] text-slate-500 line-clamp-2">${p.address || ''} ${p.city ? '• ' + p.city : ''}</p>
+                                    <p class="text-[11px] text-slate-600 dark:text-slate-300 mt-1">${reason}</p>
+                                </div>
+                                <div class="mt-3 flex items-center justify-end gap-2">
+                                    <button type="button"
+                                            class="apply-ai-place-btn px-3 py-1 rounded-full bg-primary text-white text-[11px] font-bold hover:bg-primary/90"
+                                            data-marker-id="${markerId}"
+                                            data-suggestion-index="${idx}">
+                                        Chọn địa điểm này
+                                    </button>
+                                </div>
+                            </div>
+                        `;
+                    })
+                    .join('');
+
+                altContainer.innerHTML = listHtml;
+
+                // Gắn click cho từng lựa chọn
+                altContainer.querySelectorAll('.apply-ai-place-btn').forEach((btn) => {
+                    btn.addEventListener('click', () => {
+                        const mid = btn.getAttribute('data-marker-id');
+                        const sIndex = parseInt(btn.getAttribute('data-suggestion-index') || '0', 10);
+                        const list = aiPlaceSuggestions[mid] || [];
+                        const chosen = list[sIndex];
+                        if (!chosen) return;
+
+                        if (type === 'hotel') {
+                            if (!currentTrip.itinerary.hotel) {
+                                currentTrip.itinerary.hotel = {};
+                            }
+                            currentTrip.itinerary.hotel.name = chosen.name;
+                            currentTrip.itinerary.hotel.address = chosen.address;
+                            currentTrip.itinerary.hotel.lat = chosen.lat;
+                            currentTrip.itinerary.hotel.lng = chosen.lng;
+                        } else if (type === 'activity' && dayIndex >= 0 && activityIndex >= 0) {
+                            const act = currentTrip.itinerary.days?.[dayIndex]?.activities?.[activityIndex];
+                            if (act) {
+                                act.title = chosen.name;
+                                act.address = chosen.address;
+                                act.lat = chosen.lat;
+                                act.lng = chosen.lng;
+                            }
+                        }
+
+                        // Sau khi user chọn, render lại để cập nhật UI + map
+                        renderItinerary(currentTrip.itinerary, currentTrip.destination);
+                        initMapWithMarkers(currentTrip.itinerary);
+                    });
+                });
+            } catch (err) {
+                console.error('handleChangePlace error', err);
+                altContainer.innerHTML = `
+                    <div class="pl-3 border-l-2 border-dashed border-red-400 text-xs text-red-500">
+                        Có lỗi khi gọi AI chỉnh sửa kế hoạch. Vui lòng thử lại.
+                    </div>
+                `;
+            } finally {
+                buttonEl.disabled = false;
+                buttonEl.textContent = originalText;
+            }
+        }
+
+        function initMapWithMarkers(itinerary) {
+            const bounds = [];
+            if (itinerary.hotel && itinerary.hotel.lng && itinerary.hotel.lat) {
+                bounds.push([itinerary.hotel.lng, itinerary.hotel.lat]);
+            }
+            (itinerary.days || []).forEach(d => {
+                (d.activities || []).forEach(a => {
+                    if (a.lng && a.lat) bounds.push([a.lng, a.lat]);
+                });
+            });
+
+            if (!mapToken) return;
+
+            mapboxgl.accessToken = mapToken;
+            mapInstance = new mapboxgl.Map({
+                container: 'itinerary-map',
+                style: 'mapbox://styles/mapbox/streets-v12',
+                center: (bounds[0] || [108.2772, 14.0583]),
+                zoom: bounds.length > 0 ? 10 : 5
+            });
+            mapInstance.addControl(new mapboxgl.NavigationControl(), 'bottom-right');
+
+            mapInstance.on('load', () => {
+                // Hotel marker with unique ID
+                if (itinerary.hotel && itinerary.hotel.lng && itinerary.hotel.lat) {
+                    const markerId = 'hotel-0';
+                    const el = document.createElement('div');
+                    el.className = 'w-10 h-10 rounded-full bg-primary/90 border-2 border-white shadow-lg flex items-center justify-center cursor-pointer';
+                    el.innerHTML = '<span class="material-symbols-outlined text-white text-lg">hotel</span>';
+                    const popup = new mapboxgl.Popup({ offset: 12, closeOnClick: false }).setHTML(
+                        '<h4 class="font-bold">' + (itinerary.hotel.name || 'Khách sạn') + '</h4>' +
+                        '<p class="text-xs text-slate-500">' + (itinerary.hotel.address || '') + '</p>'
+                    );
+                    locationMarkers[markerId] = new mapboxgl.Marker(el)
+                        .setLngLat([itinerary.hotel.lng, itinerary.hotel.lat])
+                        .setPopup(popup)
+                        .addTo(mapInstance);
+                }
+
+                // Activity markers with unique IDs
+                (itinerary.days || []).forEach((d, di) => {
+                    (d.activities || []).forEach((a, ai) => {
+                        if (!a.lng || !a.lat) return;
+                        const markerId = 'activity-' + di + '-' + ai;
+                        const el = document.createElement('div');
+                        el.className = 'w-9 h-9 rounded-full bg-primary border-2 border-white shadow-lg flex items-center justify-center cursor-pointer';
+                        el.innerHTML = '<span class="material-symbols-outlined text-white text-sm">place</span>';
+                        const popup = new mapboxgl.Popup({ offset: 12, closeOnClick: false }).setHTML(
+                            '<h4 class="font-bold text-sm">' + (a.title || '') + '</h4>' +
+                            '<p class="text-xs text-slate-500">' + (a.time || '') + ' • ' + (a.description || '').substring(0, 80) + '...</p>'
+                        );
+                        locationMarkers[markerId] = new mapboxgl.Marker(el)
+                            .setLngLat([a.lng, a.lat])
+                            .setPopup(popup)
+                            .addTo(mapInstance);
+                    });
+                });
+
+                // Fit bounds to show all markers
+                if (bounds.length > 1) {
+                    const bbox = new mapboxgl.LngLatBounds();
+                    bounds.forEach(coord => bbox.extend(coord));
+                    mapInstance.fitBounds(bbox, { padding: 60, maxZoom: 14 });
+                } else if (bounds.length === 1) {
+                    mapInstance.flyTo({ center: bounds[0], zoom: 14, duration: 1000 });
+                }
+            });
+        }
+
+        function updateShareUI() {
+            const sharePanel = document.getElementById('share-panel');
+            const roleBadge = document.getElementById('trip-role-badge');
+            const shareForm = document.getElementById('share-form');
+            const ownerNote = document.getElementById('share-owner-note');
+            const collaboratorsList = document.getElementById('collaborators-list');
+            const saveBtn = document.getElementById('save-trip-btn');
+            const saveLabel = document.getElementById('save-trip-label');
+
+            if (!currentTrip) {
+                if (sharePanel) sharePanel.classList.add('hidden');
+                return;
+            }
+
+            if (sharePanel) sharePanel.classList.remove('hidden');
+
+            if (roleBadge) {
+                if (currentRole === 'owner') {
+                    roleBadge.textContent = 'Người tạo';
+                } else if (currentRole === 'editor') {
+                    roleBadge.textContent = 'Được chỉnh sửa';
+                } else {
+                    roleBadge.textContent = 'Chỉ xem';
+                }
+            }
+
+            if (saveBtn && saveLabel) {
+                if (currentTripId) {
+                    saveLabel.textContent = 'Lưu thay đổi';
+                } else {
+                    saveLabel.textContent = 'Lưu kế hoạch';
+                }
+                if (currentRole === 'viewer') {
+                    saveBtn.disabled = true;
+                    saveBtn.classList.add('opacity-60', 'cursor-not-allowed');
+                } else {
+                    saveBtn.disabled = false;
+                    saveBtn.classList.remove('opacity-60', 'cursor-not-allowed');
+                }
+            }
+
+            if (shareForm && ownerNote) {
+                if (currentRole === 'owner') {
+                    shareForm.classList.remove('hidden');
+                    ownerNote.classList.remove('hidden');
+                } else {
+                    shareForm.classList.add('hidden');
+                    ownerNote.classList.add('hidden');
+                }
+            }
+
+            if (collaboratorsList) {
+                const ownerLine = currentTrip.user
+                    ? `<div class="flex items-center justify-between gap-2">
+                            <div class="flex items-center gap-2">
+                                <span class="material-symbols-outlined text-xs text-primary">star</span>
+                                <span>${currentTrip.user.fullName || currentTrip.user.email}</span>
+                            </div>
+                            <span class="text-[10px] px-2 py-0.5 rounded-full bg-primary/10 text-primary font-semibold uppercase">Owner</span>
+                       </div>`
+                    : '';
+
+                const collabs = (currentTrip.collaborators || []).map(c => {
+                    if (!c.user) return '';
+                    const roleLabel = c.role === 'editor' ? 'Được chỉnh sửa' : 'Chỉ xem';
+                    const roleClass = c.role === 'editor' ? 'bg-emerald-100 text-emerald-700' : 'bg-slate-100 text-slate-600';
+                    const removeBtn = currentRole === 'owner'
+                        ? `<button data-remove-id="${c.user._id}" class="text-[10px] text-red-500 hover:underline ml-2">Gỡ</button>`
+                        : '';
+                    return `<div class="flex items-center justify-between gap-2">
+                                <div class="flex items-center gap-2">
+                                    <span class="material-symbols-outlined text-xs text-slate-400">person</span>
+                                    <span>${c.user.fullName || c.user.email}</span>
+                                </div>
+                                <div class="flex items-center gap-1">
+                                    <span class="text-[10px] px-2 py-0.5 rounded-full ${roleClass} font-semibold">${roleLabel}</span>
+                                    ${removeBtn}
+                                </div>
+                            </div>`;
+                }).join('');
+
+                collaboratorsList.innerHTML = ownerLine + collabs;
+
+                if (currentRole === 'owner') {
+                    collaboratorsList.querySelectorAll('[data-remove-id]').forEach(btn => {
+                        btn.addEventListener('click', async () => {
+                            const userId = btn.getAttribute('data-remove-id');
+                            if (!currentTripId || !userId) return;
+                            const result = await window.TripsAPI.removeCollaborator(currentTripId, userId);
+                            if (result && result.success && Array.isArray(result.collaborators)) {
+                                currentTrip.collaborators = result.collaborators;
+                                updateShareUI();
+                            } else {
+                                alert(result.message || 'Không thể gỡ người tham gia');
+                            }
+                        });
+                    });
+                }
+            }
+        }
+
+        async function initPage() {
+            const params = new URLSearchParams(window.location.search);
+            currentTripId = params.get('id');
+
+            if (currentTripId) {
+                const result = await window.TripsAPI.getTrip(currentTripId);
+                if (result && result.success && result.trip) {
+                    currentTrip = result.trip;
+                    const userId = user && (user.id || user._id);
+                    if (userId && currentTrip.user && currentTrip.user._id === userId) {
+                        currentRole = 'owner';
+                    } else {
+                        const collab = (currentTrip.collaborators || []).find(c => c.user && c.user._id === userId);
+                        currentRole = collab ? (collab.role === 'editor' ? 'editor' : 'viewer') : 'viewer';
+                    }
+
+                    if (currentTrip.itinerary) {
+                        renderItinerary(currentTrip.itinerary, currentTrip.destination);
+                        initMapWithMarkers(currentTrip.itinerary);
+                    } else {
+                        document.getElementById('no-data').classList.remove('hidden');
+                    }
+                    updateShareUI();
+                    return;
+                }
+            }
+
+            // Fallback: dùng dữ liệu tạm thời từ storage (chưa lưu DB)
+            let raw = sessionStorage.getItem('newTrip') || localStorage.getItem('newTrip');
+            if (!raw) {
+                document.getElementById('no-data').classList.remove('hidden');
+                return;
+            }
+            try {
+                const tempTrip = JSON.parse(raw);
+                currentTrip = {
+                    destination: tempTrip.destination,
+                    duration: tempTrip.duration,
+                    vibe: tempTrip.vibe,
+                    itinerary: tempTrip.itinerary,
+                    user,
+                    collaborators: []
+                };
+                currentRole = 'owner';
+                renderItinerary(tempTrip.itinerary, tempTrip.destination);
+                initMapWithMarkers(tempTrip.itinerary);
+                updateShareUI();
+            } catch (e) {
+                document.getElementById('no-data').classList.remove('hidden');
+            }
+        }
+
+        document.getElementById('save-trip-btn').addEventListener('click', async () => {
+            if (!currentTrip || !currentTrip.itinerary) {
+                alert('Chưa có dữ liệu kế hoạch để lưu.');
+                return;
+            }
+
+            const payload = {
+                destination: currentTrip.destination || currentTrip.itinerary?.trip_summary?.destination || '',
+                duration: currentTrip.duration ||
+                    (currentTrip.itinerary?.trip_summary?.duration_days
+                        ? currentTrip.itinerary.trip_summary.duration_days + ' ngày'
+                        : ''),
+                vibe: currentTrip.vibe || '',
+                itinerary: currentTrip.itinerary
+            };
+
+            let result;
+            if (currentTripId) {
+                result = await window.TripsAPI.updateTrip(currentTripId, payload);
+            } else {
+                result = await window.TripsAPI.createTrip(payload);
+            }
+
+            if (result && result.success && result.trip) {
+                currentTrip = {
+                    ...result.trip,
+                    user: result.trip.user || user
+                };
+                currentTripId = result.trip._id;
+
+                // Cập nhật URL để luôn có ?id=... khi đã lưu
+                const url = new URL(window.location.href);
+                url.searchParams.set('id', currentTripId);
+                window.history.replaceState({}, '', url.toString());
+
+                // Không cần giữ bản tạm nữa
+                sessionStorage.removeItem('newTrip');
+
+                // Redirect về planner với trip được chọn
+                window.location.href = '/app/planner.html?id=' + currentTripId + '&saved=1';
+            } else {
+                alert(result?.message || 'Không thể lưu kế hoạch (có thể do server lỗi).');
+            }
+        });
+
+        document.getElementById('share-trip-btn').addEventListener('click', () => {
+            const panel = document.getElementById('share-panel');
+            if (!panel) return;
+            panel.classList.toggle('hidden');
+        });
+
+        document.getElementById('share-submit-btn').addEventListener('click', async () => {
+            if (currentRole !== 'owner' || !currentTripId) return;
+            const emailInput = document.getElementById('share-email-input');
+            const roleSelect = document.getElementById('share-role-select');
+            const errorEl = document.getElementById('share-error');
+            if (!emailInput || !roleSelect || !errorEl) return;
+
+            const email = emailInput.value.trim();
+            const role = roleSelect.value;
+            if (!email) {
+                errorEl.textContent = 'Vui lòng nhập email người bạn muốn mời';
+                errorEl.classList.remove('hidden');
+                return;
+            }
+
+            errorEl.classList.add('hidden');
+            const result = await window.TripsAPI.shareTrip(currentTripId, { email, role });
+            if (result && result.success && Array.isArray(result.collaborators)) {
+                currentTrip.collaborators = result.collaborators;
+                emailInput.value = '';
+                updateShareUI();
+            } else {
+                errorEl.textContent = result.message || 'Không thể chia sẻ kế hoạch';
+                errorEl.classList.remove('hidden');
+            }
+        });
+
+        initPage();
+    </script>
+</body>
+</html>

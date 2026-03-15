@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Planner - WanderTale</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    <link href="https://api.mapbox.com/mapbox-gl-js/v3.0.1/mapbox-gl.css" rel="stylesheet"/>
+    <script src="https://api.mapbox.com/mapbox-gl-js/v3.0.1/mapbox-gl.js"></script>
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: { "primary": "#f48c25", "background-light": "#f8f7f5", "background-dark": "#221910" },
+                    fontFamily: { "display": ["Space Grotesk"] },
+                    borderRadius: {"DEFAULT": "1rem", "lg": "2rem", "xl": "3rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+    <style>
+        body { font-family: 'Space Grotesk', sans-serif; }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        #planner-map .mapboxgl-ctrl-attrib, #planner-map .mapboxgl-ctrl-logo { display: none !important; }
+        #planner-map .mapboxgl-popup-close-button { display: none !important; }
+        #planner-map .mapboxgl-popup-content { padding: 12px; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.15); }
+        .trip-card { transition: all 0.2s ease; cursor: pointer; }
+        .trip-card:hover { transform: translateX(4px); border-color: #f48c25; }
+        .trip-card.active { border-color: #f48c25; background: rgba(244, 140, 37, 0.1); }
+        .location-card { transition: all 0.2s ease; cursor: pointer; }
+        .location-card:hover { transform: translateX(4px); box-shadow: 0 4px 12px rgba(244, 140, 37, 0.15); }
+        .location-card.active { border-color: #f48c25 !important; background: rgba(244, 140, 37, 0.1) !important; }
+        .lang-btn { transition: all 0.2s; color: #0f172a; background: #fff; }
+        .lang-btn:hover { background: #f1f5f9; }
+        .lang-btn.active { background: #0f172a !important; color: white !important; }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100">
+    <div class="flex h-screen overflow-hidden">
+        <!-- Sidebar: Trip History -->
+        <aside class="w-72 flex-shrink-0 border-r border-primary/10 flex flex-col bg-background-light dark:bg-background-dark">
+            <a href="/app/planner.html" class="p-6 flex items-center gap-3 hover:opacity-90 transition-opacity">
+                <div class="bg-primary p-2 rounded-lg text-white"><span class="material-symbols-outlined block">explore</span></div>
+                <h1 class="text-xl font-bold tracking-tight text-primary">WanderTale</h1>
+            </a>
+            <div class="px-4 mb-4">
+                <a href="/app/trips/create.html" class="w-full bg-primary hover:bg-primary/90 text-white font-bold py-3 px-4 rounded-xl flex items-center justify-center gap-2 transition-all block">
+                    <span class="material-symbols-outlined">add_circle</span>
+                    <span data-i18n="createTrip">Tạo chuyến đi mới</span>
+                </a>
+            </div>
+            <nav class="flex-1 overflow-y-auto px-4 no-scrollbar space-y-2">
+                <a class="flex items-center gap-3 px-4 py-3 rounded-xl bg-primary/10 text-primary font-medium" href="/app/planner.html">
+                    <span class="material-symbols-outlined">schedule</span>
+                    <span class="text-sm" data-i18n="recentTrips">Chuyến đi gần đây</span>
+                </a>
+                <a class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-primary/5 transition-colors" href="/app/explore/map.html">
+                    <span class="material-symbols-outlined">explore</span>
+                    <span class="text-sm font-medium" data-i18n="explore">Khám phá</span>
+                </a>
+                <a class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-primary/5 transition-colors" href="/public/community-stories.html">
+                    <span class="material-symbols-outlined">auto_stories</span>
+                    <span class="text-sm font-medium">Stories</span>
+                </a>
+
+                <!-- Trip History List -->
+                <div class="mt-6 pt-4 border-t border-primary/10">
+                    <p class="px-2 mb-3 text-xs font-semibold uppercase tracking-wider text-slate-400" data-i18n="tripHistory">Lịch sử chuyến đi</p>
+                    <div id="trip-history" class="space-y-2">
+                        <!-- Trip history will be loaded here -->
+                    </div>
+                </div>
+            </nav>
+            <div class="p-4 border-t border-primary/10">
+                <a href="/app/profile/profile.html" class="flex items-center gap-3 hover:opacity-90 transition-opacity">
+                    <div id="user-avatar" class="w-10 h-10 rounded-full bg-primary/20 flex items-center justify-center overflow-hidden bg-cover bg-center">
+                        <span class="material-symbols-outlined text-primary" id="avatar-fallback">person</span>
+                    </div>
+                    <div>
+                        <p class="text-sm font-bold" id="user-name">User</p>
+                        <p class="text-xs text-slate-500" id="user-email">@username</p>
+                    </div>
+                </a>
+            </div>
+        </aside>
+
+        <main class="flex-1 flex flex-col min-w-0 overflow-hidden">
+            <header class="shrink-0 flex items-center justify-between gap-4 px-6 py-3 border-b border-primary/10 bg-background-light/95 dark:bg-background-dark/95">
+                <div class="flex items-center gap-3">
+                    <a href="/app/profile/profile.html" class="flex items-center gap-1 text-slate-500 hover:text-primary transition-colors" title="Back to Profile">
+                        <span class="material-symbols-outlined">arrow_back</span>
+                    </a>
+                    <h2 class="text-xl font-bold flex items-center gap-2">
+                        <span class="material-symbols-outlined text-primary">schedule</span>
+                        <span id="header-title">Planner</span>
+                    </h2>
+                </div>
+                <div class="flex items-center gap-3">
+                    <div class="flex rounded-full overflow-hidden border border-slate-300">
+                        <button class="lang-btn px-3 py-1.5 text-xs font-bold" data-lang="en">EN</button>
+                        <button class="lang-btn px-3 py-1.5 text-xs font-bold active" data-lang="vi">VI</button>
+                    </div>
+                    <button id="edit-trip-btn" class="hidden items-center gap-1 px-3 py-2 rounded-xl border border-primary/20 text-xs font-bold text-primary hover:bg-primary/5 transition-colors">
+                        <span class="material-symbols-outlined text-sm">edit</span>
+                        <span data-i18n="edit">Chỉnh sửa</span>
+                    </button>
+                    <button id="delete-trip-btn" class="hidden items-center gap-1 px-3 py-2 rounded-xl border border-red-200 text-xs font-bold text-red-500 hover:bg-red-50 transition-colors">
+                        <span class="material-symbols-outlined text-sm">delete</span>
+                        <span data-i18n="delete">Xóa</span>
+                    </button>
+                </div>
+            </header>
+
+            <div class="flex-1 flex min-w-0 overflow-hidden">
+                <!-- Middle: Itinerary Detail -->
+                <section class="w-1/2 overflow-y-auto p-6 no-scrollbar">
+                    <div id="itinerary-container">
+                        <div id="loading-state" class="flex items-center justify-center py-20">
+                            <span class="material-symbols-outlined animate-spin text-primary text-4xl">refresh</span>
+                        </div>
+                        <div id="no-selection" class="hidden text-center py-20">
+                            <span class="material-symbols-outlined text-6xl text-slate-300 mb-4">luggage</span>
+                            <p class="text-slate-500 mb-4" data-i18n="selectTrip">Chọn một chuyến đi từ sidebar để xem chi tiết</p>
+                            <a href="/app/trips/create.html" class="text-primary font-bold hover:underline" data-i18n="orCreateNew">Hoặc tạo chuyến đi mới</a>
+                        </div>
+                        <div id="itinerary-content" class="hidden"></div>
+                    </div>
+                </section>
+
+                <!-- Right: Map -->
+                <section class="w-1/2 relative">
+                    <div id="planner-map" class="absolute inset-0"></div>
+                    <div id="map-overlay" class="absolute inset-0 flex items-center justify-center bg-slate-100/80 dark:bg-slate-900/80">
+                        <div class="text-center">
+                            <span class="material-symbols-outlined text-6xl text-slate-300 mb-4">map</span>
+                            <p class="text-slate-500" data-i18n="selectTripMap">Chọn một chuyến đi để xem trên bản đồ</p>
+                        </div>
+                    </div>
+                    <div class="absolute bottom-10 right-10 flex flex-col gap-3 z-10">
+                        <button id="zoom-in" class="w-12 h-12 bg-white dark:bg-slate-800 rounded-full shadow-xl flex items-center justify-center hover:bg-primary hover:text-white transition-all">
+                            <span class="material-symbols-outlined">add</span>
+                        </button>
+                        <button id="zoom-out" class="w-12 h-12 bg-white dark:bg-slate-800 rounded-full shadow-xl flex items-center justify-center hover:bg-primary hover:text-white transition-all">
+                            <span class="material-symbols-outlined">remove</span>
+                        </button>
+                    </div>
+                </section>
+            </div>
+        </main>
+    </div>
+
+    <script src="/assets/js/config.js"></script>
+    <script src="/assets/js/i18n.js"></script>
+    <script src="/assets/js/auth.js"></script>
+    <script src="/assets/js/trips-api.js"></script>
+    <script>
+        if (!AuthGuard.isAuthenticated()) {
+            window.location.href = '/auth/login.html?redirect=' + encodeURIComponent('/app/planner.html');
+        }
+
+        const user = AuthGuard.getUser();
+        if (user) {
+            const nameEl = document.getElementById('user-name');
+            const emailEl = document.getElementById('user-email');
+            const avatarEl = document.getElementById('user-avatar');
+            const fallbackEl = document.getElementById('avatar-fallback');
+            if (nameEl) nameEl.textContent = user.fullName || 'User';
+            if (emailEl) emailEl.textContent = '@' + (user.username || (user.email ? user.email.split('@')[0] : 'user'));
+            if (user.avatar && avatarEl) {
+                avatarEl.style.backgroundImage = `url('${user.avatar}')`;
+                if (fallbackEl) fallbackEl.style.display = 'none';
+            }
+        }
+
+        const API_URL = window.WanderTaleConfig?.API_URL || 'http://localhost:3000';
+        const MAPBOX_TOKEN = window.WanderTaleConfig?.MAPBOX_ACCESS_TOKEN || '';
+        const PLACEHOLDER_IMG = window.WanderTaleConfig?.PLACEHOLDER_IMG || 'https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=400&h=300&fit=crop';
+
+        const TYPE_ICONS = { hotel: 'hotel', food: 'restaurant', sightseeing: 'explore', nature: 'park', shopping: 'shopping_bag', cafe: 'coffee', entertainment: 'theater_comedy' };
+        const TYPE_LABELS_EN = { hotel: 'Hotel', food: 'Food', sightseeing: 'Sightseeing', nature: 'Nature', shopping: 'Shopping', cafe: 'Cafe', entertainment: 'Entertainment' };
+        const TYPE_LABELS_VI = { hotel: 'Khách sạn', food: 'Ẩm thực', sightseeing: 'Tham quan', nature: 'Thiên nhiên', shopping: 'Mua sắm', cafe: 'Cà phê', entertainment: 'Giải trí' };
+        function getTypeLabel(type) {
+            const lang = (window.i18n && window.i18n.currentLang) || localStorage.getItem('lang') || 'vi';
+            return (lang === 'en' ? TYPE_LABELS_EN[type] : TYPE_LABELS_VI[type]) || type;
+        }
+
+        let mapInstance = null;
+        let locationMarkers = {}; // { 'hotel-0': marker, 'activity-0-0': marker, ... }
+        let currentPopup = null;
+        let currentActiveCard = null;
+        let trips = [];
+        let selectedTripId = null;
+        let selectedTrip = null;
+
+        // Initialize map
+        function initMap() {
+            if (!MAPBOX_TOKEN) return;
+
+            mapboxgl.accessToken = MAPBOX_TOKEN;
+            mapInstance = new mapboxgl.Map({
+                container: 'planner-map',
+                style: 'mapbox://styles/mapbox/streets-v12',
+                center: [108.2772, 14.0583],
+                zoom: 5
+            });
+            mapInstance.addControl(new mapboxgl.NavigationControl(), 'bottom-right');
+
+            document.getElementById('zoom-in')?.addEventListener('click', () => mapInstance?.zoomIn());
+            document.getElementById('zoom-out')?.addEventListener('click', () => mapInstance?.zoomOut());
+        }
+
+        // Clear all markers
+        function clearMarkers() {
+            Object.values(locationMarkers).forEach(m => m.remove());
+            locationMarkers = {};
+            currentPopup = null;
+            currentActiveCard = null;
+        }
+
+        // Close current popup
+        function closeCurrentPopup() {
+            if (currentPopup) {
+                currentPopup.remove();
+                currentPopup = null;
+            }
+            // Remove active class from previous card
+            if (currentActiveCard) {
+                currentActiveCard.classList.remove('active');
+                currentActiveCard = null;
+            }
+        }
+
+        // Open popup for a marker
+        function openPopup(markerId) {
+            if (!mapInstance || !locationMarkers[markerId]) return;
+
+            // Close any open popup first
+            closeCurrentPopup();
+
+            const marker = locationMarkers[markerId];
+            const popup = marker.getPopup();
+
+            if (popup) {
+                popup.addTo(mapInstance);
+                currentPopup = popup;
+            }
+
+            // Add active class to card
+            const card = document.querySelector(`[data-marker-id="${markerId}"]`);
+            if (card) {
+                card.classList.add('active');
+                currentActiveCard = card;
+            }
+        }
+
+        // Fly to location and open popup
+        function flyToLocation(markerId) {
+            if (!mapInstance || !locationMarkers[markerId]) return;
+
+            const marker = locationMarkers[markerId];
+            const lngLat = marker.getLngLat();
+
+            // Fly to location
+            mapInstance.flyTo({
+                center: [lngLat.lng, lngLat.lat],
+                zoom: 15,
+                duration: 800
+            });
+
+            // Open popup after a short delay
+            setTimeout(() => openPopup(markerId), 400);
+        }
+
+        // Show trip on map
+        function showTripOnMap(trip) {
+            if (!mapInstance || !trip?.itinerary) return;
+
+            document.getElementById('map-overlay')?.classList.add('hidden');
+            clearMarkers();
+
+            const bounds = [];
+            const itinerary = trip.itinerary;
+
+            // Hotel marker
+            if (itinerary.hotel?.lng && itinerary.hotel?.lat) {
+                bounds.push([itinerary.hotel.lng, itinerary.hotel.lat]);
+                const markerId = 'hotel-0';
+
+                const el = document.createElement('div');
+                el.className = 'w-10 h-10 rounded-full bg-primary border-2 border-white shadow-lg flex items-center justify-center cursor-pointer';
+                el.innerHTML = '<span class="material-symbols-outlined text-white text-lg">hotel</span>';
+                // Khi click marker trên map, bay đến vị trí + mở popup giống như ở trang itinerary
+                el.addEventListener('click', () => flyToLocation(markerId));
+
+                const popup = new mapboxgl.Popup({ offset: 12, closeOnClick: false }).setHTML(
+                    `<div class="p-2 min-w-[200px]">
+                        <h4 class="font-bold text-sm">${itinerary.hotel.name || 'Khách sạn'}</h4>
+                        <p class="text-xs text-slate-500 mt-1">${itinerary.hotel.address || 'Chưa có địa chỉ chi tiết'}</p>
+                        ${itinerary.hotel.description ? `<p class="text-[11px] text-slate-600 mt-1 line-clamp-3">${itinerary.hotel.description}</p>` : ''}
+                        <div class="mt-2 flex flex-wrap gap-2">
+                            ${itinerary.hotel.price_level ? `<span class="inline-block px-2 py-0.5 rounded bg-primary/10 text-primary text-[11px] font-bold">${itinerary.hotel.price_level}</span>` : ''}
+                            ${itinerary.hotel.estimated_price_vnd ? `<span class="inline-block px-2 py-0.5 rounded bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400 text-[11px] font-bold">${itinerary.hotel.estimated_price_vnd}</span>` : ''}
+                        </div>
+                    </div>`
+                );
+
+                locationMarkers[markerId] = new mapboxgl.Marker(el)
+                    .setLngLat([itinerary.hotel.lng, itinerary.hotel.lat])
+                    .setPopup(popup)
+                    .addTo(mapInstance);
+            }
+
+            // Activity markers
+            (itinerary.days || []).forEach((day, di) => {
+                (day.activities || []).forEach((a, ai) => {
+                    if (a.lng && a.lat) {
+                        bounds.push([a.lng, a.lat]);
+                        const markerId = `activity-${di}-${ai}`;
+
+                        const el = document.createElement('div');
+                        el.className = 'w-8 h-8 rounded-full bg-primary border-2 border-white shadow-lg flex items-center justify-center cursor-pointer';
+                        el.innerHTML = '<span class="material-symbols-outlined text-white text-sm">place</span>';
+                        // Click marker activity cũng bay tới vị trí + mở popup
+                        el.addEventListener('click', () => flyToLocation(markerId));
+
+                        const popup = new mapboxgl.Popup({ offset: 12, closeOnClick: false }).setHTML(
+                            `<div class="p-2 min-w-[200px]">
+                                <div class="flex items-center gap-1 mb-1">
+                                    <span class="text-xs font-bold text-primary">${a.time || ''}</span>
+                                </div>
+                                <h4 class="font-bold text-sm">${a.title || ''}</h4>
+                                <p class="text-xs text-slate-500 mt-1 line-clamp-3">${a.description || ''}</p>
+                                ${a.address ? `<p class="text-[11px] text-slate-400 mt-1">${a.address}</p>` : ''}
+                                ${a.estimated_cost_vnd ? `<p class="text-xs text-green-600 font-bold mt-1">${a.estimated_cost_vnd}</p>` : ''}
+                            </div>`
+                        );
+
+                        locationMarkers[markerId] = new mapboxgl.Marker(el)
+                            .setLngLat([a.lng, a.lat])
+                            .setPopup(popup)
+                            .addTo(mapInstance);
+                    }
+                });
+            });
+
+            // Fit bounds
+            if (bounds.length > 0) {
+                const bbox = new mapboxgl.LngLatBounds();
+                bounds.forEach(coord => bbox.extend(coord));
+                mapInstance.fitBounds(bbox, { padding: 60, maxZoom: 14, duration: 1500 });
+            }
+        }
+
+        // Load trips from API
+        async function loadTrips() {
+            const result = await TripsAPI.getTrips();
+            if (result.success) {
+                trips = result.trips;
+                renderTripHistory(trips);
+
+                // Check URL params for auto-select
+                const params = new URLSearchParams(window.location.search);
+                const tripId = params.get('id');
+                const saved = params.get('saved');
+
+                if (tripId) {
+                    selectTrip(tripId);
+                    if (saved) {
+                        showNotification(t('saveSuccess'));
+                        const url = new URL(window.location.href);
+                        url.searchParams.delete('saved');
+                        window.history.replaceState({}, '', url.toString());
+                    }
+                } else {
+                    document.getElementById('loading-state')?.classList.add('hidden');
+                    document.getElementById('no-selection')?.classList.remove('hidden');
+                }
+            }
+            document.getElementById('loading-state')?.classList.add('hidden');
+        }
+
+        // Show notification
+        function showNotification(message) {
+            const notification = document.createElement('div');
+            notification.className = 'fixed top-4 right-4 bg-green-500 text-white px-4 py-3 rounded-xl shadow-lg flex items-center gap-2 z-50 animate-pulse';
+            notification.innerHTML = `
+                <span class="material-symbols-outlined">check_circle</span>
+                <span class="font-medium">${message}</span>
+            `;
+            document.body.appendChild(notification);
+            setTimeout(() => notification.remove(), 3000);
+        }
+
+        // Render trip history in sidebar
+        function renderTripHistory(tripsData) {
+            const container = document.getElementById('trip-history');
+            if (!container) return;
+
+            if (!tripsData || tripsData.length === 0) {
+                container.innerHTML = `<p class="text-xs text-slate-400 italic px-2">${t('noTrips')}</p>`;
+                return;
+            }
+
+            let html = '';
+            tripsData.forEach(trip => {
+                const lang = (window.i18n && window.i18n.currentLang) || localStorage.getItem('lang') || 'vi';
+                const date = new Date(trip.createdAt).toLocaleDateString(lang === 'en' ? 'en-US' : 'vi-VN');
+                const activeClass = selectedTripId === trip._id ? 'border-primary bg-primary/10' : 'border-primary/10';
+                html += `
+                    <div class="trip-card p-3 rounded-xl border ${activeClass} bg-white/50 dark:bg-white/5 transition-all"
+                         data-id="${trip._id}" onclick="selectTrip('${trip._id}')">
+                        <div class="flex items-start justify-between gap-2">
+                            <div class="flex-1 min-w-0">
+                                <p class="font-bold text-sm truncate">${trip.destination}</p>
+                                <p class="text-xs text-slate-500 mt-0.5">${trip.duration || ''}</p>
+                            </div>
+                            <span class="text-[10px] text-slate-400 shrink-0">${date}</span>
+                        </div>
+                        ${trip.vibe ? `<span class="inline-block mt-1 px-2 py-0.5 rounded-full bg-primary/10 text-primary text-[10px] font-bold">${trip.vibe}</span>` : ''}
+                    </div>
+                `;
+            });
+            container.innerHTML = html;
+        }
+
+        // Get image URL
+        function getImageUrl(item) {
+            return (item && item.image_url) || PLACEHOLDER_IMG;
+        }
+
+        // Render itinerary detail
+        function renderItinerary(trip) {
+            const container = document.getElementById('itinerary-content');
+            const noSelection = document.getElementById('no-selection');
+            const headerTitle = document.getElementById('header-title');
+            const editBtn = document.getElementById('edit-trip-btn');
+            const deleteBtn = document.getElementById('delete-trip-btn');
+
+            if (!container || !trip || !trip.itinerary) {
+                noSelection?.classList.remove('hidden');
+                container?.classList.add('hidden');
+                editBtn?.classList.add('hidden');
+                deleteBtn?.classList.add('hidden');
+                return;
+            }
+
+            noSelection?.classList.add('hidden');
+            container?.classList.remove('hidden');
+            editBtn?.classList.remove('hidden');
+            editBtn?.classList.add('flex');
+            deleteBtn?.classList.remove('hidden');
+            deleteBtn?.classList.add('flex');
+
+            if (headerTitle) {
+                headerTitle.textContent = trip.destination || t('planner');
+            }
+
+            const itinerary = trip.itinerary;
+            let html = '';
+
+            // Header
+            html += `<div class="flex items-center gap-2 mb-6">
+                <span class="material-symbols-outlined text-primary text-2xl">auto_awesome</span>
+                <h2 class="text-2xl font-bold">${trip.destination || itinerary.trip_summary?.destination || ''}</h2>
+            </div>`;
+
+            // Trip info
+            if (trip.vibe || trip.duration) {
+                html += `<div class="flex flex-wrap gap-2 mb-6">`;
+                if (trip.vibe) html += `<span class="px-3 py-1 rounded-full bg-primary/10 text-primary text-sm font-bold">${trip.vibe}</span>`;
+                if (trip.duration) html += `<span class="px-3 py-1 rounded-full bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 text-sm font-bold">${trip.duration}</span>`;
+                html += `</div>`;
+            }
+
+            // Hotel
+            if (itinerary.hotel) {
+                const h = itinerary.hotel;
+                const imgUrl = getImageUrl(h);
+                const price = h.estimated_price_vnd || h.price_level || '';
+                const hasCoords = h.lng && h.lat;
+                const markerId = 'hotel-0';
+                html += ''
+                    + '<div class="mb-6">'
+                    + '  <div class="location-card rounded-2xl bg-primary/5 border border-primary/20 overflow-hidden cursor-pointer hover:shadow-lg transition-shadow'
+                    +        (hasCoords ? '' : ' opacity-70') + '"'
+                    + '       data-marker-id="' + markerId + '"'
+                    +        (hasCoords ? ' onclick="flyToLocation(\'' + markerId + '\')"' : '') + '>'
+                    + '    <div class="flex flex-col md:flex-row">'
+                    + '      <div class="md:w-48 shrink-0">'
+                    + '        <img src="' + imgUrl + '" alt="' + (h.name || '').replace(/"/g, '&quot;') + '" class="w-full h-32 md:h-full object-cover"/>'
+                    + '      </div>'
+                    + '      <div class="p-4 flex-1">'
+                    + '        <div class="flex items-center gap-2 mb-1">'
+                    + '          <span class="material-symbols-outlined text-primary">hotel</span>'
+                    + '          <h3 class="font-bold">' + t('hotel') + '</h3>'
+                    +            (hasCoords ? '<span class="material-symbols-outlined text-primary text-sm ml-auto">location_on</span>' : '')
+                    + '        </div>'
+                    + '        <h4 class="font-bold text-slate-900 dark:text-white">' + (h.name || '') + '</h4>'
+                    + '        <p class="text-xs text-slate-500 mt-1">' + (h.address || '') + '</p>'
+                    + '        <p class="text-sm text-slate-600 dark:text-slate-400 mt-1">' + (h.description || '') + '</p>'
+                    + '        <div class="flex flex-wrap items-center gap-2 mt-2">'
+                    +              (h.price_level ? '<span class="text-xs px-2 py-0.5 rounded bg-primary/20 text-primary font-bold">' + h.price_level + '</span>' : '')
+                    +              (price ? '<span class="text-xs px-2 py-0.5 rounded bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400 font-bold">' + price + '</span>' : '')
+                    + '        </div>'
+                    + '      </div>'
+                    + '    </div>'
+                    + '  </div>'
+                    + '</div>';
+            }
+
+            // Days
+            if (itinerary.days && itinerary.days.length) {
+                html += '<div class="space-y-6 relative"><div class="absolute left-5 top-8 bottom-0 w-0.5 bg-primary/20"></div>';
+                itinerary.days.forEach((d, i) => {
+                    html += `
+                        <div class="relative">
+                            <div class="flex items-center gap-3 mb-3">
+                                <div class="w-10 h-10 rounded-full bg-primary flex items-center justify-center text-white font-bold z-10 text-sm">${d.day || i + 1}</div>
+                                <h3 class="text-lg font-bold">${t('day')} ${d.day || i + 1}${d.area ? ': ' + d.area : ''}</h3>
+                            </div>
+                            <div class="ml-14 space-y-3">`;
+
+                    (d.activities || []).forEach((a, ai) => {
+                        const icon = TYPE_ICONS[a.type] || 'place';
+                        const label = getTypeLabel(a.type);
+                        const imgUrl = getImageUrl(a);
+                        const cost = a.estimated_cost_vnd ? `<div class="flex items-center gap-1 mt-1 text-green-600 dark:text-green-400 font-bold text-xs"><span class="material-symbols-outlined text-sm">payments</span> ${a.estimated_cost_vnd}</div>` : '';
+                        const hasCoords = a.lng && a.lat;
+                        const markerId = `activity-${i}-${ai}`;
+
+                        html += `
+                            <div class="location-card p-0 rounded-xl bg-white dark:bg-slate-800 shadow-sm border border-primary/5 overflow-hidden cursor-pointer hover:shadow-md transition-shadow"
+                                 data-marker-id="${markerId}"
+                                 ${hasCoords ? `onclick="flyToLocation('${markerId}')"` : ''}>
+                                <div class="flex">
+                                    <div class="w-28 shrink-0 h-24">
+                                        <img src="${imgUrl}" alt="${(a.title || '').replace(/"/g, '&quot;')}" class="w-full h-full object-cover"/>
+                                    </div>
+                                    <div class="p-3 flex-1">
+                                        <div class="flex justify-between items-start">
+                                            <h4 class="font-bold text-sm">${a.title || ''}</h4>
+                                            <span class="text-primary font-bold text-sm shrink-0">${a.time || ''}</span>
+                                        </div>
+                                        <p class="text-xs text-slate-500 mt-0.5 line-clamp-2">${a.description || ''}</p>
+                                        ${a.estimated_duration_minutes ? `<span class="text-xs text-slate-400">~${a.estimated_duration_minutes} ${t('minutes')}</span>` : ''}
+                                        ${cost}
+                                        <div class="flex items-center gap-2">
+                                            ${label ? `<span class="inline-block mt-1 text-[9px] px-1.5 py-0.5 rounded bg-primary/20 text-primary font-bold uppercase">${label}</span>` : ''}
+                                            ${hasCoords ? '<span class="material-symbols-outlined text-primary text-sm mt-1">location_on</span>' : ''}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>`;
+                    });
+
+                    html += '</div></div>';
+                });
+                html += '</div>';
+            }
+
+            container.innerHTML = html;
+        }
+
+        // Select trip
+        function selectTrip(tripId) {
+            selectedTripId = tripId;
+            selectedTrip = trips.find(t => t._id === tripId);
+
+            // Update sidebar active state
+            document.querySelectorAll('.trip-card').forEach(card => {
+                card.classList.toggle('active', card.dataset.id === tripId);
+                card.classList.toggle('border-primary', card.dataset.id === tripId);
+                card.classList.toggle('bg-primary/10', card.dataset.id === tripId);
+            });
+
+            if (selectedTrip) {
+                renderItinerary(selectedTrip);
+                showTripOnMap(selectedTrip);
+
+                // Update URL
+                const url = new URL(window.location.href);
+                url.searchParams.set('id', tripId);
+                window.history.replaceState({}, '', url.toString());
+            }
+        }
+
+        // Delete trip
+        async function deleteTrip() {
+            if (!selectedTripId || !confirm(t('confirmDelete'))) return;
+
+            const result = await TripsAPI.deleteTrip(selectedTripId);
+
+            if (result.success) {
+                trips = trips.filter(t => t._id !== selectedTripId);
+                selectedTripId = null;
+                selectedTrip = null;
+
+                renderTripHistory(trips);
+                document.getElementById('itinerary-content')?.classList.add('hidden');
+                document.getElementById('no-selection')?.classList.remove('hidden');
+                document.getElementById('map-overlay')?.classList.remove('hidden');
+
+                clearMarkers();
+
+                const url = new URL(window.location.href);
+                url.searchParams.delete('id');
+                window.history.replaceState({}, '', url.toString());
+
+                showNotification(t('deleteSuccess'));
+            }
+        }
+
+        // Edit trip - redirect to itinerary with edit mode
+        function editTrip() {
+            if (selectedTripId) {
+                window.location.href = '/app/trips/itinerary.html?id=' + selectedTripId;
+            }
+        }
+
+        // Event listeners
+        document.getElementById('edit-trip-btn')?.addEventListener('click', editTrip);
+        document.getElementById('delete-trip-btn')?.addEventListener('click', deleteTrip);
+
+        // Initialize
+        initMap();
+        loadTrips();
+    </script>
+</body>
+</html>

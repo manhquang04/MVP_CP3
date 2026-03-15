@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Tạo chuyến đi mới | WanderTale</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    <link href="https://api.mapbox.com/mapbox-gl-js/v3.0.1/mapbox-gl.css" rel="stylesheet"/>
+    <script src="https://api.mapbox.com/mapbox-gl-js/v3.0.1/mapbox-gl.js"></script>
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#f48c25",
+                        "background-light": "#f8f7f5",
+                        "background-dark": "#221910",
+                    },
+                    fontFamily: { "display": ["Space Grotesk"] },
+                    borderRadius: {"DEFAULT": "1rem", "lg": "2rem", "xl": "3rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+    <style>
+        body { font-family: 'Space Grotesk', sans-serif; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        #map-preview { min-height: 400px; }
+        @media (min-width: 1024px) {
+            #map-preview { min-height: 100%; position: sticky; top: 0; }
+        }
+        #map-preview .mapboxgl-ctrl-attrib,
+        #map-preview .mapboxgl-ctrl-logo { display: none !important; }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 min-h-screen">
+    <div class="flex h-screen overflow-hidden">
+        <!-- Sidebar -->
+        <aside class="w-72 lg:w-80 border-r border-primary/10 bg-white dark:bg-background-dark flex flex-col shrink-0 fixed inset-y-0 left-0">
+            <div class="p-6 flex items-center justify-between gap-3">
+                <div class="flex items-center gap-3">
+                    <div class="bg-primary p-2 rounded-xl text-white">
+                        <span class="material-symbols-outlined text-2xl">auto_awesome</span>
+                    </div>
+                    <div>
+                        <h1 class="text-xl font-bold tracking-tight">
+                            <a href="/app/planner.html" class="text-slate-900 dark:text-white hover:text-primary transition-colors">WanderTale</a>
+                        </h1>
+                        <p class="text-xs text-primary font-medium uppercase tracking-wider">AI Travel Buddy</p>
+                    </div>
+                </div>
+                <!-- Language toggle EN/VI -->
+                <div class="flex rounded-full overflow-hidden border border-slate-300 text-xs font-bold">
+                    <button class="px-3 py-1.5 lang-btn" data-lang="en">EN</button>
+                    <button class="px-3 py-1.5 lang-btn" data-lang="vi">VI</button>
+                </div>
+            </div>
+            <nav class="flex-1 overflow-y-auto px-4 space-y-2 pb-6">
+                <a href="/app/planner.html" class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-slate-100 dark:hover:bg-white/5 transition-colors text-slate-700 dark:text-slate-300">
+                    <span class="material-symbols-outlined">edit_calendar</span>
+                    <span class="text-sm font-medium">Trip Planner</span>
+                </a>
+                <a href="/app/explore/map.html" class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-slate-100 dark:hover:bg-white/5 transition-colors text-slate-700 dark:text-slate-300">
+                    <span class="material-symbols-outlined">map</span>
+                    <span class="text-sm font-medium">Explore Map</span>
+                </a>
+                <a href="/public/community-stories.html" class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-slate-100 dark:hover:bg-white/5 transition-colors text-slate-700 dark:text-slate-300">
+                    <span class="material-symbols-outlined">auto_stories</span>
+                    <span class="text-sm font-medium">Stories</span>
+                </a>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="flex-1 flex flex-col lg:flex-row overflow-hidden">
+            <div class="flex-1 flex flex-col overflow-auto lg:max-w-[480px] xl:max-w-[560px] shrink-0 ml-72 lg:ml-80">
+                <header class="sticky top-0 z-10 flex items-center justify-between px-6 md:px-10 py-4 border-b border-primary/10 bg-background-light/95 dark:bg-background-dark/95 backdrop-blur-md">
+                    <a href="/app/planner.html" class="flex items-center gap-2 text-slate-600 dark:text-slate-400 hover:text-primary transition-colors font-medium">
+                        <span class="material-symbols-outlined text-lg">arrow_back</span>
+                        <span data-i18n="backToPlanner">Quay lại Planner</span>
+                    </a>
+                </header>
+
+                <div class="flex-1 p-6 md:p-10 overflow-y-auto">
+                    <div class="max-w-2xl mx-auto lg:max-w-none">
+                    <div class="mb-10">
+                        <h1 class="text-3xl md:text-4xl font-bold mb-2" data-i18n="createTrip">Tạo chuyến đi mới</h1>
+                        <p class="text-slate-600 dark:text-slate-400" data-i18n="createTripSubtitle">Điền thông tin để AI lên kế hoạch hành trình hoàn hảo cho bạn</p>
+                    </div>
+
+                    <form id="create-trip-form" class="space-y-8">
+                        <!-- Điểm đến -->
+                        <div class="space-y-3">
+                            <label class="block text-sm font-bold text-slate-700 dark:text-slate-300">
+                                <span class="flex items-center gap-2">
+                                    <span class="material-symbols-outlined text-primary text-lg">location_on</span>
+                                    <span data-i18n="destinationLabel">Điểm đến</span>
+                                </span>
+                            </label>
+                            <div class="relative">
+                                <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-slate-400">explore</span>
+                                <input type="text" id="destination" name="destination" required
+                                    class="w-full pl-12 pr-4 py-4 rounded-xl border border-primary/20 bg-white dark:bg-slate-800 dark:border-slate-600 focus:border-primary focus:ring-4 focus:ring-primary/10 transition-all outline-none"
+                                    data-i18n-placeholder="destinationPlaceholder"
+                                    placeholder=""/>
+                            </div>
+                        </div>
+
+                        <!-- Ngày đi - Ngày về -->
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div class="space-y-3">
+                                <label class="block text-sm font-bold text-slate-700 dark:text-slate-300">
+                                    <span class="flex items-center gap-2">
+                                        <span class="material-symbols-outlined text-primary text-lg">event</span>
+                                        <span data-i18n="startDateLabel">Ngày bắt đầu</span>
+                                    </span>
+                                </label>
+                                <input type="date" id="startDate" name="startDate" required
+                                    class="w-full px-4 py-4 rounded-xl border border-primary/20 bg-white dark:bg-slate-800 dark:border-slate-600 focus:border-primary focus:ring-4 focus:ring-primary/10 transition-all outline-none"/>
+                            </div>
+                            <div class="space-y-3">
+                                <label class="block text-sm font-bold text-slate-700 dark:text-slate-300">
+                                    <span class="flex items-center gap-2">
+                                        <span class="material-symbols-outlined text-primary text-lg">event_available</span>
+                                        <span data-i18n="endDateLabel">Ngày kết thúc</span>
+                                    </span>
+                                </label>
+                                <input type="date" id="endDate" name="endDate" required
+                                    class="w-full px-4 py-4 rounded-xl border border-primary/20 bg-white dark:bg-slate-800 dark:border-slate-600 focus:border-primary focus:ring-4 focus:ring-primary/10 transition-all outline-none"/>
+                            </div>
+                        </div>
+
+                        <!-- Ngân sách -->
+                        <div class="space-y-3">
+                            <label class="block text-sm font-bold text-slate-700 dark:text-slate-300">
+                                <span class="flex items-center gap-2">
+                                    <span class="material-symbols-outlined text-primary text-lg">payments</span>
+                                    <span data-i18n="budgetLabel">Ngân sách</span>
+                                </span>
+                            </label>
+                            <div class="flex flex-wrap gap-3">
+                                <label class="cursor-pointer">
+                                    <input type="radio" name="budget" value="low" class="sr-only peer"/>
+                                    <span class="flex items-center gap-2 px-5 py-3 rounded-xl border-2 border-primary/20 bg-white dark:bg-slate-800 peer-checked:border-primary peer-checked:bg-primary peer-checked:text-white peer-checked:shadow-lg peer-checked:shadow-primary/20 transition-all hover:border-primary/40" data-i18n="budgetLow">
+                                        Tiết kiệm
+                                    </span>
+                                </label>
+                                <label class="cursor-pointer">
+                                    <input type="radio" name="budget" value="medium" class="sr-only peer" checked/>
+                                    <span class="flex items-center gap-2 px-5 py-3 rounded-xl border-2 border-primary/20 bg-white dark:bg-slate-800 peer-checked:border-primary peer-checked:bg-primary peer-checked:text-white peer-checked:shadow-lg peer-checked:shadow-primary/20 transition-all hover:border-primary/40" data-i18n="moderate">
+                                        Vừa phải
+                                    </span>
+                                </label>
+                                <label class="cursor-pointer">
+                                    <input type="radio" name="budget" value="high" class="sr-only peer"/>
+                                    <span class="flex items-center gap-2 px-5 py-3 rounded-xl border-2 border-primary/20 bg-white dark:bg-slate-800 peer-checked:border-primary peer-checked:bg-primary peer-checked:text-white peer-checked:shadow-lg peer-checked:shadow-primary/20 transition-all hover:border-primary/40" data-i18n="luxury">
+                                        Cao cấp
+                                    </span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Phong cách / Vibe -->
+                        <div class="space-y-3">
+                            <label class="block text-sm font-bold text-slate-700 dark:text-slate-300">
+                                <span class="flex items-center gap-2">
+                                    <span class="material-symbols-outlined text-primary text-lg">mood</span>
+                                    <span data-i18n="travelVibeLabel">Phong cách chuyến đi</span>
+                                </span>
+                            </label>
+                            <div class="flex flex-wrap gap-3">
+                                <label class="cursor-pointer">
+                                    <input type="radio" name="vibe" value="chill" class="sr-only peer" checked/>
+                                    <span class="flex items-center gap-2 px-5 py-3 rounded-xl border-2 border-primary/20 bg-white dark:bg-slate-800 peer-checked:border-primary peer-checked:bg-primary peer-checked:text-white peer-checked:shadow-lg peer-checked:shadow-primary/20 transition-all hover:border-primary/40" data-i18n="chillCoffee">
+                                        <span class="material-symbols-outlined text-lg">coffee</span>
+                                        Chill & Coffee
+                                    </span>
+                                </label>
+                                <label class="cursor-pointer">
+                                    <input type="radio" name="vibe" value="adventure" class="sr-only peer"/>
+                                    <span class="flex items-center gap-2 px-5 py-3 rounded-xl border-2 border-primary/20 bg-white dark:bg-slate-800 peer-checked:border-primary peer-checked:bg-primary peer-checked:text-white peer-checked:shadow-lg peer-checked:shadow-primary/20 transition-all hover:border-primary/40" data-i18n="adventure">
+                                        <span class="material-symbols-outlined text-lg">hiking</span>
+                                        Phiêu lưu
+                                    </span>
+                                </label>
+                                <label class="cursor-pointer">
+                                    <input type="radio" name="vibe" value="nightlife" class="sr-only peer"/>
+                                    <span class="flex items-center gap-2 px-5 py-3 rounded-xl border-2 border-primary/20 bg-white dark:bg-slate-800 peer-checked:border-primary peer-checked:bg-primary peer-checked:text-white peer-checked:shadow-lg peer-checked:shadow-primary/20 transition-all hover:border-primary/40" data-i18n="nightlife">
+                                        <span class="material-symbols-outlined text-lg">nightlife</span>
+                                        Đời sống về đêm
+                                    </span>
+                                </label>
+                                <label class="cursor-pointer">
+                                    <input type="radio" name="vibe" value="culture" class="sr-only peer"/>
+                                    <span class="flex items-center gap-2 px-5 py-3 rounded-xl border-2 border-primary/20 bg-white dark:bg-slate-800 peer-checked:border-primary peer-checked:bg-primary peer-checked:text-white peer-checked:shadow-lg peer-checked:shadow-primary/20 transition-all hover:border-primary/40">
+                                        <span class="material-symbols-outlined text-lg">temple_buddhist</span>
+                                        <span data-i18n="culture">Văn hóa</span>
+                                    </span>
+                                </label>
+                                <label class="cursor-pointer">
+                                    <input type="radio" name="vibe" value="beach" class="sr-only peer"/>
+                                    <span class="flex items-center gap-2 px-5 py-3 rounded-xl border-2 border-primary/20 bg-white dark:bg-slate-800 peer-checked:border-primary peer-checked:bg-primary peer-checked:text-white peer-checked:shadow-lg peer-checked:shadow-primary/20 transition-all hover:border-primary/40" data-i18n="beachResort">
+                                        <span class="material-symbols-outlined text-lg">beach_access</span>
+                                        Biển & Nghỉ dưỡng
+                                    </span>
+                                </label>
+                                <label class="cursor-pointer">
+                                    <input type="radio" name="vibe" value="foodie" class="sr-only peer"/>
+                                    <span class="flex items-center gap-2 px-5 py-3 rounded-xl border-2 border-primary/20 bg-white dark:bg-slate-800 peer-checked:border-primary peer-checked:bg-primary peer-checked:text-white peer-checked:shadow-lg peer-checked:shadow-primary/20 transition-all hover:border-primary/40" data-i18n="foodie">
+                                        <span class="material-symbols-outlined text-lg">restaurant</span>
+                                        Ẩm thực
+                                    </span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Số người đi -->
+                        <div class="space-y-3">
+                            <label class="block text-sm font-bold text-slate-700 dark:text-slate-300">
+                                <span class="flex items-center gap-2">
+                                    <span class="material-symbols-outlined text-primary text-lg">group</span>
+                                    Số người đi
+                                </span>
+                            </label>
+                            <div class="flex items-center gap-4">
+                                <button type="button" id="decrease-travelers" class="size-12 rounded-xl border-2 border-primary/20 flex items-center justify-center hover:bg-primary/10 hover:border-primary transition-all">
+                                    <span class="material-symbols-outlined">remove</span>
+                                </button>
+                                <input type="number" id="travelers" name="travelers" value="1" min="1" max="20" readonly
+                                    class="w-20 text-center text-xl font-bold py-3 rounded-xl border border-primary/20 bg-white dark:bg-slate-800"/>
+                                <button type="button" id="increase-travelers" class="size-12 rounded-xl border-2 border-primary/20 flex items-center justify-center hover:bg-primary/10 hover:border-primary transition-all">
+                                    <span class="material-symbols-outlined">add</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Ghi chú -->
+                        <div class="space-y-3">
+                            <label class="block text-sm font-bold text-slate-700 dark:text-slate-300">
+                                <span class="flex items-center gap-2">
+                                    <span class="material-symbols-outlined text-primary text-lg">note</span>
+                                    Ghi chú thêm (tùy chọn)
+                                </span>
+                            </label>
+                            <textarea id="notes" name="notes" rows="3"
+                                class="w-full px-4 py-4 rounded-xl border border-primary/20 bg-white dark:bg-slate-800 dark:border-slate-600 focus:border-primary focus:ring-4 focus:ring-primary/10 transition-all outline-none resize-none"
+                                placeholder="VD: Muốn thăm chợ đêm, có trẻ em đi cùng..."></textarea>
+                        </div>
+
+                        <!-- Submit -->
+                        <div class="pt-4">
+                            <button type="submit" id="submit-btn"
+                                class="w-full py-4 rounded-xl bg-primary text-white font-bold text-lg shadow-lg shadow-primary/20 hover:bg-primary/90 hover:shadow-primary/30 transition-all flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed">
+                                <span class="material-symbols-outlined">auto_awesome</span>
+                                <span data-i18n="generatePlan">Tạo hành trình với AI</span>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            </div>
+            <!-- Map Preview -->
+            <div class="hidden lg:flex flex-1 min-w-0 relative border-l border-primary/10">
+                <div id="map-preview" class="w-full h-full"></div>
+                <div class="absolute bottom-4 left-4 right-4 bg-white/95 dark:bg-slate-900/95 backdrop-blur rounded-xl px-4 py-3 shadow-lg border border-primary/10">
+                    <p class="text-xs text-slate-500 dark:text-slate-400 flex items-center gap-2">
+                        <span class="material-symbols-outlined text-primary text-sm">location_on</span>
+                        <span id="map-hint">Nhập điểm đến để xem vị trí trên bản đồ</span>
+                    </p>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Loading Overlay -->
+    <div id="loading-overlay" class="fixed inset-0 z-[200] hidden items-center justify-center bg-black/50 backdrop-blur-sm">
+        <div class="bg-white dark:bg-slate-900 rounded-2xl shadow-2xl p-8 max-w-md w-full mx-4 text-center">
+            <div class="w-16 h-16 rounded-full bg-primary/20 flex items-center justify-center mx-auto mb-6">
+                <span class="material-symbols-outlined text-4xl text-primary animate-pulse">auto_awesome</span>
+            </div>
+            <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-2">AI đang lên kế hoạch</h3>
+            <p class="text-slate-500 dark:text-slate-400 text-sm mb-6">Đang phân tích điểm đến và tạo hành trình tối ưu...</p>
+            <div class="h-2 bg-slate-200 dark:bg-slate-700 rounded-full overflow-hidden">
+                <div id="loading-progress" class="h-full bg-primary rounded-full transition-all duration-300 ease-out" style="width: 0%"></div>
+            </div>
+            <p id="loading-percent" class="text-sm font-bold text-primary mt-2">0%</p>
+        </div>
+    </div>
+
+    <script src="/assets/js/config.js"></script>
+    <script src="/assets/js/i18n.js"></script>
+    <script src="/assets/js/auth.js"></script>
+    <script src="/assets/js/trips-api.js"></script>
+    <script src="/assets/js/component-loader.js"></script>
+    <script>
+        // Auth guard
+        if (!AuthGuard.isAuthenticated()) {
+            window.location.href = '/auth/login.html?redirect=' + encodeURIComponent('/app/trips/create.html');
+        }
+
+        // i18n init đã xử lý .lang-btn chung, không cần custom toggle nữa
+
+        // Mapbox map - chỉ init khi có token
+        const mapToken = window.WanderTaleConfig?.MAPBOX_ACCESS_TOKEN;
+        if (mapToken) {
+            mapboxgl.accessToken = mapToken;
+            const map = new mapboxgl.Map({
+                container: 'map-preview',
+                style: 'mapbox://styles/mapbox/streets-v12',
+                center: [108.2772, 14.0583],
+                zoom: 5,
+                pitch: 45,
+                bearing: 0
+            });
+            map.addControl(new mapboxgl.NavigationControl(), 'bottom-right');
+            map.on('load', () => {
+                map.addSource('mapbox-dem', {
+                    type: 'raster-dem',
+                    url: 'mapbox://mapbox.mapbox-terrain-dem-v1',
+                    tileSize: 512,
+                    maxzoom: 14
+                });
+                map.setTerrain({ source: 'mapbox-dem', exaggeration: 1.2 });
+            });
+            window.addEventListener('resize', () => map.resize());
+            let marker = null;
+
+            const destinationInput = document.getElementById('destination');
+            let geocodeTimeout;
+            destinationInput.addEventListener('input', () => {
+                clearTimeout(geocodeTimeout);
+                const query = destinationInput.value.trim();
+                if (query.length < 2) {
+                    if (marker) marker.remove();
+                    marker = null;
+                    document.getElementById('map-hint').textContent = 'Nhập điểm đến để xem vị trí trên bản đồ';
+                    return;
+                }
+                geocodeTimeout = setTimeout(() => {
+                    fetch('https://api.mapbox.com/geocoding/v5/mapbox.places/' + encodeURIComponent(query + ', Vietnam') + '.json?access_token=' + mapToken + '&country=VN&limit=1')
+                        .then(r => r.json())
+                        .then(data => {
+                            if (data.features && data.features[0]) {
+                                const [lng, lat] = data.features[0].center;
+                                const placeName = data.features[0].place_name;
+                                if (marker) marker.remove();
+                                marker = new mapboxgl.Marker({ color: '#f48c25' }).setLngLat([lng, lat]).addTo(map);
+                                map.flyTo({ center: [lng, lat], zoom: 12, duration: 1500 });
+                                document.getElementById('map-hint').textContent = placeName;
+                            }
+                        })
+                        .catch(() => {});
+                }, 500);
+            });
+        }
+
+        // Set min date to today
+        const today = new Date().toISOString().split('T')[0];
+        document.getElementById('startDate').min = today;
+        document.getElementById('endDate').min = today;
+
+        // Update end date min when start date changes
+        document.getElementById('startDate').addEventListener('change', (e) => {
+            document.getElementById('endDate').min = e.target.value;
+        });
+
+        // Travelers counter
+        const travelersInput = document.getElementById('travelers');
+        document.getElementById('decrease-travelers').addEventListener('click', () => {
+            const v = Math.max(1, parseInt(travelersInput.value) - 1);
+            travelersInput.value = v;
+        });
+        document.getElementById('increase-travelers').addEventListener('click', () => {
+            const v = Math.min(20, parseInt(travelersInput.value) + 1);
+            travelersInput.value = v;
+        });
+
+        // Form submit - gọi AI plan-trip API với loading mượt
+        document.getElementById('create-trip-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const btn = document.getElementById('submit-btn');
+            const overlay = document.getElementById('loading-overlay');
+            const progressBar = document.getElementById('loading-progress');
+            const percentEl = document.getElementById('loading-percent');
+
+            btn.disabled = true;
+            overlay.classList.remove('hidden');
+            overlay.classList.add('flex');
+
+            const lang = (window.i18n && window.i18n.currentLang) || localStorage.getItem('lang') || 'vi';
+            const data = {
+                destination: document.getElementById('destination').value.trim(),
+                startDate: document.getElementById('startDate').value,
+                endDate: document.getElementById('endDate').value,
+                vibe: document.querySelector('input[name="vibe"]:checked').value,
+                budget: document.querySelector('input[name="budget"]:checked').value,
+                travelers: parseInt(document.getElementById('travelers').value),
+                notes: document.getElementById('notes').value.trim(),
+                language: lang === 'en' ? 'en' : 'vi'
+            };
+
+            if (new Date(data.endDate) < new Date(data.startDate)) {
+                alert('Ngày kết thúc phải sau ngày bắt đầu');
+                btn.disabled = false;
+                overlay.classList.add('hidden');
+                overlay.classList.remove('flex');
+                return;
+            }
+
+            // Progress animation 0 -> 90% trong ~3-4s
+            let progress = 0;
+            const progressInterval = setInterval(() => {
+                progress += Math.random() * 8 + 4;
+                if (progress >= 90) {
+                    progress = 90;
+                    clearInterval(progressInterval);
+                }
+                progressBar.style.width = progress + '%';
+                percentEl.textContent = Math.round(progress) + '%';
+            }, 200);
+
+            const result = await TripsAPI.planTrip(data);
+
+            clearInterval(progressInterval);
+            progressBar.style.width = '100%';
+            percentEl.textContent = '100%';
+
+            setTimeout(() => {
+                overlay.classList.add('hidden');
+                overlay.classList.remove('flex');
+                if (result.success && result.itinerary) {
+                    // Lưu kế hoạch tạm vào storage
+                    const durationText = data.startDate && data.endDate
+                        ? Math.ceil((new Date(data.endDate) - new Date(data.startDate)) / (1000 * 60 * 60 * 24)) + ' ngày'
+                        : '';
+                    const tripData = {
+                        ...data,
+                        duration: durationText,
+                        itinerary: result.itinerary
+                    };
+                    sessionStorage.setItem('newTrip', JSON.stringify(tripData));
+                    localStorage.setItem('newTrip', JSON.stringify(tripData));
+
+                    // Chuyển sang trang xem kế hoạch trước khi lưu
+                    window.location.href = 'itinerary.html';
+                } else {
+                    alert(result.message || 'Không thể tạo kế hoạch. Vui lòng thử lại.');
+                    btn.disabled = false;
+                }
+            }, 400);
+        });
+    </script>
+</body>
+</html>

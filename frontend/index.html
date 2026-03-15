@@ -1,0 +1,915 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>WanderTale - AI-Powered Travel Planning</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Space+Grotesk:wght@300;400;500;600;700&family=Pacifico&family=Great+Vibes&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#ff5e00",
+                        "background-light": "#f8f7f5",
+                        "background-dark": "#221910",
+                        "accent-blue": "#00f0ff",
+                        "accent-orange": "#ff5e00",
+                        "accent-yellow": "#ffeb3b",
+                        "accent-teal": "#2dd4bf"
+                    },
+                    fontFamily: {
+                        "display": ["Space Grotesk", "sans-serif"],
+                        "serif": ["Playfair Display", "serif"],
+                        "script": ["Dancing Script", "cursive"],
+                        "artistic": ["Great Vibes", "cursive"]
+                    },
+                    borderRadius: {"DEFAULT": "1rem", "lg": "2rem", "xl": "3rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+    <style>
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        /* ===== NAVBAR ===== */
+        .header-scrolled {
+            background: rgba(255, 255, 255, 0.7) !important;
+            backdrop-filter: blur(10px) !important;
+            border-bottom: 1px solid rgba(226, 232, 240, 0.5) !important;
+        }
+        .header-scrolled .nav-link {
+            color: #1e293b !important;
+        }
+        .header-scrolled .nav-link:hover {
+            color: #ff5e00 !important;
+        }
+        /* Section 1 (hero) only: white lang buttons + white logout; all other pages/sections use black */
+        #main-header:not(.header-scrolled) .lang-toggle-wrap { border-color: rgba(255,255,255,0.3) !important; }
+        #main-header:not(.header-scrolled) .lang-btn { color: rgba(255,255,255,0.85) !important; background: transparent !important; }
+        #main-header:not(.header-scrolled) .lang-btn:hover { color: white !important; background: rgba(255,255,255,0.15) !important; }
+        #main-header:not(.header-scrolled) .lang-btn.active { background: white !important; color: #1e293b !important; }
+
+        #main-header:not(.header-scrolled) .topbar-logout {
+            color: #ffffff !important;
+            border-color: rgba(255,255,255,0.3) !important;
+            background: transparent !important;
+        }
+        #main-header:not(.header-scrolled) .topbar-logout:hover {
+            background: rgba(255,255,255,0.15) !important;
+        }
+        
+        /* ===== HERO SECTION ===== */
+        /* Background slow zoom */
+        .hero-bg {
+            animation: slowZoom 8s ease-out forwards;
+        }
+        
+        @keyframes slowZoom {
+            from { transform: scale(1.05); }
+            to { transform: scale(1); }
+        }
+        
+        /* Hero content fade in */
+        .hero-title {
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeSlideUp 0.8s ease-out 0.2s forwards;
+        }
+        
+        .hero-subtitle {
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeSlideUp 0.8s ease-out 0.5s forwards;
+        }
+        
+        .hero-buttons {
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeSlideUp 0.8s ease-out 0.8s forwards;
+        }
+        
+        @keyframes fadeSlideUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* ===== FEATURE CARDS ===== */
+        .feature-card {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+        
+        .feature-card.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        /* ===== TESTIMONIAL AVATARS - PREMIUM MOSAIC LAYOUT ===== */
+        .testimonial-avatar {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+            will-change: transform, opacity;
+        }
+        
+        .testimonial-avatar.visible {
+            opacity: 1;
+            transform: translateY(0);
+            animation: gentleFloat 6s ease-in-out infinite;
+        }
+        
+        /* Gentle floating animation for depth */
+        @keyframes gentleFloat {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-8px); }
+        }
+        
+        /* Stagger floating delays for natural motion */
+        .testimonial-avatar[data-float-delay="0"].visible { animation-delay: 0s; }
+        .testimonial-avatar[data-float-delay="1"].visible { animation-delay: 0.5s; }
+        .testimonial-avatar[data-float-delay="2"].visible { animation-delay: 1s; }
+        .testimonial-avatar[data-float-delay="3"].visible { animation-delay: 1.5s; }
+        .testimonial-avatar[data-float-delay="4"].visible { animation-delay: 2s; }
+        .testimonial-avatar[data-float-delay="5"].visible { animation-delay: 2.5s; }
+        .testimonial-avatar[data-float-delay="6"].visible { animation-delay: 3s; }
+        .testimonial-avatar[data-float-delay="7"].visible { animation-delay: 3.5s; }
+        
+        /* Tooltip subtle entrance */
+        .testimonial-avatar .tooltip {
+            transform: translateX(-50%) translateY(5px);
+            transition: opacity 0.3s ease, transform 0.3s ease;
+        }
+        
+        .testimonial-avatar:hover .tooltip {
+            transform: translateX(-50%) translateY(0);
+        }
+        
+        /* Responsive adjustments for mosaic layout */
+        @media (max-width: 1024px) {
+            /* Tablet: reduce density, bring avatars closer to center */
+            .testimonial-avatar[style*="left: 8%"] { left: 10% !important; }
+            .testimonial-avatar[style*="left: 15%"] { left: 18% !important; }
+            .testimonial-avatar[style*="left: 6%"] { left: 12% !important; }
+            .testimonial-avatar[style*="left: 12%"] { left: 16% !important; }
+            .testimonial-avatar[style*="right: 10%"] { right: 12% !important; }
+            .testimonial-avatar[style*="right: 5%"] { right: 10% !important; }
+            .testimonial-avatar[style*="right: 12%"] { right: 14% !important; }
+            .testimonial-avatar[style*="right: 6%"] { right: 12% !important; }
+        }
+        
+        @media (max-width: 768px) {
+            /* Mobile: stack avatars in a more compact grid */
+            .testimonial-avatar {
+                position: relative !important;
+                width: 5rem !important;
+                height: 6.5rem !important;
+                margin: 0.5rem !important;
+                display: inline-block !important;
+                top: auto !important;
+                left: auto !important;
+                right: auto !important;
+            }
+            
+            #testimonials .relative.min-h-\[700px\] {
+                min-height: auto !important;
+                display: flex;
+                flex-direction: column;
+                gap: 2rem;
+            }
+            
+            /* Mobile: create a flex container for avatars */
+            #testimonials .relative.min-h-\[700px\]::before {
+                content: '';
+                display: block;
+                width: 100%;
+                order: 1;
+            }
+            
+            .testimonial-avatar {
+                order: 0;
+            }
+            
+            .section-header {
+                order: 2 !important;
+            }
+        }
+        
+        /* Stagger delays */
+        .feature-card:nth-child(1) { transition-delay: 0.1s; }
+        .feature-card:nth-child(2) { transition-delay: 0.2s; }
+        .feature-card:nth-child(3) { transition-delay: 0.3s; }
+        .feature-card:nth-child(4) { transition-delay: 0.4s; }
+        .feature-card:nth-child(5) { transition-delay: 0.5s; }
+        .feature-card:nth-child(6) { transition-delay: 0.6s; }
+        
+        /* Card hover */
+        .feature-card:hover {
+            transform: scale(1.02);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+        
+        .feature-card:hover .feature-image {
+            transform: scale(1.05);
+        }
+        
+        .feature-image {
+            transition: transform 0.4s ease-out;
+        }
+        
+        /* ===== STATS COUNT UP - PREMIUM DESIGN ===== */
+        .stat-card {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.7s ease-out, transform 0.7s ease-out, box-shadow 0.5s ease, border-color 0.5s ease;
+        }
+        
+        .stat-card.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        /* Stagger animation for stats */
+        .stat-card:nth-child(1) { transition-delay: 0.1s; }
+        .stat-card:nth-child(2) { transition-delay: 0.2s; }
+        .stat-card:nth-child(3) { transition-delay: 0.3s; }
+        .stat-card:nth-child(4) { transition-delay: 0.4s; }
+        
+        .stat-number {
+            opacity: 0;
+            line-height: 1;
+            letter-spacing: -0.02em;
+        }
+        
+        .stat-number.visible {
+            opacity: 1;
+            animation: fadeIn 0.6s ease-out forwards;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        /* Responsive stat sizing */
+        @media (max-width: 768px) {
+            .stat-card {
+                padding: 1.5rem !important;
+            }
+            
+            .stat-number {
+                font-size: 3rem !important;
+            }
+        }
+        
+        /* ===== TESTIMONIALS ===== */
+        .testimonial-card {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+        
+        .testimonial-card.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .testimonial-card:hover {
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+        }
+        
+        /* ===== VIDEO SECTION ===== */
+        .video-thumbnail {
+            transition: transform 0.4s ease-out;
+        }
+        
+        .video-thumbnail:hover {
+            transform: scale(1.02);
+        }
+        
+        .play-button {
+            animation: pulse 2s ease-in-out infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.8; }
+        }
+        
+        /* ===== LOGOS ===== */
+        .logo-fade {
+            opacity: 0;
+            transition: opacity 0.6s ease-out;
+        }
+        
+        .logo-fade.visible {
+            opacity: 1;
+        }
+        
+        /* ===== NEWSLETTER ===== */
+        .newsletter-cta {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+        
+        .newsletter-cta.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        /* ===== SECTION HEADERS ===== */
+        .section-header {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+        
+        .section-header.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body class="font-display bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100">
+    <!-- Header -->
+    <div id="header-slot"></div>
+
+    <!-- Section 1: Hero Section -->
+    <section id="hero" class="relative flex h-screen min-h-screen w-full flex-col overflow-hidden">
+        <div class="absolute inset-0 z-0">
+            <div class="w-full h-full bg-cover bg-center hero-bg" style="background-image: url('/assets/images/home.png');">
+                <div class="absolute inset-0 bg-gradient-to-b from-black/50 via-black/40 to-black/60"></div>
+            </div>
+        </div>
+        <div class="relative z-10 flex-1 flex flex-col items-center justify-center px-6 text-center">
+            <div class="max-w-6xl mx-auto flex flex-col items-center gap-8">
+                <h1 class="hero-title text-white text-5xl sm:text-7xl md:text-8xl lg:text-[7rem] font-serif font-bold leading-[1.1] tracking-wide uppercase flex flex-col items-center">
+                    <span data-i18n="heroTurnJourney">Turn your journey</span>
+                    <span><span data-i18n="heroIntoStory">into a </span><span class="font-artistic text-primary tracking-normal" style="font-size: 1.5em; line-height: 0.7; margin-left: -0.1em; display: inline-block; transform: translateY(12px); font-weight: 400; text-transform: none;" data-i18n="storyWord">Story</span></span>
+                </h1>
+                <p class="hero-subtitle text-white/90 text-lg md:text-2xl font-light max-w-2xl leading-relaxed mt-6" data-i18n="heroSubtitleCopy">
+                    Thoughtfully crafted journeys for modern explorers. Discover freely, travel deeply, share beautifully.
+                </p>
+                <div class="hero-buttons flex flex-col sm:flex-row gap-6 mt-12 w-full sm:w-auto justify-center">
+                    <a href="/auth/signup.html" class="flex cursor-pointer items-center justify-center rounded-full h-14 px-10 bg-primary text-white text-lg font-bold tracking-wide transition-all duration-300 ease-out w-full sm:w-auto hover:brightness-95 hover:shadow-lg" data-i18n="startAdventure">
+                        Start your adventure
+                    </a>
+                    <a href="#features" class="flex cursor-pointer items-center justify-center rounded-full h-14 px-10 bg-transparent text-white text-lg font-medium tracking-wide transition-all duration-300 ease-out border-2 border-white w-full sm:w-auto hover:bg-white hover:text-slate-900" data-i18n="exploreFeatures">
+                        Explore Features
+                    </a>
+                </div>
+            </div>
+        </div>
+        <!-- Scroll indicator -->
+        <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-20 animate-bounce">
+            <a href="#features" class="flex flex-col items-center gap-2 text-white/70 hover:text-white transition-colors">
+                <span class="text-sm font-medium" data-i18n="scrollToExplore">Scroll to explore</span>
+                <span class="material-symbols-outlined text-3xl">keyboard_arrow_down</span>
+            </a>
+        </div>
+    </section>
+
+    <!-- Section 2: Features Section -->
+    <section id="features" class="relative py-24 md:py-32 bg-background-light dark:bg-background-dark overflow-hidden">
+        <!-- Background decorations -->
+        <div class="absolute top-0 left-0 w-96 h-96 bg-primary/5 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2"></div>
+        <div class="absolute bottom-0 right-0 w-96 h-96 bg-accent-teal/5 rounded-full blur-3xl translate-x-1/2 translate-y-1/2"></div>
+        
+        <div class="relative z-10 max-w-7xl mx-auto px-6">
+            <!-- Section Header -->
+            <div class="text-center mb-16 section-header">
+                <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary font-bold text-sm mb-6">
+                    <span class="material-symbols-outlined text-base">auto_awesome</span>
+                    <span data-i18n="poweredByAI">Powered by AI</span>
+                </div>
+                <h2 class="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-6 text-slate-900 dark:text-white">
+                    <span data-i18n="yourAICompanion">Your AI Travel Companion</span>
+                </h2>
+                <p class="text-lg md:text-xl text-slate-600 dark:text-slate-400 max-w-3xl mx-auto leading-relaxed" data-i18n="discoverAIFeatures">
+                    Discover how our AI-powered features transform the way you plan, explore, and share your travel experiences.
+                </p>
+            </div>
+
+            <!-- Features Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Feature 1 -->
+                <div class="feature-card flex flex-col bg-white dark:bg-slate-900 rounded-2xl shadow-lg border border-slate-100 dark:border-slate-800 overflow-hidden transition-all duration-300 group">
+                    <div class="w-full aspect-video bg-slate-50 dark:bg-slate-800 p-6 flex items-center justify-center relative overflow-hidden">
+                        <div class="absolute inset-0 bg-gradient-to-br from-primary/20 to-transparent opacity-50 group-hover:opacity-100 transition-opacity duration-500"></div>
+                        <div class="feature-image w-full h-full bg-center bg-no-repeat bg-cover rounded-lg relative z-10 shadow-sm" style="background-image: url('/assets/images/1.png');"></div>
+                    </div>
+                    <div class="p-8 flex flex-col gap-4">
+                        <div class="flex items-center gap-3">
+                            <div class="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center text-primary">
+                                <span class="material-symbols-outlined text-2xl">mood</span>
+                            </div>
+                            <h3 class="text-xl font-bold text-slate-900 dark:text-slate-100" data-i18n="aiVibeCheck">AI Vibe Check</h3>
+                        </div>
+                        <p class="text-slate-600 dark:text-slate-400 leading-relaxed text-base" data-i18n="aiVibeCheckDesc">
+                            Match your current mood to the perfect destination. Our AI suggests hidden gems based on your aesthetic preferences and energy.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Feature 2 -->
+                <div class="feature-card flex flex-col bg-white dark:bg-slate-900 rounded-2xl shadow-lg border border-slate-100 dark:border-slate-800 overflow-hidden transition-all duration-300 group">
+                    <div class="w-full aspect-video bg-slate-50 dark:bg-slate-800 p-6 flex items-center justify-center relative overflow-hidden">
+                        <div class="absolute inset-0 bg-gradient-to-bl from-primary/20 to-transparent opacity-50 group-hover:opacity-100 transition-opacity duration-500"></div>
+                        <div class="feature-image w-full h-full bg-center bg-no-repeat bg-cover rounded-lg relative z-10 shadow-sm" style="background-image: url('/assets/images/2.png');"></div>
+                    </div>
+                    <div class="p-8 flex flex-col gap-4">
+                        <div class="flex items-center gap-3">
+                            <div class="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center text-primary">
+                                <span class="material-symbols-outlined text-2xl">history_edu</span>
+                            </div>
+                            <h3 class="text-xl font-bold text-slate-900 dark:text-slate-100" data-i18n="autoMagicTimeline">Auto-Magic Timeline</h3>
+                        </div>
+                        <p class="text-slate-600 dark:text-slate-400 leading-relaxed text-base" data-i18n="autoMagicTimelineDesc">
+                            Turn your chaotic camera roll into a beautifully narrated story. We automatically organize photos into a seamless journey.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Feature 3 -->
+                <div class="feature-card flex flex-col bg-white dark:bg-slate-900 rounded-2xl shadow-lg border border-slate-100 dark:border-slate-800 overflow-hidden transition-all duration-300 group">
+                    <div class="w-full aspect-video bg-slate-50 dark:bg-slate-800 p-6 flex items-center justify-center relative overflow-hidden">
+                        <div class="absolute inset-0 bg-gradient-to-t from-primary/20 to-transparent opacity-50 group-hover:opacity-100 transition-opacity duration-500"></div>
+                        <div class="feature-image w-full h-full bg-center bg-no-repeat bg-cover rounded-lg relative z-10 shadow-sm" style="background-image: url('/assets/images/3.png');"></div>
+                    </div>
+                    <div class="p-8 flex flex-col gap-4">
+                        <div class="flex items-center gap-3">
+                            <div class="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center text-primary">
+                                <span class="material-symbols-outlined text-2xl">share</span>
+                            </div>
+                            <h3 class="text-xl font-bold text-slate-900 dark:text-slate-100" data-i18n="socialSync">Social Sync</h3>
+                        </div>
+                        <p class="text-slate-600 dark:text-slate-400 leading-relaxed text-base" data-i18n="socialSyncDesc">
+                            Share epic journeys seamlessly across platforms. Collaborate with friends on itineraries and create shared travel memories.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Feature 4 -->
+                <div class="feature-card flex flex-col bg-white dark:bg-slate-900 rounded-2xl shadow-lg border border-slate-100 dark:border-slate-800 overflow-hidden transition-all duration-300 group">
+                    <div class="w-full aspect-video bg-slate-50 dark:bg-slate-800 p-6 flex items-center justify-center relative overflow-hidden">
+                        <div class="absolute inset-0 bg-gradient-to-tr from-accent-blue/20 to-transparent opacity-50 group-hover:opacity-100 transition-opacity duration-500"></div>
+                        <div class="feature-image w-full h-full bg-center bg-no-repeat bg-cover rounded-lg relative z-10 shadow-sm" style="background-image: url('/assets/images/4.png');"></div>
+                    </div>
+                    <div class="p-8 flex flex-col gap-4">
+                        <div class="flex items-center gap-3">
+                            <div class="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center text-primary">
+                                <span class="material-symbols-outlined text-2xl">explore</span>
+                            </div>
+                            <h3 class="text-xl font-bold text-slate-900 dark:text-slate-100" data-i18n="smartRoutePlanning">Smart Route Planning</h3>
+                        </div>
+                        <p class="text-slate-600 dark:text-slate-400 leading-relaxed text-base" data-i18n="smartRoutePlanningDesc">
+                            AI optimizes your itinerary based on time, budget, and interests. Never miss a must-see spot or waste time on inefficient routes.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Feature 5 -->
+                <div class="feature-card flex flex-col bg-white dark:bg-slate-900 rounded-2xl shadow-lg border border-slate-100 dark:border-slate-800 overflow-hidden transition-all duration-300 group">
+                    <div class="w-full aspect-video bg-slate-50 dark:bg-slate-800 p-6 flex items-center justify-center relative overflow-hidden">
+                        <div class="absolute inset-0 bg-gradient-to-br from-accent-yellow/20 to-transparent opacity-50 group-hover:opacity-100 transition-opacity duration-500"></div>
+                        <div class="feature-image w-full h-full bg-center bg-no-repeat bg-cover rounded-lg relative z-10 shadow-sm" style="background-image: url('/assets/images/5.png');"></div>
+                    </div>
+                    <div class="p-8 flex flex-col gap-4">
+                        <div class="flex items-center gap-3">
+                            <div class="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center text-primary">
+                                <span class="material-symbols-outlined text-2xl">psychology</span>
+                            </div>
+                            <h3 class="text-xl font-bold text-slate-900 dark:text-slate-100" data-i18n="aiAssistant24_7">24/7 AI Assistant</h3>
+                        </div>
+                        <p class="text-slate-600 dark:text-slate-400 leading-relaxed text-base" data-i18n="aiAssistant24_7Desc">
+                            Get instant answers about destinations, local tips, and travel hacks. Your personal travel expert, always in your pocket.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Feature 6 -->
+                <div class="feature-card flex flex-col bg-white dark:bg-slate-900 rounded-2xl shadow-lg border border-slate-100 dark:border-slate-800 overflow-hidden transition-all duration-300 group">
+                    <div class="w-full aspect-video bg-slate-50 dark:bg-slate-800 p-6 flex items-center justify-center relative overflow-hidden">
+                        <div class="absolute inset-0 bg-gradient-to-tl from-accent-teal/20 to-transparent opacity-50 group-hover:opacity-100 transition-opacity duration-500"></div>
+                        <div class="feature-image w-full h-full bg-center bg-no-repeat bg-cover rounded-lg relative z-10 shadow-sm" style="background-image: url('/assets/images/6.png');"></div>
+                    </div>
+                    <div class="p-8 flex flex-col gap-4">
+                        <div class="flex items-center gap-3">
+                            <div class="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center text-primary">
+                                <span class="material-symbols-outlined text-2xl">collections</span>
+                            </div>
+                            <h3 class="text-xl font-bold text-slate-900 dark:text-slate-100" data-i18n="photoStories">Photo Stories</h3>
+                        </div>
+                        <p class="text-slate-600 dark:text-slate-400 leading-relaxed text-base" data-i18n="photoStoriesDesc">
+                            Transform your travel photos into stunning visual stories. AI-powered editing and automatic captioning make sharing effortless.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section 3: Social Proof / Testimonials (Marketing Section) -->
+    <section id="testimonials" class="relative py-24 md:py-32 overflow-hidden">
+        <!-- Premium gradient background with depth -->
+        <div class="absolute inset-0 bg-gradient-to-br from-slate-50 via-white to-slate-100/50 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950"></div>
+        <div class="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(244,140,37,0.03),transparent_50%)]"></div>
+        <div class="absolute inset-0 bg-[radial-gradient(circle_at_70%_80%,rgba(45,181,181,0.03),transparent_50%)]"></div>
+        
+        <div class="max-w-7xl mx-auto px-6 relative">
+            <!-- Testimonials Mosaic Layout -->
+            <div class="relative min-h-[700px] flex items-center justify-center">
+                <!-- Background panel for premium feel -->
+                <div class="absolute inset-0 max-w-6xl mx-auto bg-gradient-to-br from-white/40 to-slate-50/40 dark:from-slate-800/20 dark:to-slate-900/20 rounded-[3rem] backdrop-blur-sm border border-slate-200/50 dark:border-slate-700/30"></div>
+                
+                <!-- Subtle vertical dividers for structure -->
+                <div class="absolute left-1/3 top-[10%] bottom-[10%] w-px bg-gradient-to-b from-transparent via-slate-200/40 to-transparent dark:via-slate-700/40"></div>
+                <div class="absolute right-1/3 top-[10%] bottom-[10%] w-px bg-gradient-to-b from-transparent via-slate-200/40 to-transparent dark:via-slate-700/40"></div>
+                
+                <!-- LEFT CLUSTER: Traveler Avatars Mosaic (Balanced Layout) -->
+                
+                <!-- Avatar 1: Large - Top Left -->
+                <div class="testimonial-avatar group cursor-pointer" data-float-delay="0" 
+                     style="position: absolute; top: 8%; left: 2%; width: 8rem; height: 10rem; z-index: 4;">
+                    <div class="relative w-full h-full rounded-[28px] overflow-hidden shadow-[0_12px_40px_rgba(0,0,0,0.15)] hover:shadow-[0_24px_70px_rgba(0,0,0,0.25)] transition-all duration-700 hover:scale-[1.05] bg-cover bg-center border-3 border-white dark:border-slate-800"
+                         style="background-image: url('https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=500&fit=crop');">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                    </div>
+                    <div class="tooltip absolute -bottom-16 left-1/2 -translate-x-1/2 bg-slate-900 dark:bg-white text-white dark:text-slate-900 px-4 py-2 rounded-xl text-xs font-medium whitespace-nowrap opacity-0 group-hover:opacity-100 transition-all duration-300 pointer-events-none shadow-xl z-50" data-i18n="testimonial1">
+                        "WanderTale transformed my travels!"
+                        <div class="absolute -top-1 left-1/2 -translate-x-1/2 w-2 h-2 bg-slate-900 dark:bg-white rotate-45"></div>
+                    </div>
+                </div>
+                
+                <!-- Avatar 2: Medium - Top Left (overlapping) -->
+                <div class="testimonial-avatar group cursor-pointer" data-float-delay="1" 
+                     style="position: absolute; top: 5%; left: 14%; width: 7rem; height: 9rem; z-index: 5;">
+                    <div class="relative w-full h-full rounded-[24px] overflow-hidden shadow-[0_10px_35px_rgba(0,0,0,0.13)] hover:shadow-[0_20px_60px_rgba(0,0,0,0.22)] transition-all duration-700 hover:scale-[1.05] bg-cover bg-center border-3 border-white dark:border-slate-800"
+                         style="background-image: url('https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=350&h=450&fit=crop');">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                    </div>
+                    <div class="tooltip absolute -bottom-16 left-1/2 -translate-x-1/2 bg-slate-900 dark:bg-white text-white dark:text-slate-900 px-4 py-2 rounded-xl text-xs font-medium whitespace-nowrap opacity-0 group-hover:opacity-100 transition-all duration-300 pointer-events-none shadow-xl z-50" data-i18n="testimonial2">
+                        "Best travel companion ever!"
+                        <div class="absolute -top-1 left-1/2 -translate-x-1/2 w-2 h-2 bg-slate-900 dark:bg-white rotate-45"></div>
+                    </div>
+                </div>
+                
+                <!-- Avatar 3: Small - Bottom Left -->
+                <div class="testimonial-avatar group cursor-pointer" data-float-delay="2" 
+                     style="position: absolute; top: 55%; left: 6%; width: 6rem; height: 7.5rem; z-index: 2;">
+                    <div class="relative w-full h-full rounded-[20px] overflow-hidden shadow-[0_8px_30px_rgba(0,0,0,0.12)] hover:shadow-[0_18px_55px_rgba(0,0,0,0.2)] transition-all duration-700 hover:scale-[1.05] bg-cover bg-center border-3 border-white dark:border-slate-800"
+                         style="background-image: url('https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?w=300&h=400&fit=crop');">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                    </div>
+                    <div class="tooltip absolute -bottom-16 left-1/2 -translate-x-1/2 bg-slate-900 dark:bg-white text-white dark:text-slate-900 px-4 py-2 rounded-xl text-xs font-medium whitespace-nowrap opacity-0 group-hover:opacity-100 transition-all duration-300 pointer-events-none shadow-xl z-50" data-i18n="testimonial3">
+                        "Found hidden gems!"
+                        <div class="absolute -top-1 left-1/2 -translate-x-1/2 w-2 h-2 bg-slate-900 dark:bg-white rotate-45"></div>
+                    </div>
+                </div>
+                
+                <!-- Avatar 4: Medium - Bottom Left (overlapping) -->
+                <div class="testimonial-avatar group cursor-pointer" data-float-delay="3" 
+                     style="position: absolute; top: 58%; left: 13%; width: 7.5rem; height: 9.5rem; z-index: 3;">
+                    <div class="relative w-full h-full rounded-[26px] overflow-hidden shadow-[0_14px_45px_rgba(0,0,0,0.16)] hover:shadow-[0_26px_75px_rgba(0,0,0,0.26)] transition-all duration-700 hover:scale-[1.05] bg-cover bg-center border-3 border-white dark:border-slate-800"
+                         style="background-image: url('https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=400&h=500&fit=crop');">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                    </div>
+                    <div class="tooltip absolute -bottom-16 left-1/2 -translate-x-1/2 bg-slate-900 dark:bg-white text-white dark:text-slate-900 px-4 py-2 rounded-xl text-xs font-medium whitespace-nowrap opacity-0 group-hover:opacity-100 transition-all duration-300 pointer-events-none shadow-xl z-50" data-i18n="testimonial4">
+                        "Perfectly planned trips!"
+                        <div class="absolute -top-1 left-1/2 -translate-x-1/2 w-2 h-2 bg-slate-900 dark:bg-white rotate-45"></div>
+                    </div>
+                </div>
+                
+                <!-- RIGHT CLUSTER: Traveler Avatars Mosaic (Balanced Layout) -->
+                
+                <!-- Avatar 5: Large - Top Right -->
+                <div class="testimonial-avatar group cursor-pointer" data-float-delay="4" 
+                     style="position: absolute; top: 8%; right: 2%; width: 8rem; height: 10rem; z-index: 4;">
+                    <div class="relative w-full h-full rounded-[28px] overflow-hidden shadow-[0_12px_40px_rgba(0,0,0,0.15)] hover:shadow-[0_24px_70px_rgba(0,0,0,0.25)] transition-all duration-700 hover:scale-[1.05] bg-cover bg-center border-3 border-white dark:border-slate-800"
+                         style="background-image: url('https://images.unsplash.com/photo-1517841905240-472988babdf9?w=400&h=500&fit=crop');">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                    </div>
+                    <div class="tooltip absolute -bottom-16 left-1/2 -translate-x-1/2 bg-slate-900 dark:bg-white text-white dark:text-slate-900 px-4 py-2 rounded-xl text-xs font-medium whitespace-nowrap opacity-0 group-hover:opacity-100 transition-all duration-300 pointer-events-none shadow-xl z-50" data-i18n="testimonial5">
+                        "Unforgettable solo trip!"
+                        <div class="absolute -top-1 left-1/2 -translate-x-1/2 w-2 h-2 bg-slate-900 dark:bg-white rotate-45"></div>
+                    </div>
+                </div>
+                
+                <!-- Avatar 6: Medium - Top Right (overlapping) -->
+                <div class="testimonial-avatar group cursor-pointer" data-float-delay="5" 
+                     style="position: absolute; top: 5%; right: 14%; width: 7rem; height: 9rem; z-index: 5;">
+                    <div class="relative w-full h-full rounded-[24px] overflow-hidden shadow-[0_10px_35px_rgba(0,0,0,0.13)] hover:shadow-[0_20px_60px_rgba(0,0,0,0.22)] transition-all duration-700 hover:scale-[1.05] bg-cover bg-center border-3 border-white dark:border-slate-800"
+                         style="background-image: url('https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=350&h=450&fit=crop');">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                    </div>
+                    <div class="tooltip absolute -bottom-16 left-1/2 -translate-x-1/2 bg-slate-900 dark:bg-white text-white dark:text-slate-900 px-4 py-2 rounded-xl text-xs font-medium whitespace-nowrap opacity-0 group-hover:opacity-100 transition-all duration-300 pointer-events-none shadow-xl z-50" data-i18n="testimonial6">
+                        "Amazing local guides!"
+                        <div class="absolute -top-1 left-1/2 -translate-x-1/2 w-2 h-2 bg-slate-900 dark:bg-white rotate-45"></div>
+                    </div>
+                </div>
+                
+                <!-- Avatar 7: Medium - Bottom Right -->
+                <div class="testimonial-avatar group cursor-pointer" data-float-delay="6" 
+                     style="position: absolute; top: 55%; right: 6%; width: 7.5rem; height: 9.5rem; z-index: 3;">
+                    <div class="relative w-full h-full rounded-[26px] overflow-hidden shadow-[0_10px_35px_rgba(0,0,0,0.13)] hover:shadow-[0_20px_60px_rgba(0,0,0,0.22)] transition-all duration-700 hover:scale-[1.05] bg-cover bg-center border-3 border-white dark:border-slate-800"
+                         style="background-image: url('https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=400&h=500&fit=crop');">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                    </div>
+                    <div class="tooltip absolute -bottom-16 left-1/2 -translate-x-1/2 bg-slate-900 dark:bg-white text-white dark:text-slate-900 px-4 py-2 rounded-xl text-xs font-medium whitespace-nowrap opacity-0 group-hover:opacity-100 transition-all duration-300 pointer-events-none shadow-xl z-50" data-i18n="testimonial7">
+                        "Every detail was perfect!"
+                        <div class="absolute -top-1 left-1/2 -translate-x-1/2 w-2 h-2 bg-slate-900 dark:bg-white rotate-45"></div>
+                    </div>
+                </div>
+                
+                <!-- Avatar 8: Small - Bottom Right (overlapping) -->
+                <div class="testimonial-avatar group cursor-pointer" data-float-delay="7" 
+                     style="position: absolute; top: 58%; right: 13%; width: 6rem; height: 7.5rem; z-index: 2;">
+                    <div class="relative w-full h-full rounded-[20px] overflow-hidden shadow-[0_8px_30px_rgba(0,0,0,0.12)] hover:shadow-[0_18px_55px_rgba(0,0,0,0.2)] transition-all duration-700 hover:scale-[1.05] bg-cover bg-center border-3 border-white dark:border-slate-800"
+                         style="background-image: url('https://images.unsplash.com/photo-1580489944761-15a19d654956?w=350&h=450&fit=crop');">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                    </div>
+                    <div class="tooltip absolute -bottom-16 left-1/2 -translate-x-1/2 bg-slate-900 dark:bg-white text-white dark:text-slate-900 px-4 py-2 rounded-xl text-xs font-medium whitespace-nowrap opacity-0 group-hover:opacity-100 transition-all duration-300 pointer-events-none shadow-xl z-50" data-i18n="testimonial8">
+                        "Saved hours of planning!"
+                        <div class="absolute -top-1 left-1/2 -translate-x-1/2 w-2 h-2 bg-slate-900 dark:bg-white rotate-45"></div>
+                    </div>
+                </div>
+                
+                <!-- Center Content with enhanced trust indicators -->
+                <div class="relative z-10 text-center max-w-2xl mx-auto px-8 section-header">
+                    <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-accent-teal/10 text-accent-teal font-bold text-xs uppercase tracking-wider mb-6 backdrop-blur-sm border border-accent-teal/20">
+                        <span class="material-symbols-outlined text-base">verified</span>
+                        <span data-i18n="testimonialsLabel">Testimonials</span>
+                    </div>
+                    <h2 class="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight mb-4 text-slate-900 dark:text-white leading-tight">
+                        <span data-i18n="trustedByExplorers">Trusted by explorers</span><br/>
+                        <span class="bg-gradient-to-r from-slate-400 to-slate-500 bg-clip-text text-transparent font-normal" data-i18n="aroundTheWorld">around the world</span>
+                    </h2>
+                    
+                    <!-- Trust indicator with rating -->
+                    <div class="flex items-center justify-center gap-3 mb-6">
+                        <div class="flex items-center gap-1">
+                            <span class="material-symbols-outlined text-accent-yellow text-xl" style="font-variation-settings: 'FILL' 1;">star</span>
+                            <span class="material-symbols-outlined text-accent-yellow text-xl" style="font-variation-settings: 'FILL' 1;">star</span>
+                            <span class="material-symbols-outlined text-accent-yellow text-xl" style="font-variation-settings: 'FILL' 1;">star</span>
+                            <span class="material-symbols-outlined text-accent-yellow text-xl" style="font-variation-settings: 'FILL' 1;">star</span>
+                            <span class="material-symbols-outlined text-accent-yellow text-xl" style="font-variation-settings: 'FILL' 1;">star</span>
+                        </div>
+                        <span class="text-slate-900 dark:text-white font-bold text-lg">4.9</span>
+                        <span class="text-slate-500 dark:text-slate-400 text-sm" data-i18n="fromTravelers">from 50,000+ travelers</span>
+                    </div>
+                    
+                    <p class="text-base md:text-lg text-slate-600 dark:text-slate-400 leading-relaxed mb-8 max-w-xl mx-auto" data-i18n="joinThousands">
+                        Join thousands of adventurers who've discovered their perfect journey with WanderTale
+                    </p>
+                    <a href="/public/community-stories.html" class="inline-flex items-center justify-center gap-2 px-8 py-4 bg-slate-900 dark:bg-white text-white dark:text-slate-900 rounded-full font-bold hover:shadow-2xl hover:scale-105 transition-all duration-300">
+                        <span data-i18n="readTravelStories">Read Travel Stories</span>
+                        <span class="material-symbols-outlined text-lg">arrow_forward</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- As Featured In - Partner Logos -->
+            <div class="mt-20">
+                <!-- Section Label -->
+                <div class="text-center mb-10 section-header">
+                    <p class="text-sm text-slate-400 dark:text-slate-500 font-bold uppercase tracking-[0.2em]" data-i18n="asFeaturedIn">As Featured In</p>
+                </div>
+                
+                <!-- Partner Logos Grid -->
+                <div class="flex flex-wrap items-center justify-center gap-8 md:gap-12 lg:gap-16 max-w-5xl mx-auto">
+                    <!-- TechCrunch -->
+                    <div class="logo-fade group">
+                        <img src="/assets/images/partner/techcrunch-logo.png" alt="TechCrunch" class="h-12 md:h-16 w-auto object-contain opacity-80 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500">
+                    </div>
+                    
+                    <!-- Forbes -->
+                    <div class="logo-fade group">
+                        <img src="/assets/images/partner/forbes.jpg" alt="Forbes" class="h-20 md:h-24 w-auto object-contain opacity-80 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500">
+                    </div>
+                    
+                    <!-- VnExpress -->
+                    <div class="logo-fade group">
+                        <img src="/assets/images/partner/vnexpess.png" alt="VnExpress" class="h-8 md:h-9 w-auto object-contain opacity-80 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500">
+                    </div>
+                    
+                    <!-- Tuổi Trẻ -->
+                    <div class="logo-fade group">
+                        <img src="/assets/images/partner/tuoi_tre.png" alt="Tuổi Trẻ" class="h-16 md:h-20 w-auto object-contain opacity-80 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500">
+                    </div>
+                    
+                    <!-- Product Hunt -->
+                    <div class="logo-fade group">
+                        <img src="/assets/images/partner/product-hunt.png" alt="Product Hunt" class="h-12 md:h-16 w-auto object-contain opacity-80 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Video/Image Showcase -->
+            <div class="mt-20 bg-gradient-to-br from-primary/5 via-transparent to-accent-teal/5 rounded-3xl p-8 md:p-12 border border-primary/10 section-header">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                    <div class="order-2 lg:order-1">
+                        <h3 class="text-3xl md:text-4xl font-bold mb-6 text-slate-900 dark:text-white" data-i18n="seeInAction">
+                            See WanderTale in Action
+                        </h3>
+                        <p class="text-lg text-slate-600 dark:text-slate-400 mb-8 leading-relaxed" data-i18n="watchHow">
+                            Watch how travelers are using AI to plan unforgettable trips, discover hidden gems, and create stunning travel stories that go viral.
+                        </p>
+                        <div class="flex flex-col sm:flex-row gap-4">
+                            <a href="/auth/signup.html" class="inline-flex items-center justify-center gap-2 bg-primary text-white font-bold py-4 px-8 rounded-full hover:brightness-95 hover:shadow-lg transition-all duration-300">
+                                <span data-i18n="getStartedFree">Get Started Free</span>
+                                <span class="material-symbols-outlined">arrow_forward</span>
+                            </a>
+                            <a href="/public/community-stories.html" class="inline-flex items-center justify-center gap-2 bg-transparent text-slate-900 dark:text-white font-bold py-4 px-8 rounded-full border-2 border-slate-300 dark:border-slate-600 hover:border-primary hover:text-primary transition-all duration-300">
+                                <span data-i18n="viewStories">View Stories</span>
+                                <span class="material-symbols-outlined">auto_stories</span>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="order-1 lg:order-2">
+                        <div class="video-thumbnail relative aspect-video rounded-2xl overflow-hidden shadow-2xl border border-slate-200 dark:border-slate-700 cursor-pointer">
+                            <div class="absolute inset-0 bg-gradient-to-br from-primary/20 to-accent-teal/20 opacity-50"></div>
+                            <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuAMuPbJrnq5odg7Wzm265LqMxc-UgI-T_YNlJDcOpx8tji8BeWN_RHl3p0ZSEPyC41ozzqSx7iz06o6DHN-pTEjq8wJBH1FTnyl4Vos-i4dhmAstxo7Dy2GPFSwn5C0dN3RaPzoyGGz5BvOqSMzbC1LtNaJjPrUx3zekYZ3Z797IgaoBZCWSEbJmyHHm6gR2mAxciufL-a0C1spkEZww9-IQAC1jcyUMZCFYHT4yrOe0e1gyNY_Y_sLvgUVw6dl9lQ_zTzqYHwI_jyK" alt="WanderTale App Preview" class="w-full h-full object-cover relative z-10"/>
+                            <div class="absolute inset-0 flex items-center justify-center z-20">
+                                <div class="play-button w-20 h-20 rounded-full bg-white/90 flex items-center justify-center shadow-2xl hover:scale-110 transition-transform duration-300">
+                                    <span class="material-symbols-outlined text-5xl text-primary">play_arrow</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <div id="footer-slot"></div>
+
+    <!-- Scroll to top button -->
+    <button id="scroll-to-top" class="fixed bottom-8 right-8 w-12 h-12 bg-primary text-white rounded-full shadow-lg hover:shadow-2xl hover:bg-primary/90 transition-all opacity-0 pointer-events-none flex items-center justify-center z-40">
+        <span class="material-symbols-outlined">arrow_upward</span>
+    </button>
+
+    <!-- JavaScript for animations -->
+    <script>
+        // ===== NAVBAR SCROLL EFFECT =====
+        const scrollToTopBtn = document.getElementById('scroll-to-top');
+        
+        // Wait for header to be loaded
+        setTimeout(() => {
+            const header = document.getElementById('main-header');
+            
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 100) {
+                    if (header) header.classList.add('header-scrolled');
+                    scrollToTopBtn.classList.remove('opacity-0', 'pointer-events-none');
+                    scrollToTopBtn.classList.add('opacity-100', 'pointer-events-auto');
+                } else {
+                    if (header) header.classList.remove('header-scrolled');
+                    scrollToTopBtn.classList.add('opacity-0', 'pointer-events-none');
+                    scrollToTopBtn.classList.remove('opacity-100', 'pointer-events-auto');
+                }
+            });
+        }, 100);
+        
+        scrollToTopBtn.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+        
+        // ===== COUNT UP ANIMATION =====
+        function animateCount(element, target, suffix, duration = 1200) {
+            const start = 0;
+            const increment = target / (duration / 16);
+            let current = start;
+            
+            const timer = setInterval(() => {
+                current += increment;
+                if (current >= target) {
+                    current = target;
+                    clearInterval(timer);
+                }
+                
+                // Format number
+                let displayValue;
+                if (suffix === 'K+') {
+                    displayValue = Math.floor(current / 1000) + 'K+';
+                } else if (suffix === '★') {
+                    displayValue = current.toFixed(1) + '★';
+                } else if (suffix === '%') {
+                    displayValue = Math.floor(current) + '%';
+                } else {
+                    displayValue = Math.floor(current);
+                }
+                
+                element.textContent = displayValue;
+            }, 16);
+        }
+        
+        // ===== INTERSECTION OBSERVER =====
+        const observerOptions = {
+            threshold: 0.2,
+            rootMargin: '0px 0px -80px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    
+                    // Trigger count-up for stats
+                    if (entry.target.classList.contains('stat-number')) {
+                        const target = parseFloat(entry.target.dataset.target);
+                        const suffix = entry.target.dataset.suffix;
+                        animateCount(entry.target, target, suffix);
+                    }
+                    
+                    // Unobserve after animation
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+        
+        // ===== INITIALIZE OBSERVERS =====
+        document.addEventListener('DOMContentLoaded', () => {
+            // Observe feature cards
+            const featureCards = document.querySelectorAll('.feature-card');
+            featureCards.forEach(card => observer.observe(card));
+            
+            // Observe section headers
+            const sectionHeaders = document.querySelectorAll('.section-header');
+            sectionHeaders.forEach(header => observer.observe(header));
+            
+            // Observe stat cards (for entrance animation)
+            const statCards = document.querySelectorAll('.stat-card');
+            statCards.forEach(card => observer.observe(card));
+            
+            // Observe stats numbers (for count-up animation)
+            const statNumbers = document.querySelectorAll('.stat-number');
+            statNumbers.forEach(stat => observer.observe(stat));
+            
+            // Observe testimonials
+            const testimonials = document.querySelectorAll('.testimonial-card');
+            testimonials.forEach(card => observer.observe(card));
+            
+            // Observe testimonial avatars
+            const avatars = document.querySelectorAll('.testimonial-avatar');
+            avatars.forEach(avatar => observer.observe(avatar));
+            
+            // Observe logos
+            const logos = document.querySelectorAll('.logo-fade');
+            logos.forEach(logo => observer.observe(logo));
+            
+            // Observe newsletter
+            const newsletter = document.querySelector('.newsletter-cta');
+            if (newsletter) observer.observe(newsletter);
+        });
+    </script>
+    
+    <script src="/assets/js/auth.js"></script>
+    <script src="/assets/js/i18n.js"></script>
+    <script src="/assets/js/component-loader.js"></script>
+    <script>
+        // Load header and footer
+        ComponentLoader.load('header-public', 'header-slot');
+        ComponentLoader.load('footer-public', 'footer-slot');
+
+        // On homepage, hide avatar icon in topbar but keep Logout button
+        document.addEventListener('DOMContentLoaded', () => {
+            const hideAvatar = () => {
+                const avatarBtn = document.getElementById('avatar-btn');
+                if (avatarBtn) avatarBtn.classList.add('hidden');
+            };
+            // Header is injected asynchronously, so poll a bit
+            hideAvatar();
+            setTimeout(hideAvatar, 200);
+            setTimeout(hideAvatar, 600);
+        });
+        
+        // Add CSS for header-scrolled dynamically
+        const style = document.createElement('style');
+        style.textContent = `
+            #main-header.header-scrolled {
+                background: rgba(255, 255, 255, 0.7) !important;
+                backdrop-filter: blur(10px) !important;
+                border-bottom: 1px solid rgba(226, 232, 240, 0.5) !important;
+            }
+            #main-header.header-scrolled .nav-link {
+                color: #1e293b !important;
+            }
+            #main-header.header-scrolled .nav-link:hover {
+                color: #ff5e00 !important;
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>

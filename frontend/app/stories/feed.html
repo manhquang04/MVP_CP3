@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Stories | WanderTale</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script src="/assets/css/tailwind-config.js"></script>
+    <style>
+        body { font-family: 'Space Grotesk', sans-serif; }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 font-display selection:bg-primary/30 flex flex-col min-h-screen">
+    <!-- Header -->
+    <div id="header-slot"></div>
+    
+    <div class="relative flex h-auto flex-1 w-full flex-col overflow-x-hidden pt-24">
+        <div class="layout-container flex h-full grow flex-col">
+            <div class="px-6 md:px-20 lg:px-40 flex flex-1 justify-center py-5">
+                <div class="layout-content-container flex flex-col w-full max-w-[1200px] flex-1">
+                    <div class="hidden">
+                                <div class="flex w-full flex-1 items-stretch rounded-full h-full bg-slate-100 dark:bg-slate-800">
+                                    <div class="text-slate-500 flex border-none items-center justify-center pl-4 rounded-l-full">
+                                        <span class="material-symbols-outlined text-xl">search</span>
+                                    </div>
+                                    <input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-r-full text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-0 border-none bg-transparent h-full placeholder:text-slate-500 px-4 pl-2 text-sm font-medium" placeholder="Search destinations..." value=""/>
+                                </div>
+                            </label>
+                        </div>
+                        <div class="flex flex-1 justify-end gap-8">
+                            <nav class="flex items-center gap-9">
+                                <a class="text-slate-600 dark:text-slate-400 hover:text-primary dark:hover:text-primary transition-colors text-sm font-bold" href="#">Home</a>
+                                <a class="text-slate-600 dark:text-slate-400 hover:text-primary dark:hover:text-primary transition-colors text-sm font-bold" href="#">Plan</a>
+                                <a class="text-primary text-sm font-bold border-b-2 border-primary pb-1" href="#">Stories</a>
+                                <a class="text-slate-600 dark:text-slate-400 hover:text-primary dark:hover:text-primary transition-colors text-sm font-bold" href="#">Profile</a>
+                            </nav>
+                            <button class="flex min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-full h-10 px-6 bg-primary text-white hover:bg-primary/90 transition-colors text-sm font-bold shadow-sm shadow-primary/20">
+                                <span class="truncate">Create Story</span>
+                            </button>
+                            <div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10 border-2 border-primary/20" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBdybWTeMqY33JPuEdiPijcpz08muPTCmIzkwv8wVVI0FxhF7kL_-ysvw6YFlRFrc00YgIwjydLh65Iqse8O0Vm4mYo2qXzWWiWb9aKqpzUsAxEoDj8olAZluPASBqQVeDJcr4gYljpT0zUScfuzOp7HPDnL6G8al3oEcD88bkEW4Ww_b7OTV3KOcIJbJWlq3FdZcw07FTVBlJtS2r0_i6-jLIMgVVR_guF_FsOPeUamfLpAPZRm9daJNi1MbPNshcibV1QB6V0nRmV");'></div>
+                        </div>
+                    </header>
+                    <main class="flex flex-col gap-8 px-4">
+                        <section>
+                            <div class="flex flex-wrap justify-between items-end gap-4 mb-6">
+                                <div class="flex min-w-72 flex-col gap-2">
+                                    <h1 class="text-5xl font-black leading-tight tracking-[-0.033em]">Travel Tales</h1>
+                                    <p class="text-slate-600 dark:text-slate-400 text-lg font-medium">Get inspired by our community's AI-generated travel stories.</p>
+                                </div>
+                                <div class="flex gap-3 flex-wrap">
+                                    <button class="flex h-10 shrink-0 items-center justify-center gap-x-2 rounded-full bg-primary text-white px-5 font-bold shadow-sm shadow-primary/20 transition-transform hover:-translate-y-0.5">
+                                        All Tales
+                                    </button>
+                                    <button class="flex h-10 shrink-0 items-center justify-center gap-x-2 rounded-full bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-300 px-5 font-bold hover:bg-slate-300 dark:hover:bg-slate-700 transition-colors">
+                                        #Healing
+                                    </button>
+                                    <button class="flex h-10 shrink-0 items-center justify-center gap-x-2 rounded-full bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-300 px-5 font-bold hover:bg-slate-300 dark:hover:bg-slate-700 transition-colors">
+                                        #Adrenaline
+                                    </button>
+                                    <button class="flex h-10 shrink-0 items-center justify-center gap-x-2 rounded-full bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-300 px-5 font-bold hover:bg-slate-300 dark:hover:bg-slate-700 transition-colors">
+                                        #Foodie
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                                <article class="flex flex-col group cursor-pointer">
+                                    <div class="relative w-full aspect-[3/4] rounded-2xl overflow-hidden mb-4 shadow-md">
+                                        <div class="absolute inset-0 bg-center bg-no-repeat bg-cover transition-transform duration-500 group-hover:scale-105" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAMuPbJrnq5odg7Wzm265LqMxc-UgI-T_YNlJDcOpx8tji8BeWN_RHl3p0ZSEPyC41ozzqSx7iz06o6DHN-pTEjq8wJBH1FTnyl4Vos-i4dhmAstxo7Dy2GPFSwn5C0dN3RaPzoyGGz5BvOqSMzbC1LtNaJjPrUx3zekYZ3Z797IgaoBZCWSEbJmyHHm6gR2mAxciufL-a0C1spkEZww9-IQAC1jcyUMZCFYHT4yrOe0e1gyNY_Y_sLvgUVw6dl9lQ_zTzqYHwI_jyK");'></div>
+                                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
+                                        <div class="absolute top-4 left-4">
+                                            <span class="inline-flex items-center gap-1 rounded-full bg-white/20 backdrop-blur-md px-3 py-1 text-xs font-bold text-white border border-white/30">
+                                                <span class="material-symbols-outlined text-[14px]">spa</span>
+                                                #Healing
+                                            </span>
+                                        </div>
+                                        <div class="absolute bottom-4 left-4 right-4 flex items-center justify-between">
+                                            <div class="flex items-center gap-2">
+                                                <div class="size-8 rounded-full bg-cover bg-center border border-white/50" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuC99-EhNc4GzdnlgS0ZnPJZD6moUj3EvysUkCrtbWGq0jEaNKeCG1MiP7fl3NceysHZRAp2zLNBRwH0Owcwuou5w7SlPwBn46YC6GjpKbAstBhK6kjna9KzuC_glJYT8jvTNs1ZA5Y8FvxcaIIszuVOSZj2u50JTdmBSruzDaKeZW0zcv4v8SRrHKEhQPXSaaHxZAkaDkuLBxsJ19jCNvpYEhwQ2UQLXEGGxrE63Y8WXkyLPTpzA8I-cqaV5KZLIw5QvzuBlJ-YMmVN");'></div>
+                                                <span class="text-white font-medium text-sm drop-shadow-md">@minh_tri</span>
+                                            </div>
+                                            <div class="flex items-center gap-1 text-white">
+                                                <span class="material-symbols-outlined text-[18px]">favorite</span>
+                                                <span class="text-xs font-bold">1.2k</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <h3 class="text-xl font-bold mb-1 group-hover:text-primary transition-colors line-clamp-1">Whispers of Da Lat</h3>
+                                        <p class="text-slate-500 dark:text-slate-400 text-sm line-clamp-2">Found absolute peace in the misty pine forests. The AI planned the perfect slow-paced morning walk for me.</p>
+                                    </div>
+                                </article>
+                                <article class="flex flex-col group cursor-pointer">
+                                    <div class="relative w-full aspect-[3/4] rounded-2xl overflow-hidden mb-4 shadow-md">
+                                        <div class="absolute inset-0 bg-center bg-no-repeat bg-cover transition-transform duration-500 group-hover:scale-105" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCF5A9RbuBeecbvDnURDkiKa952g_F62E6aqSGBFdfYj-VrlOHSmco3Xj3AQaQVW8D6mktCGzBD_hVEn-Bl7HzVMXupUYligNWkg7rs14xuxI2nScMF6zk6xRslhrlOD7oYGp3nkCK08jDtyOmZ92td1NhZ0BbiPIbkn5pBKy9GKo_HCvD6jMJYsGj_l90up_IrZn0zvxz27yrgwUSzuI6Kweg_xq0nWqMwqFf4CVUDLPbOM-4O-zCQqtwMZcaQdxMj5WxYTLS-wPL5");'></div>
+                                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
+                                        <div class="absolute top-4 left-4">
+                                            <span class="inline-flex items-center gap-1 rounded-full bg-primary/80 backdrop-blur-md px-3 py-1 text-xs font-bold text-white border border-white/30">
+                                                <span class="material-symbols-outlined text-[14px]">bolt</span>
+                                                #Adrenaline
+                                            </span>
+                                        </div>
+                                        <div class="absolute bottom-4 left-4 right-4 flex items-center justify-between">
+                                            <div class="flex items-center gap-2">
+                                                <div class="size-8 rounded-full bg-cover bg-center border border-white/50" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCF5Ez7K4eLKTqeNZsVY1MnTJwM3L2DfsmY-pWDTHHc4qF5C7RCKvFWGWqRhUY9Z2I4z643nSvbJbawk1TAKM1LfHTqSzBhbLaGYN_7kt_X6tRWas-NhJofLNtLa8HaLCpV_3LkT7HO9Osb9rX178XVHZ1X6VjN-c4gJuQW32RPlo-Hz_3VMehIWv6mJdOg2SGwKngqj4tr3iCRMWyi-8hTi81DBAHX3Ce-vHowSq4Z24ySTr9iwbHruZ0lt_uMX_meZTJQh_XoH5Fg");'></div>
+                                                <span class="text-white font-medium text-sm drop-shadow-md">@lan_anh</span>
+                                            </div>
+                                            <div class="flex items-center gap-1 text-white">
+                                                <span class="material-symbols-outlined text-[18px]">favorite</span>
+                                                <span class="text-xs font-bold">3.4k</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <h3 class="text-xl font-bold mb-1 group-hover:text-primary transition-colors line-clamp-1">Fansipan Conquest</h3>
+                                        <p class="text-slate-500 dark:text-slate-400 text-sm line-clamp-2">Conquering the roof of Indochina was the craziest thing! The suggested trekking route was spot on.</p>
+                                    </div>
+                                </article>
+                                <article class="flex flex-col group cursor-pointer">
+                                    <div class="relative w-full aspect-[3/4] rounded-2xl overflow-hidden mb-4 shadow-md">
+                                        <div class="absolute inset-0 bg-center bg-no-repeat bg-cover transition-transform duration-500 group-hover:scale-105" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuA1WPzaSwvnAsuR_d5zHdThYgsHTf_rZjwK3xb12BHRxFp8zYZ0LBZm4Sr1XUgSCP9AUMY72snQSo23j3NhsuYxaPUEJfVTy0GiGOSUSutAtEPgtaL6E1Gj_54R_4_30Rfuv_4ck8U7TP5-dvPGqDLZAJSPt4UiYb5To6UwI0uMzAZZx25XWJYGA_Qns-gQStbu6ucsYcUXPPjW6gzh31-OKnNVIL0ANZ0n0QBx9Mko7G1JqevUb_mBrRcIDOFMiMXliAG_L3EHzGSW");'></div>
+                                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
+                                        <div class="absolute top-4 left-4">
+                                            <span class="inline-flex items-center gap-1 rounded-full bg-white/20 backdrop-blur-md px-3 py-1 text-xs font-bold text-white border border-white/30">
+                                                <span class="material-symbols-outlined text-[14px]">restaurant</span>
+                                                #Foodie
+                                            </span>
+                                        </div>
+                                        <div class="absolute bottom-4 left-4 right-4 flex items-center justify-between">
+                                            <div class="flex items-center gap-2">
+                                                <div class="size-8 rounded-full bg-cover bg-center border border-white/50" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDLTtMgALyyTrw-5Up3UMnVFVmbjJuaVnHdiLZsXOGCIRxYFOeWVxCsk4AOJ5JfZBKEcC9fsnEV3GeZUrYujeL6GWcohEs1BPp5lw_YgeOf7zxRZcMx50bOLVH2Av8jCS3xONm9lBY-bmKWiyBd1dirGLWxZczlSj1WmZ3VqbhpYr-OkWN4eiN0GbyRYZe-w5a-rGAuVwV0LwyRWcwbH-Q0rsnw0SNRZeMgYgMLGuYW1r45mUVlzz-URBj4NggTjPD5egk1r4mGrgoD");'></div>
+                                                <span class="text-white font-medium text-sm drop-shadow-md">@hoang_nam</span>
+                                            </div>
+                                            <div class="flex items-center gap-1 text-white">
+                                                <span class="material-symbols-outlined text-[18px]">favorite</span>
+                                                <span class="text-xs font-bold">892</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <h3 class="text-xl font-bold mb-1 group-hover:text-primary transition-colors line-clamp-1">Hanoi Street Eats</h3>
+                                        <p class="text-slate-500 dark:text-slate-400 text-sm line-clamp-2">Eating my way through the bustling streets of Hanoi. Found hidden gems I never knew existed.</p>
+                                    </div>
+                                </article>
+                                <article class="flex flex-col group cursor-pointer">
+                                    <div class="relative w-full aspect-[3/4] rounded-2xl overflow-hidden mb-4 shadow-md">
+                                        <div class="absolute inset-0 bg-center bg-no-repeat bg-cover transition-transform duration-500 group-hover:scale-105" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBC2sQNu29wfolNxJS5152aTkipZ1KEJx_oOerdvb6Y-Xz37ebQ_pmh4v2D58gG_VfIaaUt-oWpG94xm7arPJS_-uohHi8L_qVSkdqs7srKUuX5gQVtb9emMDzcdJejIbTbzb6t9K2N55QKAjcijJKghvleyHDZF97JLqIDYzf843xjciCnl7GU3sC3G0UkIGDSql6Jz-89A_ycKpFZ9u4SWiN7ZlkroO-pHrW6e5retGxP8YrLl0FbEwUt-pOM3I_Wy9p6iDvD4O6M");'></div>
+                                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
+                                        <div class="absolute top-4 left-4">
+                                            <span class="inline-flex items-center gap-1 rounded-full bg-white/20 backdrop-blur-md px-3 py-1 text-xs font-bold text-white border border-white/30">
+                                                <span class="material-symbols-outlined text-[14px]">temple_buddhist</span>
+                                                #Culture
+                                            </span>
+                                        </div>
+                                        <div class="absolute bottom-4 left-4 right-4 flex items-center justify-between">
+                                            <div class="flex items-center gap-2">
+                                                <div class="size-8 rounded-full bg-cover bg-center border border-white/50" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCBPmWIYDOvA0kymlrKTRjXVQmlD1VuneZaQ7sBrcG7dICk6wZ2UoKGGyrtshICM1dv1wsD2wvMoBh5Xpb7w-eK9ksMc0QzXn4nFN12rZjQteUa1FOUQyEK0wiPlHYyVs-FnikIrCl2IDO4QaFtKRhLrn3SshMSDqHuiJsmZs-YS0oC6nAB9UnNOPAFuYjwcMB2jJID_KmMCUwZVPJrb1l_rvkLJwPMKBQHJxu01v6wiuIOYG8FQ19ZF2QCz4Em-ut5GmtsYGIJvHaD");'></div>
+                                                <span class="text-white font-medium text-sm drop-shadow-md">@ngoc_diep</span>
+                                            </div>
+                                            <div class="flex items-center gap-1 text-white">
+                                                <span class="material-symbols-outlined text-[18px]">favorite</span>
+                                                <span class="text-xs font-bold">2.1k</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <h3 class="text-xl font-bold mb-1 group-hover:text-primary transition-colors line-clamp-1">Magic of Hoi An</h3>
+                                        <p class="text-slate-500 dark:text-slate-400 text-sm line-clamp-2">Exploring the ancient architecture under the glow of thousand lanterns. Truly magical.</p>
+                                    </div>
+                                </article>
+                            </div>
+                        </section>
+                        <section class="mt-8 mb-12">
+                            <div class="flex items-center justify-between mb-6">
+                                <h2 class="text-3xl font-black leading-tight tracking-[-0.015em]">Community Vibes</h2>
+                                <button class="text-primary font-bold hover:underline flex items-center gap-1">
+                                    View all <span class="material-symbols-outlined text-sm">arrow_forward</span>
+                                </button>
+                            </div>
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                                <div class="bg-white dark:bg-slate-900 p-6 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-800">
+                                    <div class="flex items-center gap-4 mb-4">
+                                        <div class="size-12 rounded-full bg-cover bg-center" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCjiuhv-szkMsDdgHs-OOxjlpc-ppb6e2VdvL8WRE52jkhNgJlZlvwvDX59TTsoktGliYKct3Y64G6EjQrSVwr58KJyCIiQhzPye4QfglFMRjY4Xl1N4eRls41BxA9tcw-GVcXMiHUeYaSyWOHzy-ZQ2vaRp5yE4NGjh6xlNMAqxRzdAA0mMmRjKsw_enceBLkMzkmQcFp5gQgg_u6ZugS_GDiktqdWzPknjLSWfu5Z6yV9WAX9JgP01468ryhoTmBNf-iR12rF-i9w");'></div>
+                                        <div>
+                                            <h4 class="font-bold">Tran Vu</h4>
+                                            <p class="text-xs text-slate-500">Solo Traveler</p>
+                                        </div>
+                                        <div class="ml-auto text-primary flex">
+                                            <span class="material-symbols-outlined text-lg">star</span>
+                                            <span class="material-symbols-outlined text-lg">star</span>
+                                            <span class="material-symbols-outlined text-lg">star</span>
+                                            <span class="material-symbols-outlined text-lg">star</span>
+                                            <span class="material-symbols-outlined text-lg">star</span>
+                                        </div>
+                                    </div>
+                                    <p class="text-slate-600 dark:text-slate-400 italic">"The AI itinerary for my trip to Sapa was incredible. It found a homestay I would never have discovered on my own. Highly recommend WanderTale!"</p>
+                                </div>
+                                <div class="bg-white dark:bg-slate-900 p-6 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-800">
+                                    <div class="flex items-center gap-4 mb-4">
+                                        <div class="size-12 rounded-full bg-cover bg-center" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDQi416VPEBHNIMNSTXLMGsdqbbJPaOfdtYbn6htoufEa6R2Ifz6M5v1ZI0d8W-uHYmvdD887Kn6q-hNPPvOU1JXTO9fqaNpvHHW6E0XJuHOmSNWBsE-b4q2QfI-H3KtMpzHcUXNHKh9vraGMUAq-_C3dRDvW_34tNfuI-UbZ-csMq4NfeNVCc6Afme5aoI8AUj95BVdfDJl-WPjSbJcgiDU-yS1z0VpBW_8ofCdtS9gNMAYJ7RkMq9oxmP8QCNDoqENiwdYV6xQPNb");'></div>
+                                        <div>
+                                            <h4 class="font-bold">Mai Phuong</h4>
+                                            <p class="text-xs text-slate-500">Food Enthusiast</p>
+                                        </div>
+                                        <div class="ml-auto text-primary flex">
+                                            <span class="material-symbols-outlined text-lg">star</span>
+                                            <span class="material-symbols-outlined text-lg">star</span>
+                                            <span class="material-symbols-outlined text-lg">star</span>
+                                            <span class="material-symbols-outlined text-lg">star</span>
+                                            <span class="material-symbols-outlined text-lg">star_half</span>
+                                        </div>
+                                    </div>
+                                    <p class="text-slate-600 dark:text-slate-400 italic">"Generated a food tour in Hue in seconds. The stories other users share gave me so much inspiration for my next adventure."</p>
+                                </div>
+                                <div class="bg-primary/10 dark:bg-primary/5 p-6 rounded-2xl border border-primary/20 flex flex-col items-center justify-center text-center">
+                                    <span class="material-symbols-outlined text-4xl text-primary mb-3">auto_awesome</span>
+                                    <h4 class="font-bold text-lg mb-2">Share Your Tale</h4>
+                                    <p class="text-sm text-slate-600 dark:text-slate-400 mb-4">Let our AI help you craft the perfect story for your recent trip.</p>
+                                    <button class="px-5 py-2 rounded-full bg-primary text-white font-bold text-sm shadow-sm hover:bg-primary/90 transition-colors">Start Writing</button>
+                                </div>
+                            </div>
+                        </section>
+                    </main>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Footer -->
+    <div id="footer-slot"></div>
+    
+    <script src="/assets/js/auth.js"></script>
+    <script src="/assets/js/i18n.js"></script>
+    <script src="/assets/js/component-loader.js"></script>
+    <script>
+        // Load header and footer
+        ComponentLoader.load('header-app', 'header-slot');
+        ComponentLoader.load('footer-app', 'footer-slot');
+    </script>
+</body>
+</html>

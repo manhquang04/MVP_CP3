@@ -1,0 +1,46 @@
+<header id="main-header" class="fixed top-6 left-1/2 transform -translate-x-1/2 w-[90%] max-w-7xl z-50 rounded-full px-8 py-4 flex items-center justify-between bg-white/90 dark:bg-slate-900/90 backdrop-blur-md border border-slate-200/50 dark:border-slate-700/50 shadow-sm transition-all duration-300">
+    <div class="flex items-center gap-3">
+        <div class="size-8 flex items-center justify-center">
+            <span class="material-symbols-outlined text-3xl text-primary">explore</span>
+        </div>
+        <h2 class="text-2xl font-serif font-bold tracking-wide hidden sm:block">
+            <a href="/app/planner.html" class="text-slate-900 dark:text-white hover:text-primary transition-colors">WanderTale</a>
+        </h2>
+    </div>
+    <div class="hidden md:flex items-center gap-8 font-medium tracking-wide">
+        <a class="text-slate-600 dark:text-slate-400 hover:text-primary transition-colors text-sm uppercase" href="/" data-i18n="home">Home</a>
+        <a class="text-slate-600 dark:text-slate-400 hover:text-primary transition-colors text-sm uppercase" href="/app/planner.html">Plan</a>
+        <a class="text-slate-600 dark:text-slate-400 hover:text-primary transition-colors text-sm uppercase" href="/app/explore/map.html" data-i18n="explore">Explore</a>
+        <a class="text-slate-600 dark:text-slate-400 hover:text-primary transition-colors text-sm uppercase" href="/public/community-stories.html" data-i18n="stories">Stories</a>
+    </div>
+    <div class="flex items-center gap-4">
+        <!-- Language Toggle: black on all app pages -->
+        <div class="flex rounded-full overflow-hidden border border-slate-300">
+            <button class="lang-btn px-3 py-1.5 text-xs font-bold text-slate-900 bg-white hover:bg-slate-100 transition-all" data-lang="en">EN</button>
+            <button class="lang-btn px-3 py-1.5 text-xs font-bold active" data-lang="vi">VI</button>
+        </div>
+        <button class="hidden sm:flex min-w-[84px] cursor-pointer items-center justify-center rounded-full h-10 px-6 bg-primary text-white hover:bg-primary/90 transition-colors text-sm font-bold tracking-wide uppercase">
+            <span class="material-symbols-outlined text-lg mr-1">add</span>
+            <span data-i18n="create">Create</span>
+        </button>
+        <div class="relative">
+            <button id="profile-avatar-btn" type="button" class="w-10 h-10 rounded-full border-2 border-primary/20 hover:border-primary/40 transition-colors overflow-hidden bg-white dark:bg-slate-800 shadow-md focus:outline-none focus:ring-2 focus:ring-primary/50" aria-label="User menu">
+                <img id="profile-avatar-img" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBdybWTeMqY33JPuEdiPijcpz08muPTCmIzkwv8wVVI0FxhF7kL_-ysvw6YFlRFrc00YgIwjydLh65Iqse8O0Vm4mYo2qXzWWiWb9aKqpzUsAxEoDj8olAZluPASBqQVeDJcr4gYljpT0zUScfuzOp7HPDnL6G8al3oEcD88bkEW4Ww_b7OTV3KOcIJbJWlq3FdZcw07FTVBlJtS2r0_i6-jLIMgVVR_guF_FsOPeUamfLpAPZRm9daJNi1MbPNshcibV1QB6V0nRmV" alt="Avatar" class="w-full h-full object-cover"/>
+            </button>
+            <div id="profile-dropdown" class="absolute left-1/2 -translate-x-1/2 top-full mt-2 py-2 w-48 bg-white dark:bg-slate-800 rounded-xl shadow-xl border border-slate-100 dark:border-slate-700 z-[200] opacity-0 scale-95 origin-top pointer-events-none transition-all duration-200 ease-out">
+                <a href="/auth/change-password.html" class="flex items-center gap-2 px-4 py-2.5 text-sm text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors">
+                    <span class="material-symbols-outlined text-lg">lock</span>
+                    <span data-i18n="changePassword">Change Password</span>
+                </a>
+                <div class="border-t border-slate-100 dark:border-slate-700 my-1"></div>
+                <button type="button" id="logout-btn" class="flex items-center gap-2 w-full px-4 py-2.5 text-sm text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors text-left">
+                    <span class="material-symbols-outlined text-lg">logout</span>
+                    <span data-i18n="logout">Log Out</span>
+                </button>
+            </div>
+        </div>
+    </div>
+</header>
+<style>
+    #main-header .lang-btn.active { background: #0f172a !important; color: white !important; }
+</style>

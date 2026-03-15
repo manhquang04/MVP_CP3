@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>AI Features | WanderTale</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script src="/assets/css/tailwind-config.js"></script>
+    <style>
+        body { font-family: 'Space Grotesk', sans-serif; }
+    </style>
+</head>
+<body class="font-display bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 min-h-screen relative overflow-x-hidden">
+    <!-- Header -->
+    <div id="header-slot"></div>
+    
+    <div class="fixed top-0 left-0 w-full h-full overflow-hidden pointer-events-none z-0">
+        <div class="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-primary/10 rounded-full blur-[100px]"></div>
+        <div class="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] bg-primary/5 rounded-full blur-[120px]"></div>
+    </div>
+    <div class="relative z-10 flex flex-col min-h-screen pt-24">
+        <main class="flex-grow flex flex-col items-center justify-center px-4 py-16 md:py-24 max-w-7xl mx-auto w-full">
+            <div class="flex flex-col items-center text-center gap-6 mb-16 max-w-3xl px-4">
+                <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary font-medium text-sm mb-2">
+                    <span class="material-symbols-outlined text-base">auto_awesome</span>
+                    <span data-i18n="poweredByAI">Powered by AI</span>
+                </div>
+                <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight leading-tight text-slate-900 dark:text-slate-100" data-i18n="wanderTaleAIFeatures">
+                    WanderTale AI Features
+                </h1>
+                <p class="text-lg md:text-xl text-slate-600 dark:text-slate-400 font-normal leading-relaxed" data-i18n="discoverHowAI">
+                    Discover how our AI-powered travel planning and storytelling web application can help you explore Vietnam like never before.
+                </p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 w-full px-4 md:px-8">
+                <div class="flex flex-col bg-white dark:bg-slate-900 rounded-xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] dark:shadow-none border border-slate-100 dark:border-slate-800 overflow-hidden hover:-translate-y-1 hover:shadow-[0_20px_40px_rgb(0,0,0,0.08)] transition-all duration-300 group">
+                    <div class="w-full aspect-video bg-slate-50 dark:bg-slate-800 p-6 flex items-center justify-center relative overflow-hidden">
+                        <div class="absolute inset-0 bg-gradient-to-br from-primary/20 to-transparent opacity-50 group-hover:opacity-100 transition-opacity duration-500"></div>
+                        <div class="w-full h-full bg-center bg-no-repeat bg-cover rounded-lg relative z-10 shadow-sm transition-transform duration-500 group-hover:scale-105" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuB_ueQUcvquTfTtyv9bNw5-KQFkUnStinbvJWSC2a2f3QpPD4m7wk4LoY1L4_yUCCdUmqi64pZHUQcjXyua0EfQ31C8SAoYEg0VpboylqUgfsehqVYCZN3SVooH1lQy0qQmWvU3xRIj854GHNpFs2cmXo4Gy3pav5uRIF92WEmd1-wkjqexHgrlzjNHyU5qP7Ii9e7QzakKWBgyYMr9eHYdCivLUdpeLwaGSSP77oOuYhttjpZPjTKuUT2NwmC_O4Z49LPmQDcuH_xg');"></div>
+                    </div>
+                    <div class="p-8 flex flex-col gap-4 flex-1">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary">
+                                <span class="material-symbols-outlined">mood</span>
+                            </div>
+                            <h3 class="text-xl font-bold text-slate-900 dark:text-slate-100" data-i18n="aiVibeCheck">AI Vibe Check</h3>
+                        </div>
+                        <p class="text-slate-600 dark:text-slate-400 leading-relaxed flex-1 text-base" data-i18n="aiVibeCheckDescFeature">
+                            Match your current mood to the perfect destination. Our AI suggests hidden gems and hotspots based on your aesthetic preferences.
+                        </p>
+                        <a class="inline-flex items-center gap-2 text-primary font-semibold mt-4 hover:text-primary/80 transition-colors w-fit group/link" href="#">
+                            <span data-i18n="learnMore">Learn more</span> 
+                            <span class="material-symbols-outlined text-sm group-hover/link:translate-x-1 transition-transform">arrow_forward</span>
+                        </a>
+                    </div>
+                </div>
+                <div class="flex flex-col bg-white dark:bg-slate-900 rounded-xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] dark:shadow-none border border-slate-100 dark:border-slate-800 overflow-hidden hover:-translate-y-1 hover:shadow-[0_20px_40px_rgb(0,0,0,0.08)] transition-all duration-300 group">
+                    <div class="w-full aspect-video bg-slate-50 dark:bg-slate-800 p-6 flex items-center justify-center relative overflow-hidden">
+                        <div class="absolute inset-0 bg-gradient-to-bl from-primary/20 to-transparent opacity-50 group-hover:opacity-100 transition-opacity duration-500"></div>
+                        <div class="w-full h-full bg-center bg-no-repeat bg-cover rounded-lg relative z-10 shadow-sm transition-transform duration-500 group-hover:scale-105" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuB6gHkz-ebvCsMA2VCvhB3bSrSjIIoApyscCvpSgdvw4uSXUUjOF4BeXi_ZJZv1iNf-LORi83U5cjJiNui0GL_LZSQ7MDJo-jWg5UOkUDo05sbg_MjZ1627LxrQlwOf8bTXD4eHV5k04F2ZhwksMn2wHwPWnPnWkm8WFEq7n91joxhtPjxNSk2QmICU6-P6O5HUX2JD3TB257rcP9Pn0NjGg-6HabO6uYJ4QD615XViI82lMfg2fEHKSVle2qj-APIqFltIR0X8sETr');"></div>
+                    </div>
+                    <div class="p-8 flex flex-col gap-4 flex-1">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary">
+                                <span class="material-symbols-outlined">history_edu</span>
+                            </div>
+                            <h3 class="text-xl font-bold text-slate-900 dark:text-slate-100" data-i18n="autoMagicTimeline">Auto-Magic Timeline</h3>
+                        </div>
+                        <p class="text-slate-600 dark:text-slate-400 leading-relaxed flex-1 text-base" data-i18n="autoMagicTimelineDescFeature">
+                            Turn your chaotic camera roll into a beautifully narrated story. We automatically organize your photos into a seamless journey.
+                        </p>
+                        <a class="inline-flex items-center gap-2 text-primary font-semibold mt-4 hover:text-primary/80 transition-colors w-fit group/link" href="#">
+                            <span data-i18n="learnMore">Learn more</span> 
+                            <span class="material-symbols-outlined text-sm group-hover/link:translate-x-1 transition-transform">arrow_forward</span>
+                        </a>
+                    </div>
+                </div>
+                <div class="flex flex-col bg-white dark:bg-slate-900 rounded-xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] dark:shadow-none border border-slate-100 dark:border-slate-800 overflow-hidden hover:-translate-y-1 hover:shadow-[0_20px_40px_rgb(0,0,0,0.08)] transition-all duration-300 group">
+                    <div class="w-full aspect-video bg-slate-50 dark:bg-slate-800 p-6 flex items-center justify-center relative overflow-hidden">
+                        <div class="absolute inset-0 bg-gradient-to-t from-primary/20 to-transparent opacity-50 group-hover:opacity-100 transition-opacity duration-500"></div>
+                        <div class="w-full h-full bg-center bg-no-repeat bg-cover rounded-lg relative z-10 shadow-sm transition-transform duration-500 group-hover:scale-105" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuALz_0Xn3D5P8WllVZQSGVFZU8xhSEhXzkuy4itLfkUJBjCaBzTXPUdVjaZGgaYO04PwuxImhMqvYtMa1GJE6zSuQvSV5H0v2X2qdrg66bAO4W1jxRO-CrtujBqTmhkRwLAXO_4kydU8EP9DmVf8HfdQpqUs4FBkEn9aSr-eBZvFWURb_STx0xPgORk8TXkcYj6fdFFBC8wqqaPKYpnSrHLuj5SZHVsiVUyXkZjGtOHPmigqb6Txu2sPotMxHzC9DC0-qVE4gN1LYvX');"></div>
+                    </div>
+                    <div class="p-8 flex flex-col gap-4 flex-1">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary">
+                                <span class="material-symbols-outlined">share</span>
+                            </div>
+                            <h3 class="text-xl font-bold text-slate-900 dark:text-slate-100" data-i18n="socialSync">Social Sync</h3>
+                        </div>
+                        <p class="text-slate-600 dark:text-slate-400 leading-relaxed flex-1 text-base" data-i18n="socialSyncDescFeature">
+                            Share your epic journeys seamlessly across platforms. Collaborate with friends on itineraries and create shared travel memories.
+                        </p>
+                        <a class="inline-flex items-center gap-2 text-primary font-semibold mt-4 hover:text-primary/80 transition-colors w-fit group/link" href="#">
+                            <span data-i18n="learnMore">Learn more</span> 
+                            <span class="material-symbols-outlined text-sm group-hover/link:translate-x-1 transition-transform">arrow_forward</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="mt-20">
+                <a href="/auth/signup.html" class="bg-primary hover:bg-primary/90 text-white font-bold py-4 px-8 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 flex items-center gap-2 text-lg w-fit mx-auto">
+                    <span data-i18n="startYourJourney">Start Your Journey</span>
+                    <span class="material-symbols-outlined">explore</span>
+                </a>
+            </div>
+        </main>
+    </div>
+    
+    <!-- Footer -->
+    <div id="footer-slot"></div>
+    
+    <script src="/assets/js/auth.js"></script>
+    <script src="/assets/js/i18n.js"></script>
+    <script src="/assets/js/component-loader.js"></script>
+    <script>
+        // Load header and footer
+        ComponentLoader.load('header-public', 'header-slot');
+        ComponentLoader.load('footer-public', 'footer-slot');
+        
+        // Add CSS for header-scrolled dynamically
+        const style = document.createElement('style');
+        style.textContent = `
+            #main-header.header-scrolled {
+                background: rgba(255, 255, 255, 0.9) !important;
+                backdrop-filter: blur(10px) !important;
+                border: 1px solid rgba(226, 232, 240, 0.5) !important;
+            }
+            #main-header.header-scrolled .nav-link {
+                color: #1e293b !important;
+            }
+            #main-header.header-scrolled .nav-link:hover {
+                color: #f48c25 !important;
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>

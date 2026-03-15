@@ -1,0 +1,62 @@
+<aside class="w-80 border-r border-primary/10 bg-white dark:bg-background-dark flex flex-col shrink-0">
+    <div class="p-6 flex items-center gap-3">
+        <div class="bg-primary p-2 rounded-xl text-white">
+            <span class="material-symbols-outlined text-2xl">auto_awesome</span>
+        </div>
+        <div>
+            <h1 class="text-xl font-bold tracking-tight">
+                <a href="/app/planner.html" class="text-slate-900 dark:text-white hover:text-primary transition-colors">WanderTale</a>
+            </h1>
+            <p class="text-xs text-primary font-medium uppercase tracking-wider">AI Travel Buddy</p>
+        </div>
+    </div>
+    
+    <div class="px-4 mb-6">
+        <a href="/app/trips/create.html" class="w-full bg-primary hover:bg-primary/90 text-white font-bold py-4 rounded-xl flex items-center justify-center gap-2 transition-all shadow-lg shadow-primary/20">
+            <span class="material-symbols-outlined">add_circle</span>
+            Tạo chuyến đi mới
+        </a>
+    </div>
+    
+    <nav class="flex-1 overflow-y-auto px-4 space-y-2">
+        <p class="px-2 text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-2">Menu</p>
+        
+        <a href="/app/planner.html" class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-slate-100 dark:hover:bg-white/5 transition-colors text-slate-700 dark:text-slate-300">
+            <span class="material-symbols-outlined">edit_calendar</span>
+            <span class="text-sm font-medium">Trip Planner</span>
+        </a>
+        
+        <a href="/app/explore/map.html" class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-slate-100 dark:hover:bg-white/5 transition-colors text-slate-700 dark:text-slate-300">
+            <span class="material-symbols-outlined">map</span>
+            <span class="text-sm font-medium">Explore Map</span>
+        </a>
+        
+        <a href="/public/community-stories.html" class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-slate-100 dark:hover:bg-white/5 transition-colors text-slate-700 dark:text-slate-300">
+            <span class="material-symbols-outlined">auto_stories</span>
+            <span class="text-sm font-medium">Stories</span>
+        </a>
+        
+        <a href="/app/profile/profile.html" class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-slate-100 dark:hover:bg-white/5 transition-colors text-slate-700 dark:text-slate-300">
+            <span class="material-symbols-outlined">person</span>
+            <span class="text-sm font-medium">Profile</span>
+        </a>
+    </nav>
+    
+    <div class="p-4 border-t border-slate-100 dark:border-white/10">
+        <div class="flex items-center gap-3 p-2 rounded-xl hover:bg-slate-100 dark:hover:bg-white/5 cursor-pointer">
+            <div class="w-10 h-10 rounded-full bg-primary/20 border-2 border-primary/30 overflow-hidden">
+                <img class="w-full h-full object-cover" id="user-avatar" alt="User" src=""/>
+            </div>
+            <div class="flex-1 overflow-hidden">
+                <p class="text-sm font-bold truncate text-slate-900 dark:text-white" id="user-name">Loading...</p>
+                <p class="text-[10px] text-slate-500 font-medium">Pro Traveler</p>
+            </div>
+            <a href="/app/profile/settings.html">
+                <span class="material-symbols-outlined text-slate-400">settings</span>
+            </a>
+        </div>
+        <button onclick="AuthGuard.logout()" class="w-full mt-2 text-xs text-slate-500 hover:text-red-500 transition-colors">
+            Logout
+        </button>
+    </div>
+</aside>

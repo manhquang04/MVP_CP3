@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#f48c25",
+                        "background-light": "#f8f7f5",
+                        "background-dark": "#221910",
+                    },
+                    fontFamily: {
+                        "display": ["Space Grotesk"]
+                    },
+                    borderRadius: {"DEFAULT": "1rem", "lg": "2rem", "xl": "3rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+    <style>.lang-btn{transition:all .2s;color:#0f172a;background:#fff;border:1px solid #cbd5e1}.lang-btn:hover{background:#f1f5f9}.lang-btn.active{background:#0f172a!important;color:#fff!important}</style>
+    <title>Login | WanderTale</title>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100 min-h-screen flex items-center justify-center p-4">
+    <div class="fixed inset-0 z-0">
+        <div class="absolute inset-0 bg-cover bg-center opacity-40 grayscale-[20%] dark:grayscale-[50%]" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDJsTGAludXyANULelpfAK4x5p01W5XMdkXPVilAUqH_dekS6pYPWZxmre1x3aLqfzzTD4X74OoWpiEtJSTF7laPbyML01B5JKg2i5w2xfC6qBC_kheOgkV4jGCKecKK5SQo1VxS1UbOX5iYNoG0gJuvQzz0MRRqkQ3sORxtxvKoLXGiTAr9U0eIQjLS95mZLdzHdpcSYd2PLW8Cs9XUPbSeE8u9n7UL4-mOyP9rXev-B9PhkmXWgI970PFTYvUQIAkIF1TiCy9p0Yf');"></div>
+        <div class="absolute inset-0 bg-gradient-to-br from-primary/20 via-background-light/80 to-background-light dark:from-primary/10 dark:via-background-dark/80 dark:to-background-dark"></div>
+    </div>
+    <div class="relative z-10 w-full max-w-[1100px] grid grid-cols-1 lg:grid-cols-2 bg-white/40 dark:bg-background-dark/40 backdrop-blur-xl rounded-xl shadow-2xl overflow-hidden border border-white/20 dark:border-white/5">
+        <div class="hidden lg:flex flex-col justify-between p-12 relative overflow-hidden group">
+            <div class="absolute inset-0 z-0 bg-primary/10"></div>
+            <div class="absolute top-0 right-0 -mr-20 -mt-20 w-64 h-64 bg-primary/20 rounded-full blur-3xl"></div>
+            <div class="relative z-10">
+                <div class="flex items-center gap-2 mb-8">
+                    <span class="material-symbols-outlined text-4xl text-primary">explore</span>
+                    <h1 class="text-3xl font-bold tracking-tight">WanderTale</h1>
+                </div>
+                <h2 class="text-5xl font-bold leading-tight mb-6">Explore the <span class="text-primary italic">unseen</span> side of Vietnam.</h2>
+                <p class="text-lg text-slate-700 dark:text-slate-300 max-w-sm">Connect with locals, find hidden gems, and write your own travel narrative.</p>
+            </div>
+            <div class="relative z-10 flex items-center gap-4">
+                <div class="flex -space-x-4">
+                    <img alt="User 1" class="w-10 h-10 rounded-full border-2 border-white" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAaIMVa1NsKfLdyDfuFkMBrAhatT-cYa6Sts1LRjN-r482gODi3bwxMZ0i5ECqXx_oUA34gCnMtXH-iqz2vzWRcc6L1y6bjqYENTimtdC8AXUMxugGb3WaMn9k43SDxD38gIVrl4M4BhJlEDjWwYLBDinWx5hs25zNNC3tpY4ukLOXmGMgdmw6h4hpGDodJiBY47sCUrfHO9W0WA5nX52KH2aTaoncH3n65k1xFtc1fmiUH0zNT0ZOhxvm6mrL6gOOtURtzPpm5f6J2"/>
+                    <img alt="User 2" class="w-10 h-10 rounded-full border-2 border-white" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDmowaQIh4NUBzjh4o-ghdzw3czzSsntL0L4OnyCRLntUd4LGyIej1r1YL_y695eWQwhfgoCblCuKzli0wGdytBfwspR1pXrbGcHkP5gb4eGAz-VJOJMHZ8ZWlPAomVTdy_CeW9bsJDViH7gsnBVx1g4klYhZzJ8jbTPvVkSOkSKXFqfeYFWGNmVjjf8EM4oDV2pDKJWmSbud0Xl4ySdnVDouj60hRljetq2XHc3p6l60fDMp4jImFLn-L4aB_Y0TqS7jU2KSzO0HCL"/>
+                    <img alt="User 3" class="w-10 h-10 rounded-full border-2 border-white" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAdhJIKhU8k5y4hxpAS8pNfpu0ia0VU37sh7i2WOiy12wkw-iWtvdFsImYy_ko8YcsNeKUjt4f-0pbUGf93FNE3zYHb4lhDe3-0bZdkb9xPhKRDmtGy8Qhce4bQNiV1nPqeRbsE4gTix62YFUF9i5dIvlkauDswkV_Vo3DCArK0YiVP70QfZiRMapqBUOgI9_196xRQIcnr-Dm-omDjnzrPmXnjsT74kMtPrjw39Dhn2IVJjX6clJuEt_5U9PXlD8HUdWJTwu30LZg1"/>
+                </div>
+                <p class="text-sm font-medium" data-i18n="joinExplorers">Join 20k+ explorers</p>
+            </div>
+        </div>
+        <div class="p-8 md:p-12 lg:p-16 flex flex-col justify-center relative">
+            <div class="absolute top-6 right-6 flex items-center gap-3">
+                <div class="flex rounded-full overflow-hidden border border-primary/20">
+                    <button class="lang-btn px-3 py-1.5 text-xs font-bold" data-lang="en">EN</button>
+                    <button class="lang-btn px-3 py-1.5 text-xs font-bold active" data-lang="vi">VI</button>
+                </div>
+                <a href="/auth/signup.html" class="flex items-center gap-2 px-4 py-2 rounded-full border-2 border-primary text-primary hover:bg-primary hover:text-white transition-all font-bold text-sm">
+                    <span class="material-symbols-outlined text-lg">person_add</span>
+                    <span data-i18n="signup">Sign Up</span>
+                </a>
+            </div>
+            <div class="mb-10 lg:hidden">
+                <div class="flex items-center gap-2">
+                    <span class="material-symbols-outlined text-3xl text-primary">explore</span>
+                    <span class="text-2xl font-bold">WanderTale</span>
+                </div>
+            </div>
+            <div class="mb-8">
+                <h3 class="text-3xl font-bold mb-2" data-i18n="welcomeBack">Welcome back</h3>
+                <p class="text-slate-600 dark:text-slate-400" data-i18n="readyForAdventure">Ready for your next adventure?</p>
+            </div>
+            <div id="error-message" class="hidden mb-4 p-4 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-xl">
+                <p class="text-sm text-red-600 dark:text-red-400 font-medium"></p>
+            </div>
+            <form id="login-form" class="space-y-5">
+                <div class="flex flex-col gap-2">
+                    <label class="text-sm font-semibold px-1 text-slate-700 dark:text-slate-300" data-i18n="email">Email Address</label>
+                    <div class="relative group">
+                        <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-primary transition-colors text-xl">mail</span>
+                        <input id="email" name="email" class="w-full pl-12 pr-4 py-4 rounded-xl bg-white/50 dark:bg-white/5 border border-primary/20 focus:border-primary focus:ring-4 focus:ring-primary/10 transition-all outline-none" type="email" required/>
+                    </div>
+                </div>
+                <div class="flex flex-col gap-2">
+                    <div class="flex justify-between items-center px-1">
+                        <label class="text-sm font-semibold text-slate-700 dark:text-slate-300" data-i18n="password">Password</label>
+                        <a class="text-xs font-bold text-primary hover:underline" href="#" data-i18n="forgotPassword">Forgot?</a>
+                    </div>
+                    <div class="relative group">
+                        <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-primary transition-colors text-xl">lock</span>
+                        <input id="password" name="password" class="w-full pl-12 pr-4 py-4 rounded-xl bg-white/50 dark:bg-white/5 border border-primary/20 focus:border-primary focus:ring-4 focus:ring-primary/10 transition-all outline-none" type="password" required/>
+                    </div>
+                </div>
+                <button id="login-btn" class="w-full py-4 bg-primary text-white font-bold rounded-xl shadow-lg shadow-primary/30 hover:shadow-primary/50 transition-all transform active:scale-[0.98] mt-4" type="submit">
+                    <span id="btn-text" data-i18n="signInToJourney">Sign In to Journey</span>
+                    <span id="btn-spinner" class="hidden">
+                        <svg class="animate-spin h-5 w-5 mx-auto" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                        </svg>
+                    </span>
+                </button>
+            </form>
+            <div class="relative my-8">
+                <div class="absolute inset-0 flex items-center"><div class="w-full border-t border-primary/10"></div></div>
+                <div class="relative flex justify-center text-xs uppercase"><span class="bg-transparent px-2 text-slate-500 font-medium" data-i18n="orContinueWith">Or continue with</span></div>
+            </div>
+            <div class="grid grid-cols-3 gap-4">
+                <button class="flex items-center justify-center py-3 rounded-xl bg-white dark:bg-white/10 border border-primary/10 hover:bg-primary/5 transition-colors">
+                    <svg class="w-5 h-5" fill="#1877F2" viewBox="0 0 24 24">
+                        <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                    </svg>
+                </button>
+                <button class="flex items-center justify-center py-3 rounded-xl bg-white dark:bg-white/10 border border-primary/10 hover:bg-primary/5 transition-colors">
+                    <svg class="w-5 h-5" viewBox="0 0 24 24">
+                        <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"></path>
+                        <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"></path>
+                        <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"></path>
+                        <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"></path>
+                    </svg>
+                </button>
+                <button class="flex items-center justify-center py-3 rounded-xl bg-white dark:bg-white/10 border border-primary/10 hover:bg-primary/5 transition-colors">
+                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M17.05 20.28c-.98.95-2.05.8-3.08.35-1.09-.46-2.09-.48-3.24 0-1.44.62-2.2.44-3.06-.35C2.79 15.25 3.51 7.59 9.05 7.31c1.35.07 2.29.74 3.08.8 1.18-.24 2.31-.93 3.57-.84 1.51.12 2.65.72 3.4 1.8-3.12 1.87-2.38 5.98.48 7.13-.57 1.5-1.31 2.99-2.54 4.09l.01-.01zM12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z"/>
+                    </svg>
+                </button>
+            </div>
+            <div class="mt-8 pt-6 border-t border-slate-200 dark:border-slate-700">
+                <a href="/index.html" class="flex items-center justify-center gap-2 text-slate-500 hover:text-primary transition-all font-medium text-sm group">
+                    <span class="material-symbols-outlined text-lg group-hover:-translate-x-1 transition-transform">arrow_back</span>
+                    <span data-i18n="backToHome">Back to Home</span>
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="fixed bottom-8 right-8 hidden md:flex items-center gap-3 bg-white/80 dark:bg-background-dark/80 backdrop-blur p-4 rounded-full border border-primary/20 shadow-xl">
+        <div class="w-10 h-10 rounded-full overflow-hidden bg-slate-200">
+            <img class="w-full h-full object-cover" alt="Ho Chi Minh City" src="https://hnm.1cdn.vn/2025/05/02/bdfc13aba3/tp.hcm_1.jpg" onerror="this.onerror=null; this.parentElement.innerHTML='<span class=\'material-symbols-outlined text-primary text-2xl\'>location_city</span>'; this.parentElement.classList.add('flex', 'items-center', 'justify-center', 'bg-gradient-to-br', 'from-primary/20', 'to-accent-teal/20'); this.parentElement.classList.remove('overflow-hidden', 'bg-slate-200');"/>
+        </div>
+        <div>
+            <p class="text-xs font-bold uppercase tracking-wider text-primary">Live Now</p>
+            <p class="text-sm font-medium">Ho Chi Minh City, VN</p>
+        </div>
+    </div>
+
+    <script src="/assets/js/config.js"></script>
+    <script src="/assets/js/i18n.js"></script>
+    <script src="/assets/js/auth.js"></script>
+    <script>
+        // i18n for login page
+        const loginI18n = {
+            en: { loginFailed: 'Login failed. Please try again.' },
+            vi: { loginFailed: 'Đăng nhập thất bại. Vui lòng thử lại.' }
+        };
+        function tLogin(key) { return loginI18n[i18n.currentLang]?.[key] || loginI18n['vi'][key] || key; }
+
+        // Handle login form submission
+        const loginForm = document.getElementById('login-form');
+        const loginBtn = document.getElementById('login-btn');
+        const btnText = document.getElementById('btn-text');
+        const btnSpinner = document.getElementById('btn-spinner');
+        const errorMessage = document.getElementById('error-message');
+
+        function showError(message) {
+            errorMessage.classList.remove('hidden');
+            errorMessage.querySelector('p').textContent = message;
+            setTimeout(() => {
+                errorMessage.classList.add('hidden');
+            }, 5000);
+        }
+
+        loginForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const email = document.getElementById('email').value.trim();
+            const password = document.getElementById('password').value;
+
+            btnText.classList.add('hidden');
+            btnSpinner.classList.remove('hidden');
+            loginBtn.disabled = true;
+
+            const result = await AuthAPI.signin(email, password);
+
+            if (result.success) {
+                window.location.href = '/public/community-stories.html';
+            } else {
+                btnText.classList.remove('hidden');
+                btnSpinner.classList.add('hidden');
+                loginBtn.disabled = false;
+                showError(result.message || tLogin('loginFailed'));
+            }
+        });
+    </script>
+</body>
+</html>

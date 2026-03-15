@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Profile - WanderTale</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#f48c25",
+                        "background-light": "#f8f7f5",
+                        "background-dark": "#221910",
+                    },
+                    fontFamily: {
+                        "display": ["Space Grotesk", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "1rem", "lg": "2rem", "xl": "3rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+    <style>
+        body { font-family: 'Space Grotesk', sans-serif; }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100 antialiased flex flex-col min-h-screen">
+    <!-- Header -->
+    <div id="header-slot"></div>
+    
+    <main class="flex-1 max-w-6xl mx-auto px-4 py-8 sm:px-6 lg:px-8 pt-32">
+        <a href="/app/profile/profile.html" class="inline-flex items-center gap-2 text-slate-600 dark:text-slate-400 hover:text-primary transition-colors font-medium mb-6 group">
+            <span class="material-symbols-outlined text-lg group-hover:-translate-x-1 transition-transform">arrow_back</span>
+            <span data-i18n="backToMyProfile">Back to My Profile</span>
+        </a>
+        <section class="flex flex-col md:flex-row items-center gap-8 mb-12">
+            <div class="relative group mt-4">
+                <div class="absolute -inset-1 bg-gradient-to-tr from-primary to-orange-300 rounded-full blur opacity-25 group-hover:opacity-50 transition duration-1000 group-hover:duration-200"></div>
+                <div class="relative h-40 w-40 rounded-full border-4 border-white dark:border-slate-800 overflow-hidden bg-slate-200" id="profile-avatar">
+                    <img class="w-full h-full object-cover" alt="Profile avatar" id="profile-avatar-img" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAJzyidPa3wrkuRNZB7iku4cE-rl3_k-Kvdlr_-WAodORi5Xim-PvBWOe8I9T6iGcK3FvhvAPiboBRAZ1voEtzD4cIhtsLyLBe_N3URt-w6iUMyQrOi_j6eRpGcz58_OWINBKtu6qsssyG58gaseuqkJ4s6pEz1EQ9irEBNE1WztPPdanJisqz0oX2mL8yU9HDJxULYTzJ8A-jbFM1nsp8PUD4x3T2Moz1SR8Mt1VlRXYtDkxnzP08bt0O_gwS0YW5GJ25LZ6-nvRD1"/>
+                </div>
+                <div class="absolute bottom-2 right-2 bg-primary text-white p-1.5 rounded-full border-2 border-white">
+                    <span class="material-symbols-outlined text-sm block">verified</span>
+                </div>
+            </div>
+            <div class="flex-1 text-center md:text-left">
+                <div class="flex flex-col md:flex-row md:items-center gap-4 mb-4">
+                    <h2 class="text-3xl font-bold" id="profile-name">Profile</h2>
+                    <div class="flex gap-2 justify-center">
+                        <button class="bg-primary text-white px-6 py-2 rounded-full font-bold text-sm hover:shadow-lg transition-all" data-i18n="follow">Follow</button>
+                        <button class="bg-primary/10 text-primary px-6 py-2 rounded-full font-bold text-sm hover:bg-primary/20 transition-all" data-i18n="message">Message</button>
+                    </div>
+                </div>
+                <p class="text-slate-600 dark:text-slate-400 mb-4 max-w-xl leading-relaxed">
+                    Digital Nomad | Coffee Lover | 15 Countries and counting 🌍 <br/>
+                    Capturing moments one story at a time with AI-assisted memories.
+                </p>
+                <div class="flex flex-wrap justify-center md:justify-start gap-4">
+                    <a class="text-sm font-medium flex items-center gap-1 text-primary hover:underline" href="#" id="profile-link">
+                        <span class="material-symbols-outlined text-lg">link</span> <span id="profile-username">wandertale.ai/profile</span>
+                    </a>
+                    <div class="flex gap-3">
+                        <span class="material-symbols-outlined text-slate-400 hover:text-primary cursor-pointer">share</span>
+                        <span class="material-symbols-outlined text-slate-400 hover:text-primary cursor-pointer">more_horiz</span>
+                    </div>
+                </div>
+            </div>
+            <div class="grid grid-cols-3 gap-4 w-full md:w-auto">
+                <div class="bg-white dark:bg-slate-800/50 p-4 rounded-xl text-center border border-primary/5">
+                    <p class="text-2xl font-bold text-primary">24</p>
+                    <p class="text-xs text-slate-500 uppercase tracking-widest font-bold" data-i18n="stories">Stories</p>
+                </div>
+                <div class="bg-white dark:bg-slate-800/50 p-4 rounded-xl text-center border border-primary/5">
+                    <p class="text-2xl font-bold text-primary">1.2k</p>
+                    <p class="text-xs text-slate-500 uppercase tracking-widest font-bold" data-i18n="followers">Followers</p>
+                </div>
+                <div class="bg-white dark:bg-slate-800/50 p-4 rounded-xl text-center border border-primary/5">
+                    <p class="text-2xl font-bold text-primary">450</p>
+                    <p class="text-xs text-slate-500 uppercase tracking-widest font-bold" data-i18n="following">Following</p>
+                </div>
+            </div>
+        </section>
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <div class="lg:col-span-2 space-y-12">
+                <section>
+                    <div class="flex items-center justify-between mb-6">
+                        <h3 class="text-xl font-bold flex items-center gap-2">
+                            <span class="material-symbols-outlined text-primary">map</span> <span data-i18n="journeys">Journeys</span>
+                        </h3>
+                        <button class="text-sm font-bold text-primary flex items-center gap-1"><span data-i18n="viewAll">View All</span> <span class="material-symbols-outlined text-sm">arrow_forward</span></button>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="group bg-white dark:bg-slate-800 rounded-lg overflow-hidden border border-slate-100 dark:border-slate-700 hover:shadow-xl transition-all">
+                            <div class="h-48 w-full overflow-hidden relative">
+                                <img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" alt="Lush green mountains in Sapa Vietnam" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD8WSpWRSbQoGm31_zn_d3k1ww_gM6plcE5n2Q4UU9jMPKoODjqKxdc5P851opKzCGv7E3PuuSRAlQzwo6mtVi8TriTQEI9rVdz2nR71ojZQUhEK-rq5--ZOnfVxbL0n8S5zangk-cxL9BC4Zq0teD2Nv8BQ_o9Z435rPSeFTGJe528xvmLud2v6ff_IcHl4PnVsKIzyJW7qRcnXTr2GDEaNk_Q8KVXFjyiNvxovCatPtpMbS6Fy-96EDwk6cO0PVQI6nGSwx6uql7h"/>
+                                <div class="absolute top-3 left-3 bg-white/90 backdrop-blur text-slate-900 px-3 py-1 rounded-full text-xs font-bold shadow-sm">
+                                    Vietnam
+                                </div>
+                            </div>
+                            <div class="p-5">
+                                <div class="flex items-center gap-2 text-[10px] text-primary font-bold uppercase tracking-wider mb-2">
+                                    <span class="material-symbols-outlined text-xs">auto_fix_high</span> <span data-i18n="aiSummary">AI Summary</span>
+                                </div>
+                                <h4 class="text-lg font-bold mb-2 group-hover:text-primary transition-colors">Mist over Sapa Valleys</h4>
+                                <p class="text-slate-600 dark:text-slate-400 text-sm line-clamp-2">A 3-day trek through Muong Hoa valley. Discovered hidden coffee spots and ethnic culture amidst golden rice terraces.</p>
+                                <div class="mt-4 flex items-center justify-between">
+                                    <div class="flex -space-x-2">
+                                        <div class="h-6 w-6 rounded-full border-2 border-white bg-slate-300"></div>
+                                        <div class="h-6 w-6 rounded-full border-2 border-white bg-slate-400"></div>
+                                    </div>
+                                    <span class="text-xs text-slate-400 font-medium">Oct 2023</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="group bg-white dark:bg-slate-800 rounded-lg overflow-hidden border border-slate-100 dark:border-slate-700 hover:shadow-xl transition-all">
+                            <div class="h-48 w-full overflow-hidden relative">
+                                <img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" alt="Busy neon street of Shibuya Crossing Japan" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDkHE1LCx0yJCKp6qWOIyVYI5S90Qe6JYrwxn4g5sAijUznjoC_BWo72MIKJJESL6zTlFu-H2W2TBcdiqhYbFj964RElg4LSK3VxTb3T21PZHwITU9TNAKfIkeUNnU15wlB_999Vxq0uj_XeH_AhqQSNfKaMNQxIHc4yJ8wOKNGRcI8a0kD3VmzndxtzaZKns-bOFmmVHXCKAqJx-kUm4RGHRHrh18epetN4dYFWBfdYT_DGICieESuk0G4MUmNUOADc2SeM6VHM3MA"/>
+                                <div class="absolute top-3 left-3 bg-white/90 backdrop-blur text-slate-900 px-3 py-1 rounded-full text-xs font-bold shadow-sm">
+                                    Japan
+                                </div>
+                            </div>
+                            <div class="p-5">
+                                <div class="flex items-center gap-2 text-[10px] text-primary font-bold uppercase tracking-wider mb-2">
+                                    <span class="material-symbols-outlined text-xs">auto_fix_high</span> <span data-i18n="aiSummary">AI Summary</span>
+                                </div>
+                                <h4 class="text-lg font-bold mb-2 group-hover:text-primary transition-colors">Neon Nights in Tokyo</h4>
+                                <p class="text-slate-600 dark:text-slate-400 text-sm line-clamp-2">Explored Shibuya after dark. AI helped navigate the secret izakayas of Golden Gai. Unforgettable ramen quest.</p>
+                                <div class="mt-4 flex items-center justify-between">
+                                    <div class="flex -space-x-2">
+                                        <div class="h-6 w-6 rounded-full border-2 border-white bg-slate-300"></div>
+                                    </div>
+                                    <span class="text-xs text-slate-400 font-medium">Dec 2023</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <section>
+                    <div class="flex items-center gap-2 mb-6">
+                        <h3 class="text-xl font-bold">World Conquest</h3>
+                        <span class="bg-primary/20 text-primary text-[10px] font-bold px-2 py-0.5 rounded-full">15 COUNTRIES</span>
+                    </div>
+                    <div class="w-full aspect-video rounded-lg bg-slate-200 dark:bg-slate-800 relative overflow-hidden border border-slate-100 dark:border-slate-700">
+                        <img class="w-full h-full object-cover opacity-80" alt="Abstract world map with travel pins" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCFiYNH_hvjYhFX3wk__2ZDg9ALbTMLUylCbYnXBMfWSFG_SwM72RmhsWuaKIf3zr0PC-ygbXGGjQkmRZZnnj4iPHKb_9MDRKhYCAChE-dDvpdhvGzQ7pQe4SUaKN1Y5PIANECtCq56IBcQR-nDY-n3--d_Bidu7zKWAH790Lpjonj5XCqYqysEK4oGRhSHE_4uD51Rkgmk_NyJRpcjDhtcTHtIkl-CnyNmtNxd3C_GIhGdOXxIzU1Dph4ePWA85qmWRYBtVKz-u11y"/>
+                        <div class="absolute top-[40%] left-[20%] animate-bounce">
+                            <span class="material-symbols-outlined text-primary text-3xl drop-shadow-lg" style="font-variation-settings: 'FILL' 1">location_on</span>
+                        </div>
+                        <div class="absolute top-[55%] left-[75%] animate-bounce delay-100">
+                            <span class="material-symbols-outlined text-primary text-3xl drop-shadow-lg" style="font-variation-settings: 'FILL' 1">location_on</span>
+                        </div>
+                        <div class="absolute top-[30%] left-[50%] animate-bounce delay-200">
+                            <span class="material-symbols-outlined text-primary text-3xl drop-shadow-lg" style="font-variation-settings: 'FILL' 1">location_on</span>
+                        </div>
+                        <div class="absolute bottom-4 left-4 right-4 bg-white/80 dark:bg-slate-900/80 backdrop-blur p-4 rounded-lg border border-white/20">
+                            <div class="flex justify-between items-center text-xs font-bold">
+                                <span>Recent Stop: Kyoto, JP</span>
+                                <span class="text-primary">Next Stop: Lisbon, PT</span>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+            <div class="space-y-12">
+                <section>
+                    <h3 class="text-xl font-bold mb-6 flex items-center gap-2">
+                        <span class="material-symbols-outlined text-primary">military_tech</span> Badges
+                    </h3>
+                    <div class="bg-white dark:bg-slate-800/50 rounded-lg p-6 border border-primary/10">
+                        <div class="grid grid-cols-2 gap-6">
+                            <div class="flex flex-col items-center text-center">
+                                <div class="h-16 w-16 bg-orange-100 dark:bg-orange-900/30 rounded-full flex items-center justify-center text-primary mb-2 ring-4 ring-orange-50 dark:ring-orange-900/10">
+                                    <span class="material-symbols-outlined text-3xl">landscape</span>
+                                </div>
+                                <span class="text-xs font-bold">Mountain Climber</span>
+                                <span class="text-[10px] text-slate-400">Lv. 3</span>
+                            </div>
+                            <div class="flex flex-col items-center text-center">
+                                <div class="h-16 w-16 bg-yellow-100 dark:bg-yellow-900/30 rounded-full flex items-center justify-center text-yellow-600 mb-2 ring-4 ring-yellow-50 dark:ring-yellow-900/10">
+                                    <span class="material-symbols-outlined text-3xl">restaurant</span>
+                                </div>
+                                <span class="text-xs font-bold">Street Food Expert</span>
+                                <span class="text-[10px] text-slate-400">Lv. 5</span>
+                            </div>
+                            <div class="flex flex-col items-center text-center opacity-50 grayscale">
+                                <div class="h-16 w-16 bg-blue-100 dark:bg-blue-900/30 rounded-full flex items-center justify-center text-blue-600 mb-2 ring-4 ring-blue-50 dark:ring-blue-900/10">
+                                    <span class="material-symbols-outlined text-3xl">surfing</span>
+                                </div>
+                                <span class="text-xs font-bold">Wave Rider</span>
+                                <span class="text-[10px] text-slate-400">Locked</span>
+                            </div>
+                            <div class="flex flex-col items-center text-center">
+                                <div class="h-16 w-16 bg-green-100 dark:bg-green-900/30 rounded-full flex items-center justify-center text-green-600 mb-2 ring-4 ring-green-50 dark:ring-green-900/10">
+                                    <span class="material-symbols-outlined text-3xl">photo_camera</span>
+                                </div>
+                                <span class="text-xs font-bold">Storyteller</span>
+                                <span class="text-[10px] text-slate-400">Lv. 2</span>
+                            </div>
+                        </div>
+                        <button class="w-full mt-6 py-3 border-2 border-dashed border-slate-200 dark:border-slate-700 rounded-lg text-xs font-bold text-slate-400 hover:text-primary hover:border-primary transition-all">
+                            View All 12 Badges
+                        </button>
+                    </div>
+                </section>
+                <section>
+                    <h3 class="text-xl font-bold mb-6 flex items-center gap-2">
+                        <span class="material-symbols-outlined text-primary">headphones</span> Travel Vibe
+                    </h3>
+                    <div class="bg-gradient-to-br from-primary to-orange-500 rounded-lg p-5 text-white">
+                        <div class="flex items-center gap-4 mb-4">
+                            <div class="h-12 w-12 bg-white/20 backdrop-blur rounded overflow-hidden">
+                                <img class="w-full h-full object-cover" alt="Music album cover art" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAg7dDh9ClBNtA31MfuW-lHgjNW-_gyDxOm31ZbGlBFbTnUxJRyJF9rlAam6t1zSSXh2LAcd6uyvBE6AwV0w4LyCClWQAVfJFVYf1QWCqhsoqcx1TTqiQe_OScPBjD6FriKcr62Vj5I_zSClFm492rpkocjUfN_V8VA-2S8r0aB2Snq9GOiKtbyClYbfymyjlXVlIikLQmfThZ-8FIwMiOchBpsfjULbFaVddHc1CM5HUPuPPqu1bgpF_n9EkVSxsYLCupXNkcNM792"/>
+                            </div>
+                            <div>
+                                <p class="text-xs font-bold opacity-80">Currently Playing</p>
+                                <p class="text-sm font-bold">Lisbon Sunset Mix</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <span class="material-symbols-outlined text-sm">play_arrow</span>
+                            <div class="h-1 flex-1 bg-white/30 rounded-full overflow-hidden">
+                                <div class="h-full bg-white w-1/3"></div>
+                            </div>
+                            <span class="text-[10px] font-bold">1:24 / 3:45</span>
+                        </div>
+                    </div>
+                </section>
+                <footer class="pt-8 border-t border-slate-100 dark:border-slate-800">
+                    <p class="text-xs text-slate-400 mb-4">WanderTale AI v2.4.0</p>
+                    <div class="flex flex-wrap gap-4 text-xs font-bold text-slate-500">
+                        <a class="hover:text-primary" href="#">Support</a>
+                        <a class="hover:text-primary" href="#">Terms</a>
+                        <a class="hover:text-primary" href="#">Privacy</a>
+                    </div>
+                </footer>
+            </div>
+        </div>
+    </main>
+    <div class="fixed bottom-6 right-6 z-50">
+        <button class="h-14 w-14 rounded-full bg-primary text-white shadow-2xl flex items-center justify-center hover:scale-110 transition-transform">
+            <span class="material-symbols-outlined text-3xl">smart_toy</span>
+        </button>
+    </div>
+    
+    <!-- Footer -->
+    <div id="footer-slot"></div>
+    
+    <script src="/assets/js/auth.js"></script>
+    <script src="/assets/js/i18n.js"></script>
+    <script src="/assets/js/component-loader.js"></script>
+    <script>
+        // View other user's profile - load from URL param ?username=xxx
+        const urlParams = new URLSearchParams(window.location.search);
+        const username = urlParams.get('username') || 'minh_tri';
+        // Mock data for other users (will be replaced by API later)
+        const mockUsers = {
+            minh_tri: { fullName: 'Minh Tri', username: 'minh_tri', avatar: 'https://lh3.googleusercontent.com/aida-public/AB6AXuC99-EhNc4GzdnlgS0ZnPJZD6moUj3EvysUkCrtbWGq0jEaNKeCG1MiP7fl3NceysHZRAp2zLNBRwH0Owcwuou5w7SlPwBn46YC6GjpKbAstBhK6kjna9KzuC_glJYT8jvTNs1ZA5Y8FvxcaIIszuVOSZj2u50JTdmBSruzDaKeZW0zcv4v8SRrHKEhQPXSaaHxZAkaDkuLBxsJ19jCNvpYEhwQ2UQLXEGGxrE63Y8WXkyLPTpzA8I-cqaV5KZLIw5QvzuBlJ-YMmVN' },
+            lan_anh: { fullName: 'Lan Anh', username: 'lan_anh', avatar: 'https://lh3.googleusercontent.com/aida-public/AB6AXuCF5Ez7K4eLKTqeNZsVY1MnTJwM3L2DfsmY-pWDTHHc4qF5C7RCKvFWGWqRhUY9Z2I4z643nSvbJbawk1TAKM1LfHTqSzBhbLaGYN_7kt_X6tRWas-NhJofLNtLa8HaLCpV_3LkT7HO9Osb9rX178XVHZ1X6VjN-c4gJuQW32RPlo-Hz_3VMehIWv6mJdOg2SGwKngqj4tr3iCRMWyi-8hTi81DBAHX3Ce-vHowSq4Z24ySTr9iwbHruZ0lt_uMX_meZTJQh_XoH5Fg' },
+            hoang_nam: { fullName: 'Hoang Nam', username: 'hoang_nam', avatar: 'https://lh3.googleusercontent.com/aida-public/AB6AXuDLTtMgALyyTrw-5Up3UMnVFVmbjJuaVnHdiLZsXOGCIRxYFOeWVxCsk4AOJ5JfZBKEcC9fsnEV3GeZUrYujeL6GWcohEs1BPp5lw_YgeOf7zxRZcMx50bOLVH2Av8jCS3xONm9lBY-bmKWiyBd1dirGLWxZczlSj1WmZ3VqbhpYr-OkWN4eiN0GbyRYZe-w5a-rGAuVwV0LwyRWcwbH-Q0rsnw0SNRZeMgYgMLGuYW1r45mUVlzz-URBj4NggTjPD5egk1r4mGrgoD' },
+            ngoc_diep: { fullName: 'Ngoc Diep', username: 'ngoc_diep', avatar: 'https://lh3.googleusercontent.com/aida-public/AB6AXuCBPmWIYDOvA0kymlrKTRjXVQmlD1VuneZaQ7sBrcG7dICk6wZ2UoKGGyrtshICM1dv1wsD2wvMoBh5Xpb7w-eK9ksMc0QzXn4nFN12rZjQteUa1FOUQyEK0wiPlHYyVs-FnikIrCl2IDO4QaFtKRhLrn3SshMSDqHuiJsmZs-YS0oC6nAB9UnNOPAFuYjwcMB2jJID_KmMCUwZVPJrb1l_rvkLJwPMKBQHJxu01v6wiuIOYG8FQ19ZF2QCz4Em-ut5GmtsYGIJvHaD' }
+        };
+        const user = mockUsers[username] || mockUsers.minh_tri;
+        document.title = user.fullName + ' - WanderTale';
+        const nameEl = document.getElementById('profile-name');
+        if (nameEl) nameEl.textContent = user.fullName;
+        const usernameEl = document.getElementById('profile-username');
+        if (usernameEl) usernameEl.textContent = 'wandertale.ai/' + user.username;
+        const img = document.getElementById('profile-avatar-img');
+        if (img && user.avatar) img.src = user.avatar;
+        // Use public header (no auth required to view others)
+        ComponentLoader.load('header-public', 'header-slot');
+        ComponentLoader.load('footer-public', 'footer-slot');
+    </script>
+</body>
+</html>

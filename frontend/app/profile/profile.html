@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>WanderTale | User Profile</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#f48c25",
+                        "background-light": "#f8f7f5",
+                        "background-dark": "#221910",
+                    },
+                    fontFamily: {
+                        "display": ["Space Grotesk"]
+                    },
+                    borderRadius: {"DEFAULT": "1rem", "lg": "2rem", "xl": "3rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+    <style>
+        body { font-family: 'Space Grotesk', sans-serif; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        .filled-icon { font-variation-settings: 'FILL' 1; }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 min-h-screen">
+    <!-- Header -->
+    <div id="header-slot"></div>
+
+    <div class="relative flex h-auto min-h-screen w-full flex-col overflow-x-hidden">
+        <div class="layout-container flex h-full grow flex-col">
+            <main class="flex-1 max-w-7xl mx-auto w-full px-4 md:px-10 py-6 pt-24">
+                <div class="mb-8">
+                    <!-- Profile info -->
+                    <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-6 px-2 md:px-4">
+                        <div class="flex items-end gap-4 md:gap-6">
+                            <div class="relative shrink-0 mt-4">
+                                <div class="size-28 md:size-36 rounded-full border-4 border-white dark:border-slate-800 shadow-xl overflow-hidden bg-white dark:bg-slate-800" id="profile-avatar-wrap">
+                                    <img alt="Profile photo" class="w-full h-full object-cover" id="profile-avatar-img" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBYbPmTOr2tt9dqFEwEDeiLHytj0Q-p4iD6iSwmq2fnfn7PjN21KfgKFH5xkAfkXrE27oi_hlxOAycBf2xP0v1Sa9a528ZFnN2-EhPodEzy5ZJ6fecQ6oE7G1ajHl4DPl00yJzPI5J3KhWIkthK3bvPZP59ns_NaysMmvKTGTEE9p-wcqa7G2NONUx9Peum-sfW-JKu-CJuS8iji5DPUsZhAiwbbddXjvN3TrpTPIUSAoYQdzvGmUHHgZW5RMFpRPlKRjWDUlUaq7Gc"/>
+                                </div>
+                                <div class="absolute bottom-1 right-1 size-7 bg-primary rounded-full border-2 border-white dark:border-slate-800 flex items-center justify-center text-white shadow-lg">
+                                    <span class="material-symbols-outlined text-xs filled-icon">verified</span>
+                                </div>
+                            </div>
+                            <div class="pb-1">
+                                <h2 class="text-2xl md:text-3xl font-bold text-slate-900 dark:text-slate-100" id="profile-fullname">User</h2>
+                                <div class="flex items-center gap-2 mt-1 flex-wrap">
+                                    <span class="text-slate-600 dark:text-slate-400 font-medium" id="profile-username">@username</span>
+                                </div>
+                                <p id="profile-bio" class="text-slate-600 dark:text-slate-400 text-sm mt-2 max-w-xl line-clamp-3 hidden"></p>
+                                <div class="flex items-center gap-1 text-slate-500 dark:text-slate-400 mt-1">
+                                    <span class="material-symbols-outlined text-base">location_on</span>
+                                    <span class="text-sm font-medium" id="profile-location">Tokyo, Japan</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex gap-3 pb-2">
+                            <a href="/app/profile/edit.html" class="px-6 h-11 bg-primary text-white font-bold rounded-full hover:shadow-lg hover:shadow-primary/30 transition-all flex items-center gap-2">
+                                <span class="material-symbols-outlined text-lg">edit_note</span>
+                                <span data-i18n="editProfile">Edit Profile</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 mt-12">
+                    <div class="lg:col-span-8 flex flex-col gap-8">
+                        <div class="flex flex-wrap gap-4 items-center justify-between p-6 bg-white dark:bg-slate-800/50 rounded-xl border border-primary/5 shadow-sm">
+                            <div class="flex flex-1 min-w-[100px] flex-col items-center border-r border-primary/10 last:border-0">
+                                <p class="text-2xl font-bold text-slate-900 dark:text-slate-100 tracking-tight">1.2k</p>
+                                <p class="text-slate-500 text-xs font-medium uppercase tracking-widest" data-i18n="following">Following</p>
+                            </div>
+                            <div class="flex flex-1 min-w-[100px] flex-col items-center border-r border-primary/10 last:border-0">
+                                <p class="text-2xl font-bold text-slate-900 dark:text-slate-100 tracking-tight">850</p>
+                                <p class="text-slate-500 text-xs font-medium uppercase tracking-widest" data-i18n="followers">Followers</p>
+                            </div>
+                            <div class="flex flex-1 min-w-[100px] flex-col items-center">
+                                <p class="text-2xl font-bold text-primary tracking-tight">42</p>
+                                <p class="text-slate-500 text-xs font-medium uppercase tracking-widest" data-i18n="journeys">Journeys</p>
+                            </div>
+                        </div>
+                        <div class="flex flex-col gap-6">
+                            <div class="flex border-b border-primary/10 overflow-x-auto no-scrollbar">
+                                <button class="px-6 py-4 text-primary border-b-2 border-primary font-bold text-sm whitespace-nowrap" data-i18n="myStories">My Stories</button>
+                                <button class="px-6 py-4 text-slate-500 hover:text-primary transition-colors font-bold text-sm whitespace-nowrap" data-i18n="gallery">Gallery</button>
+                                <button class="px-6 py-4 text-slate-500 hover:text-primary transition-colors font-bold text-sm whitespace-nowrap" data-i18n="savedPlaces">Saved Places</button>
+                                <button class="px-6 py-4 text-slate-500 hover:text-primary transition-colors font-bold text-sm whitespace-nowrap" data-i18n="achievements">Achievements</button>
+                            </div>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div class="group bg-white dark:bg-slate-800/50 rounded-xl overflow-hidden border border-primary/5 shadow-sm hover:shadow-md transition-all">
+                                    <div class="h-48 relative overflow-hidden">
+                                        <img alt="City lights in Tokyo" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCF-gXUhel4n1fwrUa-nGhq3RMca6fNief4jk5Kls03kZ1C_GPNIQZfQ0PUsDgkfe9V1sgVyEhLRERVJmpEhP97LgXDxflJqMX8SEtsJ2zro8hhyhQnsDdNQ6XMbXROn5Ibn3qvKUpbHPGLrPvd0Lu0pBAPfffgXc_tAeP6u7H0GQBmKZ8o1jRlvt8LeoyeQz8e9qurgRFQbIx9wjcfcidizC4OJobPxxCuyJOCMPJAli5JwPHtLxXCZOKt7eSoysL2uSDbu0Z-AZbx"/>
+                                        <div class="absolute top-3 left-3 px-3 py-1 bg-white/90 backdrop-blur rounded-full text-[10px] font-bold uppercase tracking-tighter text-primary">Tokyo Dipped</div>
+                                    </div>
+                                    <div class="p-5 flex flex-col gap-3">
+                                        <h3 class="font-bold text-lg group-hover:text-primary transition-colors">Neon Nights & Ramen Fights</h3>
+                                        <div class="flex items-start gap-2 p-3 bg-primary/5 rounded-lg border-l-4 border-primary">
+                                            <span class="material-symbols-outlined text-primary text-sm mt-1">auto_awesome</span>
+                                            <p class="text-xs text-slate-600 dark:text-slate-300 leading-relaxed italic">"Explored the hidden alleys of Shinjuku. Found the best miso ramen in a spot with only 4 seats."</p>
+                                        </div>
+                                        <div class="flex items-center justify-between mt-2 pt-3 border-t border-primary/5">
+                                            <div class="flex gap-4">
+                                                <div class="flex items-center gap-1 text-slate-500"><span class="material-symbols-outlined text-sm">favorite</span><span class="text-xs font-bold">2.4k</span></div>
+                                                <div class="flex items-center gap-1 text-slate-500"><span class="material-symbols-outlined text-sm">chat_bubble</span><span class="text-xs font-bold">142</span></div>
+                                            </div>
+                                            <span class="text-[10px] text-slate-400 font-medium">2 days ago</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="group bg-white dark:bg-slate-800/50 rounded-xl overflow-hidden border border-primary/5 shadow-sm hover:shadow-md transition-all">
+                                    <div class="h-48 relative overflow-hidden">
+                                        <img alt="Green rice fields in Bali" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAD8JgD4LWKsDxXQpQbCoppMPLCEN_qSVNM1tBgf4JL0FfR6hyGfnhBVIe-WWZztHkAfaOVFZbbFEbUtZdR_Qu-P8Y2gK2JCwUzRHu4N0N9O5nEiDNpcnsji3oE3XDDDYpwJkubna3JyXyy9EMTit_lXMsUoU9zRuQpjYqc-H1JkHh8VEyeOjyPeAnKlYSdymvOyPhK96yYz8My2CPSn_c8wBU-XJvFMR0zjEFGlQ-xuPUE-2yQoNOMYfOivcecntfxlP01nZ2hcUHU"/>
+                                        <div class="absolute top-3 left-3 px-3 py-1 bg-white/90 backdrop-blur rounded-full text-[10px] font-bold uppercase tracking-tighter text-primary">Bali Bliss</div>
+                                    </div>
+                                    <div class="p-5 flex flex-col gap-3">
+                                        <h3 class="font-bold text-lg group-hover:text-primary transition-colors">Digital Nomad or Forest Spirit?</h3>
+                                        <div class="flex items-start gap-2 p-3 bg-primary/5 rounded-lg border-l-4 border-primary">
+                                            <span class="material-symbols-outlined text-primary text-sm mt-1">auto_awesome</span>
+                                            <p class="text-xs text-slate-600 dark:text-slate-300 leading-relaxed italic">"Waking up to the sound of tropical birds and fresh coconut water. Ubud is a different vibe."</p>
+                                        </div>
+                                        <div class="flex items-center justify-between mt-2 pt-3 border-t border-primary/5">
+                                            <div class="flex gap-4">
+                                                <div class="flex items-center gap-1 text-slate-500"><span class="material-symbols-outlined text-sm">favorite</span><span class="text-xs font-bold">1.8k</span></div>
+                                                <div class="flex items-center gap-1 text-slate-500"><span class="material-symbols-outlined text-sm">chat_bubble</span><span class="text-xs font-bold">89</span></div>
+                                            </div>
+                                            <span class="text-[10px] text-slate-400 font-medium">1 week ago</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="lg:col-span-4 flex flex-col gap-8">
+                        <div class="p-6 bg-white dark:bg-slate-800/50 rounded-xl border border-primary/5 shadow-sm">
+                            <h3 class="text-lg font-bold mb-4 flex items-center gap-2"><span class="material-symbols-outlined text-primary">genetics</span> Travel DNA</h3>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="px-4 py-2 bg-primary text-white rounded-full text-xs font-bold">Solo Explorer</span>
+                                <span class="px-4 py-2 bg-primary/10 text-primary rounded-full text-xs font-bold">Night Owl</span>
+                                <span class="px-4 py-2 bg-blue-500/10 text-blue-500 rounded-full text-xs font-bold">Street Foodie</span>
+                                <span class="px-4 py-2 bg-purple-500/10 text-purple-500 rounded-full text-xs font-bold">Urban Legend</span>
+                            </div>
+                        </div>
+                        <div class="p-6 bg-white dark:bg-slate-800/50 rounded-xl border border-primary/5 shadow-sm overflow-hidden">
+                            <div class="flex items-center justify-between mb-4">
+                                <h3 class="text-lg font-bold flex items-center gap-2"><span class="material-symbols-outlined text-primary">public</span> World Map</h3>
+                                <a href="/app/explore/map.html" class="text-primary text-xs font-bold hover:underline">View Map</a>
+                            </div>
+                            <div class="h-40 w-full rounded-lg bg-slate-100 dark:bg-slate-900 overflow-hidden relative">
+                                <div class="absolute inset-0 opacity-40 mix-blend-multiply bg-primary/20"></div>
+                                <img alt="Abstract map illustration" class="w-full h-full object-cover grayscale opacity-60" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCXjkne4FJdpC_6R5_4dtYRmmLMLr_Rr-52kETnWjVz35mnas9t4AV6sYMQ4_Kh2f35sb-jSrhrAhNeDB-ezuZq_wX54QnTjpoxO6CK8VgFIlLPnV0cKtgBPp8t7pIA_nGkf8RdWAi38w6HyEPcdMdUr2Cm3g1Z8gwmXLRonWvYZ9coRlNpfLqbOsnHn7S4LiVbsNaguYPkIown5ZihHWQYpwzPEqD5aIxx5B9Au09J7viyg78MD6vyMm9G8H-pzJa7--quglJPyMgT"/>
+                                <div class="absolute top-1/2 left-1/2 size-4 bg-primary rounded-full border-2 border-white animate-pulse shadow-lg"></div>
+                                <div class="absolute top-1/4 left-1/3 size-3 bg-primary/60 rounded-full border border-white"></div>
+                                <div class="absolute bottom-1/3 right-1/4 size-3 bg-primary/60 rounded-full border border-white"></div>
+                            </div>
+                        </div>
+                        <div class="p-6 bg-white dark:bg-slate-800/50 rounded-xl border border-primary/5 shadow-sm">
+                            <h3 class="text-lg font-bold mb-4 flex items-center gap-2"><span class="material-symbols-outlined text-primary">military_tech</span> Recent Badges</h3>
+                            <div class="grid grid-cols-4 gap-4">
+                                <div class="flex flex-col items-center gap-1 group cursor-help">
+                                    <div class="size-12 rounded-full bg-gradient-to-br from-yellow-300 to-orange-500 flex items-center justify-center text-white shadow-md group-hover:scale-110 transition-transform"><span class="material-symbols-outlined filled-icon">star</span></div>
+                                    <span class="text-[9px] font-bold text-center leading-tight">5-Star Pilot</span>
+                                </div>
+                                <div class="flex flex-col items-center gap-1 group cursor-help">
+                                    <div class="size-12 rounded-full bg-gradient-to-br from-red-400 to-pink-600 flex items-center justify-center text-white shadow-md group-hover:scale-110 transition-transform"><span class="material-symbols-outlined filled-icon">restaurant</span></div>
+                                    <span class="text-[9px] font-bold text-center leading-tight">Foodie King</span>
+                                </div>
+                                <div class="flex flex-col items-center gap-1 group cursor-help">
+                                    <div class="size-12 rounded-full bg-gradient-to-br from-blue-400 to-indigo-600 flex items-center justify-center text-white shadow-md group-hover:scale-110 transition-transform"><span class="material-symbols-outlined filled-icon">camera</span></div>
+                                    <span class="text-[9px] font-bold text-center leading-tight">Flash Master</span>
+                                </div>
+                                <div class="flex flex-col items-center gap-1 group cursor-help">
+                                    <div class="size-12 rounded-full bg-slate-200 dark:bg-slate-700 flex items-center justify-center text-slate-400"><span class="material-symbols-outlined">lock</span></div>
+                                    <span class="text-[9px] font-bold text-center leading-tight text-slate-400">Hidden</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+            <!-- Footer -->
+            <div id="footer-slot"></div>
+        </div>
+    </div>
+
+    <div class="fixed bottom-6 left-1/2 -translate-x-1/2 md:hidden flex bg-white/90 dark:bg-background-dark/90 backdrop-blur-xl border border-primary/20 rounded-full shadow-2xl px-6 py-3 gap-8 z-50">
+        <a href="/app/profile/profile.html" class="material-symbols-outlined text-primary filled-icon">person</a>
+        <a href="/app/explore/map.html" class="material-symbols-outlined text-slate-400">explore</a>
+        <a href="/app/stories/create.html" class="size-10 bg-primary rounded-full flex items-center justify-center text-white -mt-5 border-4 border-background-light dark:border-background-dark shadow-lg">
+            <span class="material-symbols-outlined">add</span>
+        </a>
+        <span class="material-symbols-outlined text-slate-400">chat</span>
+        <span class="material-symbols-outlined text-slate-400">notifications</span>
+    </div>
+
+    <script src="/assets/js/auth.js"></script>
+    <script src="/assets/js/i18n.js"></script>
+    <script src="/assets/js/component-loader.js"></script>
+    <script>
+        // Auth guard - redirect to login if not authenticated
+        if (!AuthGuard.isAuthenticated()) {
+            window.location.href = '/auth/login.html?redirect=' + encodeURIComponent('/app/profile/profile.html');
+        } else {
+            const user = AuthGuard.getUser();
+            if (user) {
+                document.title = (user.fullName || 'Profile') + ' - WanderTale';
+                const fullnameEl = document.getElementById('profile-fullname');
+                if (fullnameEl) fullnameEl.textContent = user.fullName || 'User';
+                const usernameEl = document.getElementById('profile-username');
+                if (usernameEl) usernameEl.textContent = '@' + (user.username || (user.email ? user.email.split('@')[0] : 'user'));
+                const bioEl = document.getElementById('profile-bio');
+                if (bioEl && user.bio) {
+                    bioEl.textContent = user.bio;
+                    bioEl.classList.remove('hidden');
+                }
+                const avatarImg = document.getElementById('profile-avatar-img');
+                if (avatarImg && user.avatar) avatarImg.src = user.avatar;
+            }
+        }
+        ComponentLoader.load('header-app', 'header-slot');
+        ComponentLoader.load('footer-app', 'footer-slot');
+    </script>
+</body>
+</html>

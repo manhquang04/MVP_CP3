@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Edit Profile - WanderTale</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#f48c25",
+                        "background-light": "#f8f7f5",
+                        "background-dark": "#221910",
+                    },
+                    fontFamily: {
+                        "display": ["Space Grotesk", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "1rem",
+                        "lg": "2rem",
+                        "xl": "3rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+    <style>
+        body { font-family: 'Space Grotesk', sans-serif; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 font-display">
+    <div class="relative flex min-h-screen w-full flex-col overflow-x-hidden">
+        <div class="layout-container flex h-full grow flex-col">
+            <!-- Header Section -->
+            <header class="sticky top-0 z-50 flex items-center justify-between border-b border-primary/10 bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-md px-6 py-4 md:px-20 lg:px-40">
+                <div class="flex items-center gap-4">
+                    <a href="/app/profile/profile.html" class="flex items-center justify-center rounded-full h-10 w-10 bg-primary/10 text-primary hover:bg-primary/20 transition-colors">
+                        <span class="material-symbols-outlined">arrow_back</span>
+                    </a>
+                    <div class="flex items-center gap-2">
+                        <div class="size-6 text-primary">
+                            <svg fill="currentColor" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M44 11.2727C44 14.0109 39.8386 16.3957 33.69 17.6364C39.8386 18.877 44 21.2618 44 24C44 26.7382 39.8386 29.123 33.69 30.3636C39.8386 31.6043 44 33.9891 44 36.7273C44 40.7439 35.0457 44 24 44C12.9543 44 4 40.7439 4 36.7273C4 33.9891 8.16144 31.6043 14.31 30.3636C8.16144 29.123 4 26.7382 4 24C4 21.2618 8.16144 18.877 14.31 17.6364C8.16144 16.3957 4 14.0109 4 11.2727C4 7.25611 12.9543 4 24 4C35.0457 4 44 7.25611 44 11.2727Z"></path>
+                            </svg>
+                        </div>
+                        <h1 class="text-xl font-bold tracking-tight text-slate-900 dark:text-slate-100">WanderTale</h1>
+                    </div>
+                </div>
+                <button id="save-btn" class="flex min-w-[100px] cursor-pointer items-center justify-center rounded-full h-10 px-6 bg-primary text-white text-sm font-bold shadow-lg shadow-primary/20 hover:scale-105 transition-transform active:scale-95" data-i18n="save">
+                    Save
+                </button>
+            </header>
+            <main class="flex flex-1 justify-center py-8 px-6">
+                <div class="flex flex-col max-w-[640px] flex-1 gap-10">
+                    <!-- Profile Photo Section -->
+                    <div class="flex flex-col items-center gap-6">
+                        <div class="relative group cursor-pointer">
+                            <div class="size-36 rounded-full border-4 border-white dark:border-slate-800 shadow-xl overflow-hidden bg-primary/5">
+                                <img alt="Profile Picture" id="profile-avatar-img" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBMookKryYtbxUagSYo8AnhnWW0L2YB_QmQ4IXa-DLeoWR1OQctwva7ejeU4ITE_Ttn7S00ISHKBBvGd2iWxNd52giRqvjXnRRtUKPiCxetp4fK2gSK_ytDOs_4KuBU3KBK4bYZTnZiXkkYCQ-IPPOE4E1RWwg5Jj6LHA0kIwOLwo8kHCqavbIpn03xXGmMmVW6683sgpFTo9sWmJmsaQklhVzmS4X4xtgMMb6kr47bzxTofeR4ecgeNSqyV8Ca_1H_dXbqjLsV_YOL"/>
+                            </div>
+                            <div class="absolute bottom-1 right-1 bg-primary text-white p-2 rounded-full border-4 border-background-light dark:border-background-dark shadow-md flex items-center justify-center">
+                                <span class="material-symbols-outlined text-sm">photo_camera</span>
+                            </div>
+                            <div class="absolute inset-0 bg-black/20 rounded-full opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                                <span class="text-white text-xs font-bold uppercase tracking-wider" data-i18n="changePhoto">Change Photo</span>
+                            </div>
+                        </div>
+                        <div class="text-center">
+                            <h2 class="text-2xl font-bold text-slate-900 dark:text-slate-100" data-i18n="editProfile">Edit Profile</h2>
+                            <p class="text-slate-500 text-sm mt-1 font-medium" data-i18n="updateTravelPersona">Update your travel persona</p>
+                        </div>
+                    </div>
+                    <!-- Form Fields -->
+                    <form id="edit-profile-form" class="grid grid-cols-1 gap-6">
+                        <label class="flex flex-col gap-2">
+                            <span class="text-slate-700 dark:text-slate-300 text-sm font-bold px-1" data-i18n="fullName">Full Name</span>
+                            <input id="fullName" name="fullName" class="form-input w-full rounded-xl border-primary/20 bg-white dark:bg-slate-800 dark:border-slate-600 focus:border-primary focus:ring-primary h-14 px-4 text-base transition-all" data-i18n-placeholder="yourName" placeholder="" type="text"/>
+                        </label>
+                        <label class="flex flex-col gap-2">
+                            <span class="text-slate-700 dark:text-slate-300 text-sm font-bold px-1" data-i18n="username">Username</span>
+                            <div class="relative flex items-center">
+                                <span class="absolute left-4 text-primary font-bold">@</span>
+                                <input id="username" name="username" class="form-input w-full rounded-xl border-primary/20 bg-white dark:bg-slate-800 dark:border-slate-600 focus:border-primary focus:ring-primary h-14 pl-9 pr-4 text-base transition-all" placeholder="username" type="text"/>
+                            </div>
+                        </label>
+                        <label class="flex flex-col gap-2">
+                            <span class="text-slate-700 dark:text-slate-300 text-sm font-bold px-1" data-i18n="bio">Bio</span>
+                            <textarea id="bio" name="bio" class="form-input w-full rounded-xl border-primary/20 bg-white dark:bg-slate-800 dark:border-slate-600 focus:border-primary focus:ring-primary min-h-[120px] p-4 text-base transition-all" data-i18n-placeholder="tellWorldPlaceholder" placeholder=""></textarea>
+                        </label>
+                        <label class="flex flex-col gap-2">
+                            <span class="text-slate-700 dark:text-slate-300 text-sm font-bold px-1" data-i18n="websiteSocial">Website / Social</span>
+                            <div class="relative flex items-center">
+                                <span class="absolute left-4 text-slate-400 material-symbols-outlined">link</span>
+                                <input id="website" name="website" class="form-input w-full rounded-xl border-primary/20 bg-white dark:bg-slate-800 dark:border-slate-600 focus:border-primary focus:ring-primary h-14 pl-12 pr-4 text-base transition-all" placeholder="https://yourblog.com" type="url"/>
+                            </div>
+                        </label>
+                        <label class="flex flex-col gap-2">
+                            <span class="text-slate-700 dark:text-slate-300 text-sm font-bold px-1" data-i18n="locationLabel">Location</span>
+                            <div class="relative flex items-center">
+                                <span class="absolute left-4 text-slate-400 material-symbols-outlined">location_on</span>
+                                <input id="location" name="location" class="form-input w-full rounded-xl border-primary/20 bg-white dark:bg-slate-800 dark:border-slate-600 focus:border-primary focus:ring-primary h-14 pl-12 pr-4 text-base transition-all" data-i18n-placeholder="cityCountryPlaceholder" placeholder="" type="text"/>
+                            </div>
+                        </label>
+                        <!-- Social Connections Section -->
+                        <div class="flex flex-col gap-4">
+                            <span class="text-slate-700 dark:text-slate-300 text-sm font-bold px-1" data-i18n="socialConnections">Social Connections</span>
+                            <div class="grid grid-cols-1 gap-3">
+                                <div class="flex items-center justify-between p-4 bg-white dark:bg-slate-800 border border-primary/20 dark:border-slate-600 rounded-full shadow-sm hover:border-primary/40 transition-colors">
+                                    <div class="flex items-center gap-3">
+                                        <div class="flex h-10 w-10 items-center justify-center rounded-full bg-gradient-to-tr from-[#f09433] via-[#dc2743] to-[#bc1888] text-white">
+                                            <svg class="size-5" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"></path>
+                                            </svg>
+                                        </div>
+                                        <div class="flex flex-col">
+                                            <span id="instagram-username" class="text-sm font-bold text-slate-900 dark:text-slate-100">Connect Instagram</span>
+                                            <span class="text-xs text-slate-500">Instagram</span>
+                                        </div>
+                                    </div>
+                                    <button type="button" class="px-4 py-1.5 text-xs font-bold text-slate-500 hover:text-red-500 border border-slate-200 hover:border-red-200 rounded-full transition-colors">
+                                        Disconnect
+                                    </button>
+                                </div>
+                                <div class="flex items-center justify-between p-4 bg-white dark:bg-slate-800 border border-primary/20 dark:border-slate-600 rounded-full shadow-sm hover:border-primary/40 transition-colors">
+                                    <div class="flex items-center gap-3">
+                                        <div class="flex h-10 w-10 items-center justify-center rounded-full bg-black text-white">
+                                            <svg class="size-5" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.59-1.01-.01 2.62.02 5.24-.02 7.86-.03 1.34-.36 2.71-1.1 3.84-1.15 1.75-3.23 2.79-5.32 2.78-2.06.01-4.14-.98-5.26-2.72-1.1-1.69-1.17-3.95-.24-5.74.88-1.71 2.79-2.88 4.71-2.85.19 0 .39.01.58.03V11.2c-1.28-.15-2.61.21-3.56 1.05-.98.86-1.42 2.22-1.16 3.48.24 1.18.99 2.25 2.05 2.81 1.05.57 2.37.56 3.4-.04 1.02-.59 1.63-1.69 1.73-2.85.06-2.62.01-5.25.02-7.87h.03z"></path>
+                                            </svg>
+                                        </div>
+                                        <span class="text-sm font-bold text-slate-900 dark:text-slate-100">Connect TikTok</span>
+                                    </div>
+                                    <button type="button" class="px-6 py-1.5 text-xs font-bold bg-primary text-white rounded-full shadow-sm hover:scale-105 transition-transform">
+                                        Link
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Travel Interests Section -->
+                        <div class="flex flex-col gap-4">
+                            <div class="flex justify-between items-end px-1">
+                                <span class="text-slate-700 dark:text-slate-300 text-sm font-bold">Travel Vibes</span>
+                                <span class="text-primary text-xs font-bold cursor-pointer hover:underline">+ Add New</span>
+                            </div>
+                            <div class="flex flex-wrap gap-2">
+                                <div class="flex items-center gap-1.5 px-4 py-2 bg-primary text-white rounded-full text-sm font-medium shadow-md shadow-primary/10">
+                                    <span>Solo Traveler</span>
+                                    <span class="material-symbols-outlined text-xs cursor-pointer">close</span>
+                                </div>
+                                <div class="flex items-center gap-1.5 px-4 py-2 bg-primary/10 text-primary border border-primary/20 rounded-full text-sm font-medium">
+                                    <span>Foodie</span>
+                                    <span class="material-symbols-outlined text-xs cursor-pointer">close</span>
+                                </div>
+                                <div class="flex items-center gap-1.5 px-4 py-2 bg-primary/10 text-primary border border-primary/20 rounded-full text-sm font-medium">
+                                    <span>Mountain Hiker</span>
+                                    <span class="material-symbols-outlined text-xs cursor-pointer">close</span>
+                                </div>
+                                <div class="flex items-center gap-1.5 px-4 py-2 bg-primary/10 text-primary border border-primary/20 rounded-full text-sm font-medium">
+                                    <span>City Explorer</span>
+                                    <span class="material-symbols-outlined text-xs cursor-pointer">close</span>
+                                </div>
+                                <div class="flex items-center gap-1.5 px-4 py-2 bg-primary/10 text-primary border border-primary/20 rounded-full text-sm font-medium">
+                                    <span>Backpacker</span>
+                                    <span class="material-symbols-outlined text-xs cursor-pointer">close</span>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Privacy Settings -->
+                        <div class="flex flex-col gap-4 bg-primary/5 p-6 rounded-2xl border border-primary/10">
+                            <div class="flex items-center justify-between">
+                                <div class="flex flex-col">
+                                    <span class="text-slate-900 dark:text-slate-100 font-bold">Public Profile</span>
+                                    <p class="text-slate-500 text-xs">Allow anyone to see your stories and routes</p>
+                                </div>
+                                <label class="relative inline-flex items-center cursor-pointer">
+                                    <input id="public-profile" checked class="sr-only peer" type="checkbox"/>
+                                    <div class="w-11 h-6 bg-slate-300 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+                                </label>
+                            </div>
+                            <div class="h-[1px] bg-primary/10"></div>
+                            <div class="flex items-center justify-between">
+                                <div class="flex flex-col">
+                                    <span class="text-slate-900 dark:text-slate-100 font-bold">Share Location</span>
+                                    <p class="text-slate-500 text-xs">Show your current city on your profile</p>
+                                </div>
+                                <label class="relative inline-flex items-center cursor-pointer">
+                                    <input id="share-location" class="sr-only peer" type="checkbox"/>
+                                    <div class="w-11 h-6 bg-slate-300 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+                                </label>
+                            </div>
+                        </div>
+                        <!-- Delete Account Button -->
+                        <div class="flex justify-center pb-12">
+                            <button type="button" class="text-red-500 text-sm font-bold hover:bg-red-50 dark:hover:bg-red-900/20 px-6 py-2 rounded-full transition-colors">
+                                Deactivate Account
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <script src="/assets/js/auth.js"></script>
+    <script src="/assets/js/i18n.js"></script>
+    <script>
+        // Auth guard
+        if (!AuthGuard.isAuthenticated()) {
+            window.location.href = '/auth/login.html?redirect=' + encodeURIComponent('/app/profile/edit.html');
+        } else {
+            const user = AuthGuard.getUser();
+            if (user) {
+                document.getElementById('fullName').value = user.fullName || '';
+                document.getElementById('username').value = user.username || (user.email ? user.email.split('@')[0] : '');
+                document.getElementById('bio').value = user.bio || '';
+                if (user.avatar) {
+                    document.getElementById('profile-avatar-img').src = user.avatar;
+                }
+            }
+        }
+
+        document.getElementById('save-btn').addEventListener('click', () => {
+            const fullName = document.getElementById('fullName').value.trim();
+            const username = document.getElementById('username').value.trim();
+            const bio = document.getElementById('bio').value.trim();
+            const user = AuthGuard.getUser();
+            if (user) {
+                user.fullName = fullName || user.fullName;
+                user.username = username || (user.email ? user.email.split('@')[0] : '');
+                user.bio = bio || '';
+                localStorage.setItem('user', JSON.stringify(user));
+            }
+            window.location.href = '/app/profile/profile.html';
+        });
+    </script>
+</body>
+</html>
