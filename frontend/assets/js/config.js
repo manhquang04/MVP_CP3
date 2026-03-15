@@ -2,7 +2,7 @@
 window.WanderTaleConfig = {
     API_URL: 'https://surprised-olimpia-0manhquang0-6c9e70d9.koyeb.app',
     API_BASE_URL: 'https://surprised-olimpia-0manhquang0-6c9e70d9.koyeb.app/api',
-    MAPBOX_ACCESS_TOKEN: window.__MAPBOX_TOKEN__ || '',
+    MAPBOX_ACCESS_TOKEN: 'pk.eyJ1IjoibXF1YW5nenExIiwiYSI6ImNtZzB2MjF3djBnMmwyaXNkdjI0NzlhemoifQ.Bq2_OcfRluEV0ZFnwLqscQ',
     PLACEHOLDER_IMG: 'https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=400&h=300&fit=crop'
 };
 
