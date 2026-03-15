@@ -67,6 +67,39 @@
     </div>
 </header>
 
+<!-- Auth Gate Modal -->
+<div id="auth-gate-modal" class="fixed inset-0 z-[999] flex items-center justify-center opacity-0 pointer-events-none transition-opacity duration-300">
+    <!-- Backdrop -->
+    <div id="auth-gate-backdrop" class="absolute inset-0 bg-black/60 backdrop-blur-sm"></div>
+    <!-- Modal Content -->
+    <div id="auth-gate-content" class="relative w-[90%] max-w-md bg-white dark:bg-slate-900 rounded-3xl shadow-2xl border border-slate-200 dark:border-slate-700 p-8 transform scale-95 transition-transform duration-300 z-10">
+        <!-- Close Button -->
+        <button id="auth-gate-close" class="absolute top-4 right-4 w-8 h-8 flex items-center justify-center rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors text-slate-400 hover:text-slate-600 dark:hover:text-slate-300">
+            <span class="material-symbols-outlined text-xl">close</span>
+        </button>
+        <!-- Icon -->
+        <div class="flex justify-center mb-5">
+            <div class="w-16 h-16 rounded-2xl bg-primary/10 flex items-center justify-center">
+                <span class="material-symbols-outlined text-4xl text-primary">lock_open</span>
+            </div>
+        </div>
+        <!-- Title -->
+        <h3 class="text-2xl font-bold text-center text-slate-900 dark:text-white mb-2" data-i18n="authGateTitle">Sign in to continue</h3>
+        <p class="text-center text-slate-500 dark:text-slate-400 text-sm mb-8 leading-relaxed" data-i18n="authGateDesc">Please log in or create an account to access this feature.</p>
+        <!-- Buttons -->
+        <div class="flex flex-col gap-3">
+            <a href="/auth/login.html" class="flex items-center justify-center gap-2 h-12 rounded-full bg-primary text-white font-bold text-base tracking-wide hover:brightness-95 hover:shadow-lg transition-all">
+                <span class="material-symbols-outlined text-lg">login</span>
+                <span data-i18n="login">Login</span>
+            </a>
+            <a href="/auth/signup.html" class="flex items-center justify-center gap-2 h-12 rounded-full bg-slate-900 dark:bg-white text-white dark:text-slate-900 font-bold text-base tracking-wide hover:bg-slate-800 dark:hover:bg-slate-100 transition-all">
+                <span class="material-symbols-outlined text-lg">person_add</span>
+                <span data-i18n="signup">Sign Up</span>
+            </a>
+        </div>
+    </div>
+</div>
+
 <style>
     /* Lang buttons: black on all pages/sections (overridden on index hero only) */
     #main-header .lang-toggle-wrap { border-color: rgba(15,23,42,0.3); }
