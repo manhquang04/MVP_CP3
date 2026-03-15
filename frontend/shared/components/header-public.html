@@ -74,20 +74,3 @@
     #main-header .lang-btn:hover { background: #f1f5f9; color: #0f172a; }
     #main-header .lang-btn.active { background: #0f172a !important; color: white !important; }
 </style>
-
-<script>
-    // Header scroll effect - wait for DOM to be ready
-    document.addEventListener('DOMContentLoaded', () => {
-        const header = document.getElementById('main-header');
-
-        if (header) {
-            window.addEventListener('scroll', () => {
-                if (window.scrollY > 100) {
-                    header.classList.add('header-scrolled');
-                } else {
-                    header.classList.remove('header-scrolled');
-                }
-            });
-        }
-    });
-</script>
