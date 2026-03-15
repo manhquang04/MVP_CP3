@@ -72,6 +72,21 @@ const ComponentLoader = {
 
         // Logout
         document.getElementById('logout-btn')?.addEventListener('click', () => window.AuthGuard?.logout());
+
+        // Header scroll effect (apply after component has been injected)
+        const header = document.getElementById('main-header');
+        if (header) {
+            const handleScroll = () => {
+                if (window.scrollY > 100) {
+                    header.classList.add('header-scrolled');
+                } else {
+                    header.classList.remove('header-scrolled');
+                }
+            };
+            window.addEventListener('scroll', handleScroll, { passive: true });
+            // Run once on init so state matches current scroll position
+            handleScroll();
+        }
     },
 
     setupDropdown(btn, dropdown) {
