@@ -315,7 +315,21 @@ window.i18n = {
             createNewTrip: 'Create new trip',
             estimatedCost: 'Estimated cost',
             changeHotel: 'Change hotel',
-            changePlace: 'Change place'
+            changePlace: 'Change place',
+            
+            // Stories Immersive Feed Feed
+            premiumDiscovery: 'Premium Discovery',
+            sidebarDiscover: 'Discover',
+            sidebarMap: 'Map',
+            sidebarTrips: 'Trips',
+            sidebarProfile: 'Profile',
+            aiRecommended: 'AI Recommended',
+            trending: 'Trending',
+            addToTrip: 'Add to Trip',
+            saveBtn: 'Save',
+            nearbyGems: 'Nearby Gems',
+            expandMap: 'Expand Map',
+            viewFullItinerary: 'View Full Itinerary'
         },
 
         vi: {
@@ -628,7 +642,21 @@ window.i18n = {
             createNewTrip: 'Tạo chuyến đi mới',
             estimatedCost: 'Chi phí ước tính',
             changeHotel: 'Đổi khách sạn khác',
-            changePlace: 'Đổi địa điểm khác'
+            changePlace: 'Đổi địa điểm khác',
+            
+            // Stories Immersive Feed Feed
+            premiumDiscovery: 'Khám phá Tinh chọn',
+            sidebarDiscover: 'Khám phá',
+            sidebarMap: 'Bản đồ',
+            sidebarTrips: 'Chuyến đi',
+            sidebarProfile: 'Hồ sơ',
+            aiRecommended: 'AI Gợi ý',
+            trending: 'Thịnh hành',
+            addToTrip: 'Thêm vào Chuyến đi',
+            saveBtn: 'Lưu',
+            nearbyGems: 'Điểm đến Lân cận',
+            expandMap: 'Mở rộng Bản đồ',
+            viewFullItinerary: 'Xem Toàn bộ Lịch trình'
         }
     },
 
