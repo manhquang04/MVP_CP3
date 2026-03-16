@@ -32,7 +32,12 @@
                 <a href="/auth/signup.html" class="flex min-w-[84px] cursor-pointer items-center justify-center rounded-full h-10 px-6 bg-white text-slate-900 hover:bg-slate-100 transition-colors text-sm font-bold tracking-wide uppercase" data-i18n="signup">Sign Up</a>
             </div>
             <!-- Logged in: Avatar with dropdown (same default as profile page) -->
-            <div id="auth-user" class="hidden relative">
+            <div id="auth-user" class="hidden relative items-center gap-3">
+                <!-- Notification Bell for authenticated users -->
+                <button class="relative p-2 rounded-full hover:bg-white/10 transition-colors" onclick="window.location.href='/app/notifications'">
+                    <span class="material-symbols-outlined nav-link text-white text-xl">notifications</span>
+                    <span class="absolute top-2 right-2 w-2 h-2 bg-primary rounded-full"></span>
+                </button>
                 <button id="avatar-btn" type="button" class="flex items-center justify-center size-10 rounded-full overflow-hidden border-2 border-primary/80 hover:border-primary transition-colors bg-white dark:bg-slate-800 shadow-md focus:outline-none focus:ring-2 focus:ring-primary/50" aria-label="User menu">
                     <img id="avatar-img" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBYbPmTOr2tt9dqFEwEDeiLHytj0Q-p4iD6iSwmq2fnfn7PjN21KfgKFH5xkAfkXrE27oi_hlxOAycBf2xP0v1Sa9a528ZFnN2-EhPodEzy5ZJ6fecQ6oE7G1ajHl4DPl00yJzPI5J3KhWIkthK3bvPZP59ns_NaysMmvKTGTEE9p-wcqa7G2NONUx9Peum-sfW-JKu-CJuS8iji5DPUsZhAiwbbddXjvN3TrpTPIUSAoYQdzvGmUHHgZW5RMFpRPlKRjWDUlUaq7Gc" alt="Avatar" class="w-full h-full object-cover"/>
                 </button>
@@ -43,7 +48,8 @@
                     <span class="material-symbols-outlined text-sm">logout</span>
                     <span data-i18n="logout">Logout</span>
                 </button>
-                <div id="avatar-dropdown" class="absolute left-1/2 -translate-x-1/2 top-full mt-2 py-2 w-48 bg-white dark:bg-slate-800 rounded-xl shadow-xl border border-slate-100 dark:border-slate-700 z-[200] opacity-0 scale-95 origin-top pointer-events-none transition-all duration-200 ease-out">
+                </button>
+                <div id="avatar-dropdown" class="absolute left-full -translate-x-full min-w-48 top-full mt-2 py-2 bg-white dark:bg-slate-800 rounded-xl shadow-xl border border-slate-100 dark:border-slate-700 z-[200] opacity-0 scale-95 origin-top-right pointer-events-none transition-all duration-200 ease-out flex flex-col items-stretch">
                     <a href="/app/profile/profile.html" class="flex items-center gap-2 px-4 py-2.5 text-sm text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors">
                         <span class="material-symbols-outlined text-lg">person</span>
                         <span data-i18n="myProfile">My Profile</span>

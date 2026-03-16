@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>WanderTale | Travel Planner</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#f48c25",
+                        "secondary": "#3b82f6",
+                        "background-light": "#f8f7f5",
+                        "background-dark": "#221910",
+                    },
+                    fontFamily: {
+                        "display": ["Space Grotesk"]
+                    },
+                    borderRadius: {"DEFAULT": "1rem", "lg": "2rem", "xl": "3rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        .glass {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100 min-h-screen">
+<div class="relative flex min-h-screen flex-col overflow-x-hidden">
+<!-- Navigation Bar -->
+<header class="flex items-center justify-between border-b border-slate-200 dark:border-slate-800 bg-white/80 dark:bg-background-dark/80 backdrop-blur-md sticky top-0 z-50 px-6 py-3 lg:px-12">
+<div class="flex items-center gap-8">
+<div class="flex items-center gap-3">
+<div class="bg-primary p-2 rounded-lg text-white">
+<span class="material-symbols-outlined text-2xl">explore</span>
+</div>
+<h2 class="text-xl font-bold tracking-tight">WanderTale</h2>
+</div>
+<div class="hidden md:flex items-center gap-2 bg-slate-100 dark:bg-slate-800 rounded-full px-4 py-2 border border-slate-200 dark:border-slate-700">
+<span class="material-symbols-outlined text-slate-500">search</span>
+<input class="bg-transparent border-none focus:ring-0 text-sm w-64 placeholder:text-slate-500" placeholder="Search destinations..." type="text"/>
+</div>
+</div>
+<nav class="hidden lg:flex items-center gap-8">
+<a class="text-sm font-semibold text-primary border-b-2 border-primary pb-1" href="#">Dashboard</a>
+<a class="text-sm font-medium hover:text-primary transition-colors" href="#">Live Map</a>
+<a class="text-sm font-medium hover:text-primary transition-colors" href="#">My Trips</a>
+<a class="text-sm font-medium hover:text-primary transition-colors" href="#">Community</a>
+</nav>
+<div class="flex items-center gap-4">
+<button class="relative p-2 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
+<span class="material-symbols-outlined">notifications</span>
+<span class="absolute top-2 right-2 w-2 h-2 bg-primary rounded-full"></span>
+</button>
+<div class="h-10 w-10 rounded-full bg-cover bg-center border-2 border-primary/20" data-alt="User profile avatar showing a smiling young traveler" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAw5tg6Xbcrox7VtdC-6TogGU9gxYKpokrEE457W7KemB7v7JJyo6Ru2eGWYph-tq0y-eDfkIW6QO259qn1SDSoIaro1NA1pPKCRLIWrSOmCZV5HlOvcsH9W-moMcnv8c140UAIBgv6dJzW3NL6SP7fz0tyfpa4WVPx_vgHdjCWfshXciuxdf47vj2sXOYxBevBTOM1aPecrtWAblJnPeeUQ0iNrEYzPOinK3T4w7Lbjc67PJXQ20h-mfuRliELO7y1Pj3xLpyku93v')"></div>
+</div>
+</header>
+<main class="flex flex-1 relative h-[calc(100vh-64px)] overflow-hidden">
+<!-- Sidebar -->
+<aside class="hidden xl:flex w-72 flex-col border-r border-slate-200 dark:border-slate-800 p-6 gap-6 bg-white dark:bg-background-dark">
+<div class="flex flex-col gap-2">
+<p class="text-xs font-bold uppercase tracking-widest text-slate-400">Current Adventure</p>
+<div class="flex items-center gap-3 p-3 bg-primary/10 rounded-xl border border-primary/20">
+<div class="bg-primary text-white p-2 rounded-lg">
+<span class="material-symbols-outlined">location_on</span>
+</div>
+<div>
+<p class="text-sm font-bold">London Explorer</p>
+<p class="text-xs text-slate-500">Day 3 of 5</p>
+</div>
+</div>
+</div>
+<div class="flex flex-col gap-1">
+<p class="text-xs font-bold uppercase tracking-widest text-slate-400 mb-2">Navigation</p>
+<button class="flex items-center gap-3 px-4 py-3 rounded-xl bg-slate-100 dark:bg-slate-800 font-bold text-primary">
+<span class="material-symbols-outlined">map</span>
+<span>Interactive Map</span>
+</button>
+<button class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors">
+<span class="material-symbols-outlined">favorite</span>
+<span>Saved Places</span>
+</button>
+<button class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors">
+<span class="material-symbols-outlined">thermostat</span>
+<span>Weather Radar</span>
+</button>
+<button class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors">
+<span class="material-symbols-outlined">auto_awesome</span>
+<span>AI Itinerary</span>
+</button>
+</div>
+<div class="mt-auto p-4 bg-slate-50 dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700">
+<p class="text-sm font-bold mb-1">Travel Tip</p>
+<p class="text-xs text-slate-500 leading-relaxed">The British Museum has the shortest queues between 10 AM and 11 AM.</p>
+</div>
+</aside>
+<!-- Map Area -->
+<section class="flex-1 relative bg-slate-200 overflow-hidden">
+<div class="absolute inset-0 bg-cover bg-center" data-alt="Stylized topographic map of London with colorful destination markers" data-location="London" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDGDnI2XWzrlbb_x9fxD8FJ9zxXrQgh5ery4Zkaz5axE3W9N0ZY4acGpH_Ly5Zfd8bOURBHLMSfKF7Y1HeIrAJKohzp02minj9CykSCBy45gGen7qoVeA7F04Q5ObzBQPQSddTKc07_qn_eo5Y00rQkv0XBeraq6DwFPZCEr3ufybVyDbbdKH-qoIRJSFlUszlP5OyZTFxFeM92b1gKqihxWR10PR18C7aHrv0kWbGy8jKcZI-mTAkiuJ9K2EbCKn0ZO8_V53LNVggo')"></div>
+<!-- Map Controls -->
+<div class="absolute right-6 top-6 flex flex-col gap-2">
+<button class="p-3 bg-white dark:bg-slate-800 rounded-xl shadow-xl hover:bg-slate-50 transition-colors">
+<span class="material-symbols-outlined">add</span>
+</button>
+<button class="p-3 bg-white dark:bg-slate-800 rounded-xl shadow-xl hover:bg-slate-50 transition-colors">
+<span class="material-symbols-outlined">remove</span>
+</button>
+<button class="p-3 bg-white dark:bg-slate-800 rounded-xl shadow-xl hover:bg-slate-50 transition-colors text-secondary">
+<span class="material-symbols-outlined">my_location</span>
+</button>
+</div>
+<!-- OVERLAY NOTIFICATION: Real-time Web Assistant -->
+<div class="absolute inset-x-0 top-10 flex justify-center px-4 pointer-events-none">
+<div class="glass w-full max-w-2xl rounded-2xl shadow-2xl overflow-hidden border border-white/50 pointer-events-auto flex flex-col md:flex-row">
+<!-- Left Info Section -->
+<div class="flex-1 p-6 flex flex-col gap-4">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-primary/20 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined">rainy</span>
+</div>
+<div class="flex flex-col">
+<span class="text-[10px] font-bold uppercase tracking-widest text-primary">Real-time Assistant</span>
+<h3 class="text-xl font-bold leading-tight">Incoming Rain Alert!</h3>
+</div>
+</div>
+<p class="text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
+                                Heavy rain is expected in <span class="font-bold text-slate-900 dark:text-white">12 minutes</span>. I've optimized your route for indoor activities nearby.
+                            </p>
+<div class="flex flex-col gap-2 mt-2">
+<div class="flex items-center gap-3 text-xs">
+<span class="material-symbols-outlined text-slate-400 text-sm">circle</span>
+<span class="text-slate-500 line-through">Covent Garden Market</span>
+</div>
+<div class="flex items-center gap-3 text-xs font-bold text-secondary">
+<span class="material-symbols-outlined text-sm">arrow_forward</span>
+<span>The British Museum (Indoor)</span>
+</div>
+</div>
+<div class="mt-4 flex gap-3">
+<button class="flex-1 bg-primary hover:bg-primary/90 text-white font-bold py-3 px-6 rounded-xl transition-all shadow-lg shadow-primary/30 flex items-center justify-center gap-2">
+<span>Accept New Route</span>
+<span class="material-symbols-outlined text-sm">route</span>
+</button>
+<button class="px-4 py-3 bg-white/50 dark:bg-slate-800/50 rounded-xl text-slate-500 hover:text-slate-700 transition-colors">
+<span class="material-symbols-outlined">close</span>
+</button>
+</div>
+</div>
+<!-- Right Map/Visual Section -->
+<div class="hidden md:block w-56 relative border-l border-white/30">
+<div class="absolute inset-0 bg-cover bg-center" data-alt="Mini map showing a blue optimized path to the museum" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBuwAI8Jc0D8E5ypyIdoAV0vXiNmp89m9Kgw79GPECwReMp03_X-ytML90agFo1iA7FfxGCn75DPiJSC69GtajQI3Mda1k3txUE_h6ILp1vDMhm9oVyK5dPSqr99rFw0Kpy_Q7YENvvcnCaVDdUXnKyPa2rshLtcvY02zk0WECr9XCb9GMCp4isEm6jj4iUAM149VSd7u81czkHj8V4EmW7-Pv-SeNoiqaJgbJkhiSpbn7eHG3VoPkMQfelPnnnTZorvHFHiiQxg646')"></div>
+<div class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent"></div>
+<div class="absolute bottom-4 left-4 right-4 bg-white/90 dark:bg-slate-900/90 p-3 rounded-xl backdrop-blur-md">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-sm">local_activity</span>
+<span class="text-[10px] font-bold uppercase">New Destination</span>
+</div>
+<p class="text-xs font-bold truncate">British Museum</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Floating Bottom Dock (Mobile/Small Desktop) -->
+<div class="absolute bottom-6 left-1/2 -translate-x-1/2 flex items-center bg-white dark:bg-slate-900 px-6 py-3 rounded-full shadow-2xl border border-slate-200 dark:border-slate-800 gap-8">
+<button class="text-primary flex flex-col items-center gap-1">
+<span class="material-symbols-outlined">explore</span>
+<span class="text-[10px] font-bold uppercase">Explore</span>
+</button>
+<button class="text-slate-400 flex flex-col items-center gap-1">
+<span class="material-symbols-outlined">calendar_today</span>
+<span class="text-[10px] font-bold uppercase">Planner</span>
+</button>
+<button class="text-slate-400 flex flex-col items-center gap-1">
+<span class="material-symbols-outlined">groups</span>
+<span class="text-[10px] font-bold uppercase">Social</span>
+</button>
+</div>
+</section>
+<!-- Details Panel (Right) -->
+<aside class="hidden 2xl:flex w-80 flex-col border-l border-slate-200 dark:border-slate-800 p-6 bg-white dark:bg-background-dark overflow-y-auto">
+<h3 class="text-lg font-bold mb-4">Nearby Now</h3>
+<div class="flex flex-col gap-4">
+<div class="group cursor-pointer">
+<div class="w-full aspect-video rounded-2xl overflow-hidden mb-2">
+<div class="w-full h-full bg-cover bg-center transition-transform group-hover:scale-105" data-alt="Classic museum exterior with grand columns" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDxYwa73zi50cukmLhDXzkiAR2MFdNORAPhddl3FpWAZuAYTRO39OuXf3MH0pZZuN_ZPr-JJiG_VzCKoNosQhbqs_vhGV_G0ol8nD1v_JCgRZM1jnpXOd9CbfSpLH3xvG5sD1xbTYWLGpXONcBtQi71ElTkfbghivVg-iXSgx4iXym6hrQZLFzxpnsyTYXOJLA73amZv67GJYmpLA090fBVMVz0EDyz2PMbA_fumHPieFZX-Ll6mUyORc0BrICDL5Bv5r4rQYqT0TEc')"></div>
+</div>
+<h4 class="font-bold text-sm">British Museum</h4>
+<p class="text-xs text-slate-500">History • 5 min walk</p>
+</div>
+<div class="group cursor-pointer opacity-60">
+<div class="w-full aspect-video rounded-2xl overflow-hidden mb-2">
+<div class="w-full h-full bg-cover bg-center" data-alt="Outdoor garden path with flowers" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBP_5TJ7JsyezPjF1ZEDwdwkQFthNHDfyrhzgUcAtzv3jKd_yo5i1JAmiaUFk7hs-255KwogOrgsZ9iZX48h3SRO9NTnytncy8_Li0MFEaswzonxxdAxqHFILM0q076hN49Xc4VDej2DkLGu-jgcJKEwc5g6h1QxaTH-YAfeYvmVnHPUrbWpmnha3BrXH_3SNQEtRLy3vqN0j3nUaoD-926S3yk0Ea2htkLqmqfvssRMUf70sWQXA3OK9EZh-Aq77Z_-Yl20ihmX_kb')"></div>
+</div>
+<h4 class="font-bold text-sm">St. James's Park</h4>
+<p class="text-xs text-slate-500">Nature • 15 min walk</p>
+<div class="mt-1 flex items-center gap-1 text-[10px] text-primary font-bold">
+<span class="material-symbols-outlined text-xs">warning</span>
+<span>Not recommended (Rain)</span>
+</div>
+</div>
+</div>
+<div class="mt-8 border-t border-slate-100 dark:border-slate-800 pt-6">
+<h3 class="text-lg font-bold mb-4">Weather Forecast</h3>
+<div class="grid grid-cols-4 gap-2">
+<div class="flex flex-col items-center p-2 rounded-xl bg-slate-50 dark:bg-slate-800">
+<span class="text-[10px] font-bold">14:00</span>
+<span class="material-symbols-outlined text-primary my-1">wb_sunny</span>
+<span class="text-xs font-bold">22°</span>
+</div>
+<div class="flex flex-col items-center p-2 rounded-xl border border-primary/30 bg-primary/5">
+<span class="text-[10px] font-bold text-primary">15:00</span>
+<span class="material-symbols-outlined text-primary my-1">rainy</span>
+<span class="text-xs font-bold">19°</span>
+</div>
+<div class="flex flex-col items-center p-2 rounded-xl bg-slate-50 dark:bg-slate-800">
+<span class="text-[10px] font-bold">16:00</span>
+<span class="material-symbols-outlined text-slate-400 my-1">cloud</span>
+<span class="text-xs font-bold">20°</span>
+</div>
+<div class="flex flex-col items-center p-2 rounded-xl bg-slate-50 dark:bg-slate-800">
+<span class="text-[10px] font-bold">17:00</span>
+<span class="material-symbols-outlined text-slate-400 my-1">cloud</span>
+<span class="text-xs font-bold">21°</span>
+</div>
+</div>
+</div>
+</aside>
+</main>
+</div>
+</body>
+</html>
