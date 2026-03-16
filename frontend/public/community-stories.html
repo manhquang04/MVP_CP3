@@ -1,15 +1,12 @@
 <!DOCTYPE html>
-<html class="light" lang="en">
-<head>
-    <meta charset="utf-8"/>
-    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-    <link rel="icon" type="image/png" href="/assets/images/logo.png"/>
-    <title>Travel Tales | WanderTale</title>
-    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
-    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&display=swap" rel="stylesheet"/>
-    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
-    <script id="tailwind-config">
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
         tailwind.config = {
             darkMode: "class",
             theme: {
@@ -20,215 +17,157 @@
                         "background-dark": "#221910",
                     },
                     fontFamily: {
-                        "display": ["Space Grotesk", "sans-serif"]
+                        "display": ["Space Grotesk"]
                     },
-                    borderRadius: {
-                        "DEFAULT": "1rem",
-                        "lg": "2rem",
-                        "xl": "3rem",
-                        "full": "9999px"
-                    },
+                    borderRadius: {"DEFAULT": "1rem", "lg": "2rem", "xl": "3rem", "full": "9999px"},
                 },
             },
         }
     </script>
-    <style>
-        body { font-family: 'Space Grotesk', sans-serif; }
-        .glass-effect {
-            background: rgba(255, 255, 255, 0.15);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-        }
-        .sidebar-item-active {
-            background-color: rgba(244, 140, 37, 0.1);
-            color: #f48c25;
-        }
-    </style>
+<title>TravelAI - Visual Discovery</title>
 </head>
-<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 min-h-screen">
-<div class="flex h-screen overflow-hidden">
-<!-- Side Navigation Bar -->
-<aside class="w-72 flex-shrink-0 border-r border-primary/10 bg-background-light dark:bg-background-dark p-6 flex flex-col justify-between z-40 relative">
-    <div class="space-y-8">
-        <div class="flex flex-col gap-1 px-3">
-            <h1 class="text-2xl font-bold tracking-tight text-primary">TravelAI</h1>
-            <p class="text-sm font-medium opacity-60" data-i18n="premiumDiscovery">Premium Discovery</p>
-        </div>
-        <nav class="flex flex-col gap-2">
-            <a class="flex items-center gap-4 px-4 py-3 rounded-xl sidebar-item-active group" href="#">
-                <span class="material-symbols-outlined">explore</span>
-                <span class="font-medium" data-i18n="sidebarDiscover">Discover</span>
-            </a>
-            <a class="flex items-center gap-4 px-4 py-3 rounded-xl hover:bg-primary/5 transition-colors group" href="/app/explore/map.html">
-                <span class="material-symbols-outlined">map</span>
-                <span class="font-medium opacity-80 group-hover:opacity-100" data-i18n="sidebarMap">Map</span>
-            </a>
-            <a class="flex items-center gap-4 px-4 py-3 rounded-xl hover:bg-primary/5 transition-colors group" href="/app/planner.html">
-                <span class="material-symbols-outlined">work</span>
-                <span class="font-medium opacity-80 group-hover:opacity-100" data-i18n="sidebarTrips">Trips</span>
-            </a>
-            <a class="flex items-center gap-4 px-4 py-3 rounded-xl hover:bg-primary/5 transition-colors group" href="/app/profile/profile.html">
-                <span class="material-symbols-outlined">person</span>
-                <span class="font-medium opacity-80 group-hover:opacity-100" data-i18n="sidebarProfile">Profile</span>
-            </a>
-        </nav>
-    </div>
-    <div class="px-4 py-6 bg-primary/5 rounded-2xl flex items-center gap-3 border border-primary/10">
-        <div class="w-10 h-10 rounded-full bg-primary/20 flex items-center justify-center overflow-hidden">
-            <img class="w-full h-full object-cover" data-alt="User profile picture of a traveler" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBG7_wv2ASqY0L3EVhVTDqhlOaL4_yT6jxY70RMNVQLZUPPdKKXwCZN1H5Df9cVZTEKxU4XMaegZmlh99NdCjM_Z5FQFBLJ-mK0k9sIczvwcXfke2hKmxNvv0VBBeqcGirdxXlxwvcroC99k9GauU1m0r4p51oeTquGvdT7eKoyGddLuwK2FHNLHKdvjgOpD9m4VzhetQcFW0TDtm_bMI7LRao8LvoNehq6tssQuIdJw01CHpVB120kgtvwmqKPIcRur9nRtxK696_O"/>
-        </div>
-        <div class="flex flex-col">
-            <p class="text-sm font-bold">Alex Rivers</p>
-            <p class="text-xs opacity-60">Gold Member</p>
-        </div>
-    </div>
+<body class="bg-slate-950 font-display text-slate-100 overflow-hidden">
+<div class="flex h-screen w-full">
+<!-- Sidebar Navigation -->
+<aside class="w-72 h-full border-r border-white/10 flex flex-col p-8 bg-slate-950/60 backdrop-blur-xl">
+<div class="flex items-center gap-3 mb-12 px-2">
+<div class="bg-primary size-10 rounded-lg flex items-center justify-center text-white">
+<span class="material-symbols-outlined text-2xl">explore</span>
+</div>
+<div class="flex flex-col">
+<h1 class="text-xl font-bold leading-none">TravelAI</h1>
+<p class="text-primary text-xs font-medium uppercase tracking-widest mt-1">Premium Discovery</p>
+</div>
+</div>
+<nav class="flex flex-col gap-2 flex-grow">
+<a class="flex items-center gap-4 px-4 py-3 rounded-full bg-white/10 text-white font-bold" href="#">
+<span class="material-symbols-outlined fill-[1]">explore</span>
+<span class="font-semibold">Discover</span>
+</a>
+<a class="flex items-center gap-4 px-4 py-3 rounded-full hover:bg-white/5 transition-colors text-slate-400 hover:text-white" href="#">
+<span class="material-symbols-outlined">map</span>
+<span class="font-medium">Map</span>
+</a>
+<a class="flex items-center gap-4 px-4 py-3 rounded-full hover:bg-white/5 transition-colors text-slate-400 hover:text-white" href="#">
+<span class="material-symbols-outlined">luggage</span>
+<span class="font-medium">Trips</span>
+</a>
+<a class="flex items-center gap-4 px-4 py-3 rounded-full hover:bg-white/5 transition-colors text-slate-400 hover:text-white" href="#">
+<span class="material-symbols-outlined">person</span>
+<span class="font-medium">Profile</span>
+</a>
+</nav>
+<div class="mt-auto pt-6 border-t border-slate-200 dark:border-slate-800">
+<button class="w-full bg-primary text-white py-4 rounded-full font-bold flex items-center justify-center gap-2 hover:opacity-90 transition-opacity">
+<span class="material-symbols-outlined">add_circle</span>
+                    Book Now
+                </button>
+</div>
 </aside>
-
-<!-- Main Immersive Feed -->
-<main class="flex-1 relative flex flex-col items-center justify-center p-8 bg-slate-200 dark:bg-slate-900 overflow-hidden">
-    <!-- Background Immersive Visual -->
-    <div class="absolute inset-0 z-0">
-        <div class="absolute inset-0 bg-black/30 z-10"></div>
-        <img class="w-full h-full object-cover" data-alt="Breathtaking aerial view of Ho Chi Minh City at dusk" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC5Vw9svUoo8SDTmdYloQi58TujpWcsMqjAoYtp0WC2NjZqCYs5-HWmVd4KBINok53JyDvkU4sGsuRuBVQrhFsz3CwbQ61Rw9MvEfE0lro_62YpqzIknXzt57re1T7Xe9AvzD_tedIl4eQu8XAMgXhoLM9bNWvCVopW-f7zN2jOezMT6YLQD9km1MEvILYWmk190CTQM1BNINSRbJV84bZmghl3OKQn72xnvX8ZZoCL_3Oe7H2g7hkFpEAFmvaJyT4Af_8C1OYMWmwP"/>
-    </div>
-    
-    <!-- Header with Language Selector overlaid -->
-    <div class="absolute top-6 right-6 z-50 flex gap-2">
-        <button class="lang-btn bg-white/20 backdrop-blur-md px-3 py-1.5 rounded-lg text-white font-bold text-sm border border-white/30 hover:bg-white/30 transition shadow-lg" data-lang="en">EN</button>
-        <button class="lang-btn bg-white/20 backdrop-blur-md px-3 py-1.5 rounded-lg text-white font-bold text-sm border border-white/30 hover:bg-white/30 transition shadow-lg" data-lang="vi">VI</button>
-    </div>
-
-    <!-- Content Container -->
-    <div class="relative z-20 w-full max-w-6xl flex flex-col md:flex-row gap-8 items-end justify-between h-full pb-12">
-        <!-- Center Video Focus (Mocked as a large container with play UI) -->
-        <div class="flex-1 h-full max-h-[80vh] flex items-center justify-center group relative">
-            <div class="absolute inset-0 flex items-center justify-center">
-                <button class="size-24 rounded-full glass-effect flex items-center justify-center text-white hover:scale-110 transition-transform">
-                    <span class="material-symbols-outlined !text-5xl translate-x-1">play_arrow</span>
-                </button>
-            </div>
-            <!-- Progress Bar Overlay -->
-            <div class="absolute bottom-4 left-4 right-4 h-1.5 bg-white/20 rounded-full overflow-hidden">
-                <div class="h-full bg-primary w-1/3"></div>
-            </div>
-        </div>
-        
-        <!-- Info Overlay Side Panel -->
-        <div class="w-full md:w-[400px] glass-effect p-8 rounded-xl text-white flex flex-col gap-6 shadow-2xl">
-            <div class="flex items-start justify-between">
-                <div class="space-y-2">
-                    <div class="flex gap-2 mb-3">
-                        <span class="px-3 py-1 bg-primary text-white text-[10px] font-bold uppercase tracking-wider rounded-full" data-i18n="aiRecommended">AI Recommended</span>
-                        <span class="px-3 py-1 bg-white/20 text-white text-[10px] font-bold uppercase tracking-wider rounded-full" data-i18n="trending">Trending</span>
-                    </div>
-                    <h2 class="text-4xl font-bold leading-tight">The Hidden Oasis</h2>
-                    <div class="flex items-center gap-2 opacity-90">
-                        <span class="material-symbols-outlined text-primary text-sm">location_on</span>
-                        <p class="text-sm font-medium">District 1, Saigon • Vietnam</p>
-                    </div>
-                </div>
-                <div class="bg-primary/20 p-2 rounded-lg border border-primary/30">
-                    <img class="w-16 h-16 rounded-lg object-cover" data-alt="Thumbnail of the boutique retreat interior" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBJVyz39otMbuvndqhLsnzkSy1Ahk_rDO5uI3NE4sUq9_0UWd7229wpBMWeBAkBWUxDxfXdQ-kj9betpqaF1oQkfawHNTcw1Wyiua5_rLG6DY8ETpAl7p7oR4G2Op-UMf4I6-3Cb_8ikcacw28SesFCl92C7dOJDUa6TC9a9aGcIduKlv8e4NGSvD_27meLG_AJkTIi8ej6zWDCBYHXWZjtk0S9VyMa_0gmghoA71_6dhCJ-9ip4_cuiZaFMj9sI9hFCt5L8VR9Tkfh"/>
-                </div>
-            </div>
-            <p class="text-sm leading-relaxed opacity-80">
-                Experience a high-end boutique retreat nestled in the heart of Saigon. A secret sanctuary featuring minimalist design and local craftsmanship.
-            </p>
-            <div class="flex gap-4">
-                <button class="flex-1 bg-primary hover:bg-primary/90 text-white font-bold py-4 rounded-xl transition-all shadow-lg shadow-primary/20 flex items-center justify-center gap-2">
-                    <span class="material-symbols-outlined text-xl">add_circle</span>
-                    <span data-i18n="addToTrip">Add to Trip</span>
-                </button>
-                <button class="flex-1 bg-white/10 hover:bg-white/20 border border-white/20 text-white font-bold py-4 rounded-xl transition-all flex items-center justify-center gap-2">
-                    <span class="material-symbols-outlined text-xl">bookmark</span>
-                    <span data-i18n="saveBtn">Save</span>
-                </button>
-            </div>
-            <div class="pt-4 border-t border-white/10 flex justify-around">
-                <button class="flex flex-col items-center gap-1 group">
-                    <div class="size-12 rounded-full flex items-center justify-center hover:bg-white/10 transition-colors">
-                        <span class="material-symbols-outlined !text-3xl text-white group-hover:text-red-500">favorite</span>
-                    </div>
-                    <span class="text-xs font-bold opacity-80">12.4k</span>
-                </button>
-                <button class="flex flex-col items-center gap-1 group">
-                    <div class="size-12 rounded-full flex items-center justify-center hover:bg-white/10 transition-colors">
-                        <span class="material-symbols-outlined !text-3xl text-white">chat_bubble</span>
-                    </div>
-                    <span class="text-xs font-bold opacity-80">850</span>
-                </button>
-                <button class="flex flex-col items-center gap-1 group">
-                    <div class="size-12 rounded-full flex items-center justify-center hover:bg-white/10 transition-colors">
-                        <span class="material-symbols-outlined !text-3xl text-white">share</span>
-                    </div>
-                    <span class="text-xs font-bold opacity-80">2.1k</span>
-                </button>
-            </div>
-        </div>
-    </div>
-    
-    <!-- Floating Navigation Controls -->
-    <div class="absolute right-8 top-1/2 -translate-y-1/2 z-30 flex flex-col gap-4">
-        <button class="size-12 rounded-full glass-effect text-white flex items-center justify-center hover:bg-white/30 transition-all border border-white/40">
-            <span class="material-symbols-outlined">keyboard_arrow_up</span>
-        </button>
-        <button class="size-12 rounded-full glass-effect text-white flex items-center justify-center hover:bg-white/30 transition-all border border-white/40">
-            <span class="material-symbols-outlined">keyboard_arrow_down</span>
-        </button>
-    </div>
-</main>
-
-<!-- Right Map Preview (Minimalist) -->
-<aside class="w-80 hidden xl:flex flex-col border-l border-primary/10 bg-background-light dark:bg-background-dark p-6 overflow-y-auto gap-6 z-40 relative">
-    <h3 class="text-lg font-bold" data-i18n="nearbyGems">Nearby Gems</h3>
-    <div class="rounded-2xl overflow-hidden h-48 relative border border-primary/10 group cursor-pointer">
-        <img class="w-full h-full object-cover" data-alt="Map view showing location of Saigon District 1" data-location="Saigon" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCFL8ShEGVRxG6u7ti2hJ9Mx9NBQXkRZ8Y5UXlJ2vpqYvbHF36py1NL8V0aqliPeR2aXqmE-s1vDKOn08y0ToWIMfci_2SYkbXUNUeFFPmhpbwPDTG70PaJ6WKJa_W2Oka3_kcLBuqvar9vtDtMGbE0PBg7DdkhmkS2Efc8VRSEwa3Ujttki0_JpzpKtRXcyyudfT3gGchD1sBJycDwP0-Ev8KRzgDquWa0p9ioMG0Mu1NQzds_SLunYYAYy27iYW-mnsgRvfw4Bgi6"/>
-        <div class="absolute inset-0 bg-primary/20 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity backdrop-blur-sm">
-            <span class="px-4 py-2 bg-white text-slate-900 rounded-full font-bold text-sm shadow-xl" data-i18n="expandMap">Expand Map</span>
-        </div>
-        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
-            <span class="material-symbols-outlined text-primary text-4xl drop-shadow-lg">location_on</span>
-        </div>
-    </div>
-    
-    <div class="space-y-4">
-        <div class="flex items-center gap-4 p-3 hover:bg-primary/5 rounded-xl transition-colors cursor-pointer border border-transparent hover:border-primary/10">
-            <div class="size-14 rounded-lg overflow-hidden flex-shrink-0">
-                <img class="w-full h-full object-cover" data-alt="Cafe terrace in Saigon" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAoxao02QrsnbbDdriGyOU6Jk3Ni48k7UCJpebEjKdGwDHm2JNIkSPrw8NENs8wGv7wp5EDnOCCc62TwPfw9D7ZdO8Qm_l30b43ZfGnhJuauxcLVggqt6JQcKPzntUQ0iAtaUFkIRb8IlzGb-RPZYMLr_EkcCrwf0CLd49n8PFBCySXimVO2YFP4GZWrT3OWQ4oEal-YnwWY9TdGRcUZzHqA-3nnqxZRy_PX_sWVLJR-h7M95nhzB28AQEXWeAOkw_XM5VJBaOQzLY7"/>
-            </div>
-            <div>
-                <p class="text-sm font-bold">The Workshop Coffee</p>
-                <p class="text-xs opacity-60">450m away • 4.8★</p>
-            </div>
-        </div>
-        <div class="flex items-center gap-4 p-3 hover:bg-primary/5 rounded-xl transition-colors cursor-pointer border border-transparent hover:border-primary/10">
-            <div class="size-14 rounded-lg overflow-hidden flex-shrink-0">
-                <img class="w-full h-full object-cover" data-alt="Traditional market stall" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAMVqHDq_r6OVUHUjsvFO8Yosn0YjYxdLq0uRFEnFtq3crVZDriNlEh1rsFwLr2ohPQoxqH_5Fx44N3kzNQmYlIcZStU3X_LwiwU-jd_2iUkKkVI0iBThusUyVtKNhYarEon86JJkSzeS-yI6V4dEJQzwifk7eRgnYIc3I2Zlev8dZmApWhLIXHGMMjPEGXiOVmFsbDXVj4GjIdcQcQVWo1d7uFl0W3DFfwyE5td7fJBLKYrlaB5tPlwy-evFj1r28Ej_eKlDmgbXO0"/>
-            </div>
-            <div>
-                <p class="text-sm font-bold">Ben Thanh Market</p>
-                <p class="text-xs opacity-60">1.2km away • 4.2★</p>
-            </div>
-        </div>
-        <div class="flex items-center gap-4 p-3 hover:bg-primary/5 rounded-xl transition-colors cursor-pointer border border-transparent hover:border-primary/10">
-            <div class="size-14 rounded-lg overflow-hidden flex-shrink-0">
-                <img class="w-full h-full object-cover" data-alt="Modern rooftop bar" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBbGueImgG286XebcIC0joptOjXjvYU6PGZuLJ9HZx2MfFXDnhIPpZPu7_mTArhPfaR_ZsmpcV-We7LkqwnW3EEHu1G_pIYMNvNy38af6WyqKg1aokRBOiv42F9_9QR8JP30pYtchY7Gm1zSinS_FD-dbe6b-q8JvsoaAqXQ7kiixOqpev4Y1v5o7JHy2-alHYmIZNLhT6ZTQW6VsPp7wvVI8gymAuJ4vUs3z1EvGSYuLdyQ2eDMmz_sv_pHWh6MPbx96f-3B6zRywW"/>
-            </div>
-            <div>
-                <p class="text-sm font-bold">Skyline Lounge</p>
-                <p class="text-xs opacity-60">800m away • 4.9★</p>
-            </div>
-        </div>
-    </div>
-    <div class="mt-auto pt-6 border-t border-primary/10">
-        <button class="w-full py-3 bg-background-light dark:bg-slate-800 border border-primary/20 rounded-xl text-primary font-bold text-sm hover:bg-primary hover:text-white transition-all shadow-sm" data-i18n="viewFullItinerary">
-            View Full Itinerary
-        </button>
-    </div>
+<!-- Main Content Area -->
+<main class="flex-1 flex flex-col relative overflow-hidden"><!-- Header -->
+<header class="flex items-center justify-between px-10 py-6 absolute top-0 left-0 right-0 z-20 pointer-events-none">
+<div class="flex items-center gap-8 pointer-events-auto">
+<div class="flex items-center gap-9">
+<a class="text-white drop-shadow-md text-sm font-bold border-b-2 border-primary pb-1" href="#">Explore</a>
+<a class="text-white/60 drop-shadow-md text-sm font-medium hover:text-white transition-colors" href="#">Following</a>
+</div>
+</div>
+<div class="flex items-center gap-6 pointer-events-auto">
+<div class="relative w-64">
+<span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-white/70">search</span>
+<input class="w-full bg-white/10 backdrop-blur-md border border-white/10 rounded-full py-2 pl-12 pr-4 text-white placeholder:text-white/50 focus:outline-none focus:ring-2 focus:ring-primary/50" placeholder="Search destinations..."/>
+</div>
+<button class="size-10 rounded-full bg-white/10 backdrop-blur-md border border-white/10 flex items-center justify-center text-white hover:bg-white/20 transition-colors">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+</div>
+</header>
+<div class="flex-1 flex items-center justify-center p-4 relative" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCotZYc-GRose6M3UWmAf5A-aWFvLjKUpd6FqcRedvXAH_LIRjDJDd1uvC5FfFxyVjnyCymK9DEjE3rJaTK3vcR3YvWIWLH6K8NO7QH9dXaZudSuPGKmgWjjDWPLKE775RwtOtmtB0MkCVtns_ekoca0ky3kmg7iLS6rBheKb-a2j6QHeRS41rDViw-GbcJgeodUy4gtbHZbyhYk9n5K3qWvnAxLgh8PpPI_2ue-WW2waZoR0qnh2gkM2YBesU9-NPuNPT4BMp-1elY'); background-size: cover; background-position: center;">
+<!-- TikTok-style Vertical Video Container -->
+<div class="relative h-full aspect-[9/16] max-h-[850px] w-auto bg-black rounded-3xl overflow-hidden shadow-2xl border border-white/10 group">
+<img alt="Destination" class="absolute inset-0 w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAQPM1p7I_Xz5hzoHE4a-u-ztO8qcjO56EH-9Jj2U0nrFZsxGaDf0HaSQlIEYrlmvi74KKMuxIfaFRtPd63p6a1zGWsZr7ocezhbuGAWmBSsxfq5_YnRirdAFQRu2QgF_PZJmzpfZTMUytW-g1z3PBrjfVz9ZiM99JSpEFHiV02_j4c8k_iBSvCAEReLKyo95_2nEDxMZMz6ogkIf1TAeXitYlB0VwXhwzBP6xwn2ff-i4VFxg4GK3-d23XANLsKhT07LtC4gNmfWaJ"/>
+<!-- Gradient Overlay -->
+<div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/20"></div>
+<!-- Bottom Info Overlay -->
+<div class="absolute bottom-0 left-0 right-0 p-6 flex flex-col gap-3">
+<div class="flex items-center gap-2">
+<h2 class="text-xl font-bold">The Azure Estate</h2>
+<span class="text-primary text-sm">• Bali</span>
+</div>
+<p class="text-sm text-white/80 line-clamp-2 leading-relaxed">A breathtaking cliffside sanctuary overlooking the Indian Ocean. Experience ultimate serenity in our award-winning private infinity villas.</p>
+<div class="flex flex-wrap gap-2 mb-2">
+<span class="text-xs font-bold text-primary hover:underline cursor-pointer">#chill</span>
+<span class="text-xs font-bold text-primary hover:underline cursor-pointer">#tropical</span>
+<span class="text-xs font-bold text-primary hover:underline cursor-pointer">#architecture</span>
+</div>
+<button class="w-full bg-primary hover:bg-primary/90 text-white py-3 rounded-xl font-bold flex items-center justify-center gap-2 transition-all">
+<span class="material-symbols-outlined">add_circle</span>
+                Add to Trip
+            </button>
+</div>
+<!-- Vertical Action Bar (Inside Video right) -->
+<div class="absolute right-4 bottom-32 flex flex-col items-center gap-5">
+<div class="flex flex-col items-center gap-1">
+<button class="size-12 rounded-full bg-black/20 backdrop-blur-md flex items-center justify-center text-white hover:text-red-500 transition-colors border border-white/10">
+<span class="material-symbols-outlined text-2xl fill-[1]">favorite</span>
+</button>
+<span class="text-white text-[10px] font-bold">24.5k</span>
+</div>
+<div class="flex flex-col items-center gap-1">
+<button class="size-12 rounded-full bg-black/20 backdrop-blur-md flex items-center justify-center text-white hover:text-primary transition-colors border border-white/10">
+<span class="material-symbols-outlined text-2xl fill-[1]">chat_bubble</span>
+</button>
+<span class="text-white text-[10px] font-bold">1.2k</span>
+</div>
+<div class="flex flex-col items-center gap-1">
+<button class="size-12 rounded-full bg-black/20 backdrop-blur-md flex items-center justify-center text-white hover:text-blue-400 transition-colors border border-white/10">
+<span class="material-symbols-outlined text-2xl">bookmark</span>
+</button>
+<span class="text-white text-[10px] font-bold">Save</span>
+</div>
+<div class="flex flex-col items-center gap-1">
+<button class="size-12 rounded-full bg-black/20 backdrop-blur-md flex items-center justify-center text-white hover:text-green-400 transition-colors border border-white/10">
+<span class="material-symbols-outlined text-2xl">share</span>
+</button>
+<span class="text-white text-[10px] font-bold">Share</span>
+</div>
+</div>
+</div>
+</div></main>
+<!-- Right Preview Rail (Discovery Feed) -->
+<aside class="w-80 h-full border-l border-white/10 flex flex-col p-6 overflow-y-auto no-scrollbar bg-slate-950/60 backdrop-blur-xl">
+<h3 class="text-sm font-bold uppercase tracking-widest mb-6 text-white/40">Nearby Gems</h3>
+<div class="flex flex-col gap-6">
+<div class="group cursor-pointer">
+<div class="relative h-32 w-full rounded-2xl overflow-hidden mb-3 border-2 border-primary shadow-lg">
+<img class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCMD3_Ec9sfPsQCRoZ8KxunrFJN4A92BtfnZrNDxhZ24Po9wwt952WUN_gWcXOgcWIEJxVudlGyhoe-lyetPsr8i3XpWAT4HcM8GMxGoYLyGRgbjIHbsZFKh54-wP1T3VDW3wkfx_mQyHCAVm-CKAFo3ZWZVsaFmvSI9COzSHke_EXisCqG8dXzF287PZTlKs0nF605JTjoDiAw7tgkGla1EazxZGETrBt6uazjHjNJXcpQ-t-kYZrxaVHacN-H-MTioM6t3vEkd_Na"/>
+<div class="absolute top-2 right-2 px-2 py-0.5 bg-black/60 backdrop-blur-md text-[10px] text-white font-bold rounded-full">4.8 ★</div>
+</div>
+<h4 class="font-bold text-sm leading-tight group-hover:text-primary transition-colors">The Floating Temple</h4>
+<p class="text-xs text-slate-500 dark:text-slate-400 mt-1 uppercase tracking-tighter">Cultural • 1.2km</p>
+</div>
+<div class="group cursor-pointer">
+<div class="relative h-32 w-full rounded-2xl overflow-hidden mb-3">
+<img class="w-full h-full object-cover opacity-80 group-hover:opacity-100 group-hover:scale-110 transition-all duration-500" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBURmF9K5ZDZA0vd_hf4ESmIdkAesPXLVdDO45bZk-WTn9iMm1icsm5reG2zg4Chq2qhff-sqEoPSrBZu99apm4xjW1isLeXpr4wAFbXUxIKlAtYg-hloH5j8qxM7WdRZGjIGr2ZwRU5TQFhuodYoeNeT0tciZNVuabhDqaXsdwz2N4R20bJDC2Gh0wD_YJa00HHWEB92SE77V5fjBWz4CYNrIecuSRaYZXuhsaljeJ1M-jei7wnpQW18EgD3K217xXzS9bsSjSo_4z"/>
+<div class="absolute top-2 right-2 px-2 py-0.5 bg-black/60 backdrop-blur-md text-[10px] text-white font-bold rounded-full">4.5 ★</div>
+</div>
+<h4 class="font-bold text-sm leading-tight group-hover:text-primary transition-colors">Vintage Arcade Bar</h4>
+<p class="text-xs text-slate-500 dark:text-slate-400 mt-1 uppercase tracking-tighter">Social • 0.8km</p>
+</div>
+<div class="group cursor-pointer">
+<div class="relative h-32 w-full rounded-2xl overflow-hidden mb-3">
+<img class="w-full h-full object-cover opacity-80 group-hover:opacity-100 group-hover:scale-110 transition-all duration-500" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCG3Kri1d6E53twpOA41kRe44VBbJND8mQPQ1saEfAhiJl3c4EsLeJJak5byPQvyyPva2wywlwpty483t_vzK32N_XaiuQKi87K2SmwBKPxmfoRI9kHjixgaicd9Sjxqcrse9cGXfyvF-jiZcsBA4Niw1897ZxP7W5lAfGFa8Or8EbOF-a_nPO3vKS6d4Kak2JWiZJ88_WSnuGHzzOVU8O9fjeawf2jaHOXPfG9zWz5yNIOz9Uh6mi_XONujNz7KLMLaAXnmb7Vh0Y3"/>
+<div class="absolute top-2 right-2 px-2 py-0.5 bg-black/60 backdrop-blur-md text-[10px] text-white font-bold rounded-full">4.9 ★</div>
+</div>
+<h4 class="font-bold text-sm leading-tight group-hover:text-primary transition-colors">Secret Zen Garden</h4>
+<p class="text-xs text-slate-500 dark:text-slate-400 mt-1 uppercase tracking-tighter">Relaxing • 2.1km</p>
+</div>
+</div>
+<button class="w-full mt-auto py-3 rounded-xl border border-slate-200 dark:border-slate-800 text-slate-400 font-bold text-xs uppercase tracking-widest hover:border-primary hover:text-primary transition-colors flex items-center justify-center gap-2">
+    View All Near You
+    <span class="material-symbols-outlined text-sm">arrow_forward</span>
+</button>
 </aside>
 </div>
-
-<script src="/assets/js/i18n.js"></script>
-</body>
-</html>
+</body></html>
