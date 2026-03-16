@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>WanderTale Partner Dashboard</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#f48c25",
+                        "background-light": "#f8f7f5",
+                        "background-dark": "#221910",
+                        "slate-custom": "#1e293b",
+                    },
+                    fontFamily: {
+                        "display": ["Space Grotesk"]
+                    },
+                    borderRadius: {"DEFAULT": "1rem", "lg": "2rem", "xl": "3rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Space Grotesk', sans-serif;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 min-h-screen">
+<div class="flex h-screen overflow-hidden">
+<!-- Sidebar -->
+<aside class="w-64 border-r border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 flex flex-col">
+<div class="p-6 flex items-center gap-3">
+<div class="bg-primary rounded-lg p-2 text-white">
+<span class="material-symbols-outlined">map</span>
+</div>
+<div>
+<h1 class="font-bold text-xl tracking-tight text-slate-900 dark:text-white">WanderTale</h1>
+<p class="text-xs text-slate-500 font-medium">PARTNER PORTAL</p>
+</div>
+</div>
+<nav class="flex-1 px-4 space-y-2 mt-4">
+<a class="flex items-center gap-3 px-4 py-3 bg-primary/10 text-primary rounded-xl font-medium transition-colors" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span>Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-xl font-medium transition-colors" href="#">
+<span class="material-symbols-outlined">analytics</span>
+<span>Analytics</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-xl font-medium transition-colors" href="#">
+<span class="material-symbols-outlined">confirmation_number</span>
+<span>Vouchers</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-xl font-medium transition-colors" href="#">
+<span class="material-symbols-outlined">calendar_today</span>
+<span>Reservations</span>
+</a>
+<div class="pt-4 mt-4 border-t border-slate-100 dark:border-slate-800">
+<a class="flex items-center gap-3 px-4 py-3 text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-xl font-medium transition-colors" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span>Settings</span>
+</a>
+</div>
+</nav>
+<div class="p-4 border-t border-slate-100 dark:border-slate-800">
+<div class="flex items-center gap-3 p-2 bg-slate-50 dark:bg-slate-800/50 rounded-xl">
+<div class="size-10 rounded-full bg-slate-200 dark:bg-slate-700 overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="Profile picture of partner manager" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAzKDcLjljhGAqIE4Szlf69g1zjNXaZ0ThGqQmyWW3d_q9WcOnlNr9vvGRjDw4xB9iih6GRuS7F5abufzgKoMQnj5_ORvz840viX8cF0CTl35_yCodJE7XWJpC1X4l456DssySOeYusLeZEzVnd_FKQ4_sBqZUQj8LKnnWSvySGll_rLaGh18J1-H4Mek_FikX6h7Q-MOzHvqrbjwP3iy8JbUIgMBYcuAWqkh1_LCJWQNmUTz6LPBjwo35jBY_AxoYAwSeCB2R1xcIw"/>
+</div>
+<div class="flex-1 min-w-0">
+<p class="text-sm font-semibold truncate">L'Avenue Bistro</p>
+<p class="text-xs text-slate-500 truncate">Premium Partner</p>
+</div>
+</div>
+</div>
+</aside>
+<!-- Main Content -->
+<main class="flex-1 flex flex-col overflow-y-auto">
+<!-- Top Bar -->
+<header class="h-16 bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between px-8 sticky top-0 z-10">
+<div class="flex-1 max-w-md">
+<div class="relative group">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400">search</span>
+<input class="w-full bg-slate-100 dark:bg-slate-800 border-none rounded-full pl-10 pr-4 py-2 text-sm focus:ring-2 focus:ring-primary/50 placeholder:text-slate-400" placeholder="Search analytics, reservations..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<button class="size-10 flex items-center justify-center rounded-full text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors relative">
+<span class="material-symbols-outlined">notifications</span>
+<span class="absolute top-2 right-2 size-2 bg-red-500 rounded-full border-2 border-white dark:border-slate-900"></span>
+</button>
+<button class="flex items-center gap-2 px-4 py-2 bg-slate-900 dark:bg-white dark:text-slate-900 text-white rounded-full text-sm font-semibold hover:opacity-90 transition-opacity">
+<span class="material-symbols-outlined text-[18px]">add_circle</span>
+<span>New Voucher</span>
+</button>
+</div>
+</header>
+<div class="p-8 space-y-8">
+<!-- Welcome Section -->
+<div>
+<h2 class="text-3xl font-bold text-slate-900 dark:text-white">Dashboard Overview</h2>
+<p class="text-slate-500 mt-1">Here's what's happening at L'Avenue Bistro today.</p>
+</div>
+<!-- Summary Cards -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+<div class="bg-white dark:bg-slate-900 p-6 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm">
+<div class="flex items-center justify-between mb-4">
+<span class="material-symbols-outlined text-primary bg-primary/10 p-2 rounded-lg">group</span>
+<span class="text-emerald-500 text-xs font-bold bg-emerald-50 dark:bg-emerald-500/10 px-2 py-1 rounded-full">+12.5%</span>
+</div>
+<p class="text-slate-500 text-sm font-medium">Total Visitors</p>
+<h3 class="text-2xl font-bold mt-1">1,284</h3>
+</div>
+<div class="bg-white dark:bg-slate-900 p-6 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm">
+<div class="flex items-center justify-between mb-4">
+<span class="material-symbols-outlined text-primary bg-primary/10 p-2 rounded-lg">payments</span>
+<span class="text-emerald-500 text-xs font-bold bg-emerald-50 dark:bg-emerald-500/10 px-2 py-1 rounded-full">+8.2%</span>
+</div>
+<p class="text-slate-500 text-sm font-medium">Total Revenue</p>
+<h3 class="text-2xl font-bold mt-1">$12,450.00</h3>
+</div>
+<div class="bg-white dark:bg-slate-900 p-6 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm">
+<div class="flex items-center justify-between mb-4">
+<span class="material-symbols-outlined text-primary bg-primary/10 p-2 rounded-lg">confirmation_number</span>
+<span class="text-rose-500 text-xs font-bold bg-rose-50 dark:bg-rose-500/10 px-2 py-1 rounded-full">-2.4%</span>
+</div>
+<p class="text-slate-500 text-sm font-medium">Active Vouchers</p>
+<h3 class="text-2xl font-bold mt-1">14</h3>
+</div>
+<div class="bg-white dark:bg-slate-900 p-6 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm">
+<div class="flex items-center justify-between mb-4">
+<span class="material-symbols-outlined text-primary bg-primary/10 p-2 rounded-lg">star</span>
+<span class="text-emerald-500 text-xs font-bold bg-emerald-50 dark:bg-emerald-500/10 px-2 py-1 rounded-full">+0.1</span>
+</div>
+<p class="text-slate-500 text-sm font-medium">Average Rating</p>
+<h3 class="text-2xl font-bold mt-1">4.8</h3>
+</div>
+</div>
+<!-- Charts Section -->
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+<div class="bg-white dark:bg-slate-900 p-6 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm">
+<div class="flex items-center justify-between mb-6">
+<h4 class="font-bold text-slate-800 dark:text-white">Visitor Traffic</h4>
+<select class="bg-slate-50 dark:bg-slate-800 border-none text-xs rounded-full py-1 pl-3 pr-8 focus:ring-primary">
+<option>Last 7 Days</option>
+<option>Last 30 Days</option>
+</select>
+</div>
+<div class="h-64 flex flex-col justify-between">
+<svg fill="none" height="180" preserveaspectratio="none" viewbox="-3 0 478 150" width="100%" xmlns="http://www.w3.org/2000/svg">
+<path d="M0 109C18.1538 109 18.1538 21 36.3077 21C54.4615 21 54.4615 41 72.6154 41C90.7692 41 90.7692 93 108.923 93C127.077 93 127.077 33 145.231 33C163.385 33 163.385 101 181.538 101C199.692 101 199.692 61 217.846 61C236 61 236 45 254.154 45C272.308 45 272.308 121 290.462 121C308.615 121 308.615 149 326.769 149C344.923 149 344.923 1 363.077 1C381.231 1 381.231 81 399.385 81C417.538 81 417.538 129 435.692 129C453.846 129 453.846 25 472 25V149H326.769H0V109Z" fill="url(#paint0_linear)"></path>
+<path d="M0 109C18.1538 109 18.1538 21 36.3077 21C54.4615 21 54.4615 41 72.6154 41C90.7692 41 90.7692 93 108.923 93C127.077 93 127.077 33 145.231 33C163.385 33 163.385 101 181.538 101C199.692 101 199.692 61 217.846 61C236 61 236 45 254.154 45C272.308 45 272.308 121 290.462 121C308.615 121 308.615 149 326.769 149C344.923 149 344.923 1 363.077 1C381.231 1 381.231 81 399.385 81C417.538 81 417.538 129 435.692 129C453.846 129 453.846 25 472 25" stroke="#f48c25" stroke-linecap="round" stroke-width="3"></path>
+<defs>
+<lineargradient gradientunits="userSpaceOnUse" id="paint0_linear" x1="0" x2="0" y1="0" y2="150">
+<stop stop-color="#f48c25" stop-opacity="0.3"></stop>
+<stop offset="1" stop-color="#f48c25" stop-opacity="0"></stop>
+</lineargradient>
+</defs>
+</svg>
+<div class="flex justify-between px-2 text-[10px] font-bold text-slate-400">
+<span>MON</span><span>TUE</span><span>WED</span><span>THU</span><span>FRI</span><span>SAT</span><span>SUN</span>
+</div>
+</div>
+</div>
+<div class="bg-white dark:bg-slate-900 p-6 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm">
+<div class="flex items-center justify-between mb-6">
+<h4 class="font-bold text-slate-800 dark:text-white">Revenue Growth</h4>
+<select class="bg-slate-50 dark:bg-slate-800 border-none text-xs rounded-full py-1 pl-3 pr-8 focus:ring-primary">
+<option>Last 6 Months</option>
+<option>Year to Date</option>
+</select>
+</div>
+<div class="h-64 flex flex-col justify-end">
+<div class="flex items-end justify-between h-48 px-4 gap-3">
+<div class="w-full bg-slate-100 dark:bg-slate-800 rounded-t-lg relative" style="height: 40%">
+<div class="absolute inset-x-0 bottom-0 bg-primary/40 rounded-t-lg transition-all hover:bg-primary" style="height: 100%"></div>
+</div>
+<div class="w-full bg-slate-100 dark:bg-slate-800 rounded-t-lg relative" style="height: 60%">
+<div class="absolute inset-x-0 bottom-0 bg-primary/40 rounded-t-lg transition-all hover:bg-primary" style="height: 100%"></div>
+</div>
+<div class="w-full bg-slate-100 dark:bg-slate-800 rounded-t-lg relative" style="height: 55%">
+<div class="absolute inset-x-0 bottom-0 bg-primary/40 rounded-t-lg transition-all hover:bg-primary" style="height: 100%"></div>
+</div>
+<div class="w-full bg-slate-100 dark:bg-slate-800 rounded-t-lg relative" style="height: 75%">
+<div class="absolute inset-x-0 bottom-0 bg-primary/40 rounded-t-lg transition-all hover:bg-primary" style="height: 100%"></div>
+</div>
+<div class="w-full bg-slate-100 dark:bg-slate-800 rounded-t-lg relative" style="height: 90%">
+<div class="absolute inset-x-0 bottom-0 bg-primary/40 rounded-t-lg transition-all hover:bg-primary" style="height: 100%"></div>
+</div>
+<div class="w-full bg-slate-100 dark:bg-slate-800 rounded-t-lg relative" style="height: 85%">
+<div class="absolute inset-x-0 bottom-0 bg-primary/40 rounded-t-lg transition-all hover:bg-primary" style="height: 100%"></div>
+</div>
+</div>
+<div class="flex justify-between px-4 mt-4 text-[10px] font-bold text-slate-400">
+<span>JAN</span><span>FEB</span><span>MAR</span><span>APR</span><span>MAY</span><span>JUN</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Voucher Management Section -->
+<div class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden">
+<div class="p-6 border-b border-slate-100 dark:border-slate-800 flex items-center justify-between">
+<div>
+<h4 class="font-bold text-slate-900 dark:text-white">Active Vouchers</h4>
+<p class="text-sm text-slate-500">Manage and track your promotional campaigns.</p>
+</div>
+<button class="text-primary text-sm font-bold hover:underline">View All</button>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left">
+<thead class="bg-slate-50 dark:bg-slate-800/50 text-slate-500 text-xs font-bold uppercase tracking-wider">
+<tr>
+<th class="px-6 py-4">Voucher Name</th>
+<th class="px-6 py-4">Discount</th>
+<th class="px-6 py-4">Usage Count</th>
+<th class="px-6 py-4">Expires</th>
+<th class="px-6 py-4">Status</th>
+<th class="px-6 py-4">Action</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-slate-100 dark:divide-slate-800">
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-800/30 transition-colors">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="size-8 rounded bg-primary/10 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-[18px]">local_cafe</span>
+</div>
+<span class="font-semibold text-sm">Morning Brew Special</span>
+</div>
+</td>
+<td class="px-6 py-4 text-sm">20% Off</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-2">
+<div class="flex-1 h-1.5 bg-slate-100 dark:bg-slate-700 rounded-full overflow-hidden min-w-[60px]">
+<div class="bg-primary h-full" style="width: 75%"></div>
+</div>
+<span class="text-xs font-medium">150/200</span>
+</div>
+</td>
+<td class="px-6 py-4 text-sm">Oct 24, 2023</td>
+<td class="px-6 py-4">
+<span class="px-2 py-1 bg-emerald-50 dark:bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 rounded-full text-[10px] font-bold uppercase">Active</span>
+</td>
+<td class="px-6 py-4">
+<button class="size-8 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-700 flex items-center justify-center transition-colors">
+<span class="material-symbols-outlined text-slate-400">more_vert</span>
+</button>
+</td>
+</tr>
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-800/30 transition-colors">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="size-8 rounded bg-primary/10 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-[18px]">dinner_dining</span>
+</div>
+<span class="font-semibold text-sm">Weekend Dinner Trio</span>
+</div>
+</td>
+<td class="px-6 py-4 text-sm">$15 Fixed</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-2">
+<div class="flex-1 h-1.5 bg-slate-100 dark:bg-slate-700 rounded-full overflow-hidden min-w-[60px]">
+<div class="bg-primary h-full" style="width: 42%"></div>
+</div>
+<span class="text-xs font-medium">84/200</span>
+</div>
+</td>
+<td class="px-6 py-4 text-sm">Nov 12, 2023</td>
+<td class="px-6 py-4">
+<span class="px-2 py-1 bg-emerald-50 dark:bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 rounded-full text-[10px] font-bold uppercase">Active</span>
+</td>
+<td class="px-6 py-4">
+<button class="size-8 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-700 flex items-center justify-center transition-colors">
+<span class="material-symbols-outlined text-slate-400">more_vert</span>
+</button>
+</td>
+</tr>
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-800/30 transition-colors opacity-60">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="size-8 rounded bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-slate-400">
+<span class="material-symbols-outlined text-[18px]">bakery_dining</span>
+</div>
+<span class="font-semibold text-sm">Summer Pastry Pack</span>
+</div>
+</td>
+<td class="px-6 py-4 text-sm">Buy 1 Get 1</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-2">
+<div class="flex-1 h-1.5 bg-slate-100 dark:bg-slate-700 rounded-full overflow-hidden min-w-[60px]">
+<div class="bg-slate-300 dark:bg-slate-600 h-full" style="width: 100%"></div>
+</div>
+<span class="text-xs font-medium">100/100</span>
+</div>
+</td>
+<td class="px-6 py-4 text-sm">Sep 30, 2023</td>
+<td class="px-6 py-4">
+<span class="px-2 py-1 bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400 rounded-full text-[10px] font-bold uppercase">Expired</span>
+</td>
+<td class="px-6 py-4">
+<button class="size-8 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-700 flex items-center justify-center transition-colors">
+<span class="material-symbols-outlined text-slate-400">more_vert</span>
+</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</main>
+</div>
+</body></html>
