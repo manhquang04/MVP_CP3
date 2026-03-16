@@ -29,8 +29,11 @@
 <body class="bg-slate-950 font-display text-slate-100 overflow-hidden">
 <div class="flex h-screen w-full">
 <!-- Sidebar Navigation -->
-<aside class="w-72 h-full border-r border-white/10 flex flex-col p-8 bg-slate-950/60 backdrop-blur-xl">
-<div class="flex items-center gap-3 mb-12 px-2">
+<aside class="w-72 h-full border-r border-white/10 flex flex-col p-8 bg-slate-950/60 backdrop-blur-xl relative">
+<button onclick="window.location.href='/index.html'" class="absolute right-4 top-4 p-1.5 rounded-full hover:bg-white/10 transition-colors text-slate-500 hover:text-primary">
+<span class="material-symbols-outlined text-xl">arrow_back</span>
+</button>
+<div class="flex items-center gap-3 mb-12 px-2 mt-4">
 <div class="bg-primary size-10 rounded-lg flex items-center justify-center text-white">
 <span class="material-symbols-outlined text-2xl">explore</span>
 </div>
