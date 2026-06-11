@@ -341,8 +341,7 @@
     </style>
 </head>
 <body class="font-display bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100">
-    <!-- Header -->
-    <div id="header-slot"></div>
+
 
     <!-- Section 1: Hero Section -->
     <section id="hero" class="relative flex min-h-screen w-full flex-col overflow-hidden">
@@ -364,8 +363,8 @@
                     Thoughtfully crafted journeys for modern explorers. Discover freely, travel deeply, share beautifully.
                 </p>
                 <div class="hero-buttons flex flex-col sm:flex-row gap-4 sm:gap-6 mt-8 sm:mt-12 w-full sm:w-auto justify-center">
-                    <a href="/auth/signup.html" class="flex cursor-pointer items-center justify-center rounded-full h-12 sm:h-14 px-8 sm:px-10 bg-primary text-white text-base sm:text-lg font-bold tracking-wide transition-all duration-300 ease-out w-full sm:w-auto hover:brightness-95 hover:shadow-lg" data-i18n="startAdventure">
-                        Start your adventure
+                    <a href="https://github.com/manhquang04/MVP_CP3/releases/download/1.0.0/WanderTale.apk" class="flex cursor-pointer items-center justify-center rounded-full h-12 sm:h-14 px-8 sm:px-10 bg-primary text-white text-base sm:text-lg font-bold tracking-wide transition-all duration-300 ease-out w-full sm:w-auto hover:brightness-95 hover:shadow-lg">
+                        Tải xuống (APK)
                     </a>
                     <a href="#features" class="flex cursor-pointer items-center justify-center rounded-full h-12 sm:h-14 px-8 sm:px-10 bg-transparent text-white text-base sm:text-lg font-medium tracking-wide transition-all duration-300 ease-out border-2 border-white w-full sm:w-auto hover:bg-white hover:text-slate-900" data-i18n="exploreFeatures">
                         Explore Features
@@ -768,22 +767,15 @@
         // ===== NAVBAR SCROLL EFFECT =====
         const scrollToTopBtn = document.getElementById('scroll-to-top');
         
-        // Wait for header to be loaded
-        setTimeout(() => {
-            const header = document.getElementById('main-header');
-            
-            window.addEventListener('scroll', () => {
-                if (window.scrollY > 100) {
-                    if (header) header.classList.add('header-scrolled');
-                    scrollToTopBtn.classList.remove('opacity-0', 'pointer-events-none');
-                    scrollToTopBtn.classList.add('opacity-100', 'pointer-events-auto');
-                } else {
-                    if (header) header.classList.remove('header-scrolled');
-                    scrollToTopBtn.classList.add('opacity-0', 'pointer-events-none');
-                    scrollToTopBtn.classList.remove('opacity-100', 'pointer-events-auto');
-                }
-            });
-        }, 100);
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 100) {
+                scrollToTopBtn.classList.remove('opacity-0', 'pointer-events-none');
+                scrollToTopBtn.classList.add('opacity-100', 'pointer-events-auto');
+            } else {
+                scrollToTopBtn.classList.add('opacity-0', 'pointer-events-none');
+                scrollToTopBtn.classList.remove('opacity-100', 'pointer-events-auto');
+            }
+        });
         
         scrollToTopBtn.addEventListener('click', () => {
             window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -882,38 +874,7 @@
     <script src="/assets/js/i18n.js"></script>
     <script src="/assets/js/component-loader.js"></script>
     <script>
-        // Load header and footer
-        ComponentLoader.load('header-public', 'header-slot');
         ComponentLoader.load('footer-public', 'footer-slot');
-
-        // On homepage, hide avatar icon in topbar but keep Logout button
-        document.addEventListener('DOMContentLoaded', () => {
-            const hideAvatar = () => {
-                const avatarBtn = document.getElementById('avatar-btn');
-                if (avatarBtn) avatarBtn.classList.add('hidden');
-            };
-            // Header is injected asynchronously, so poll a bit
-            hideAvatar();
-            setTimeout(hideAvatar, 200);
-            setTimeout(hideAvatar, 600);
-        });
-        
-        // Add CSS for header-scrolled dynamically
-        const style = document.createElement('style');
-        style.textContent = `
-            #main-header.header-scrolled {
-                background: rgba(255, 255, 255, 0.7) !important;
-                backdrop-filter: blur(10px) !important;
-                border-bottom: 1px solid rgba(226, 232, 240, 0.5) !important;
-            }
-            #main-header.header-scrolled .nav-link {
-                color: #1e293b !important;
-            }
-            #main-header.header-scrolled .nav-link:hover {
-                color: #ff5e00 !important;
-            }
-        `;
-        document.head.appendChild(style);
     </script>
 </body>
 </html>
