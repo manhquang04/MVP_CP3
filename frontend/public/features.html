@@ -1,141 +1,174 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="vi">
 <head>
     <meta charset="utf-8"/>
-    <link rel="icon" type="image/png" href="/assets/images/logo.png"/>
+    <link rel="icon" type="image/png" href="../assets/images/logo1.png"/>
     <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-    <title>AI Features | WanderTale</title>
-    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
-    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
-    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-    <script src="/assets/css/tailwind-config.js"></script>
+    <meta name="description" content="Chi tiết tính năng WanderTale cho traveler: AI trip planner, thời tiết, bản đồ, khách sạn, đặt chỗ và ưu đãi."/>
+    <title>WanderTale</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com"/>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+    <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet"/>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: "#ff5e00",
+                        ink: "#E1E0CC",
+                        canvas: "#0a0a0a",
+                        surface: "#141414",
+                        card: "#1c1c1c",
+                        mute: "#8a8a80",
+                    },
+                    fontFamily: {
+                        sans: ["Be Vietnam Pro", "system-ui", "sans-serif"],
+                    },
+                    maxWidth: { content: "1100px" },
+                }
+            }
+        }
+    </script>
     <style>
-        body { font-family: 'Space Grotesk', sans-serif; }
+        body {
+            font-family: "Be Vietnam Pro", system-ui, sans-serif;
+            background: #0a0a0a;
+            color: #E1E0CC;
+            -webkit-font-smoothing: antialiased;
+        }
+        .feature-row { border: 1px solid rgba(255,255,255,.07); background: #141414; }
+        .feature-row:hover { border-color: rgba(255,94,0,.35); }
+        .btn-primary { background: #ff5e00; color: #fff; }
+        .btn-primary:hover { filter: brightness(1.05); }
     </style>
 </head>
-<body class="font-display bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 min-h-screen relative overflow-x-hidden">
-    <!-- Header -->
-    <div id="header-slot"></div>
-    
-    <div class="fixed top-0 left-0 w-full h-full overflow-hidden pointer-events-none z-0">
-        <div class="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-primary/10 rounded-full blur-[100px]"></div>
-        <div class="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] bg-primary/5 rounded-full blur-[120px]"></div>
-    </div>
-    <div class="relative z-10 flex flex-col min-h-screen pt-24">
-        <main class="flex-grow flex flex-col items-center justify-center px-4 py-16 md:py-24 max-w-7xl mx-auto w-full">
-            <div class="flex flex-col items-center text-center gap-6 mb-16 max-w-3xl px-4">
-                <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary font-medium text-sm mb-2">
-                    <span class="material-symbols-outlined text-base">auto_awesome</span>
-                    <span data-i18n="poweredByAI">Powered by AI</span>
-                </div>
-                <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight leading-tight text-slate-900 dark:text-slate-100" data-i18n="wanderTaleAIFeatures">
-                    WanderTale AI Features
-                </h1>
-                <p class="text-lg md:text-xl text-slate-600 dark:text-slate-400 font-normal leading-relaxed" data-i18n="discoverHowAI">
-                    Discover how our AI-powered travel planning and storytelling web application can help you explore Vietnam like never before.
-                </p>
-            </div>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 w-full px-4 md:px-8">
-                <div class="flex flex-col bg-white dark:bg-slate-900 rounded-xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] dark:shadow-none border border-slate-100 dark:border-slate-800 overflow-hidden hover:-translate-y-1 hover:shadow-[0_20px_40px_rgb(0,0,0,0.08)] transition-all duration-300 group">
-                    <div class="w-full aspect-video bg-slate-50 dark:bg-slate-800 p-6 flex items-center justify-center relative overflow-hidden">
-                        <div class="absolute inset-0 bg-gradient-to-br from-primary/20 to-transparent opacity-50 group-hover:opacity-100 transition-opacity duration-500"></div>
-                        <div class="w-full h-full bg-center bg-no-repeat bg-cover rounded-lg relative z-10 shadow-sm transition-transform duration-500 group-hover:scale-105" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuB_ueQUcvquTfTtyv9bNw5-KQFkUnStinbvJWSC2a2f3QpPD4m7wk4LoY1L4_yUCCdUmqi64pZHUQcjXyua0EfQ31C8SAoYEg0VpboylqUgfsehqVYCZN3SVooH1lQy0qQmWvU3xRIj854GHNpFs2cmXo4Gy3pav5uRIF92WEmd1-wkjqexHgrlzjNHyU5qP7Ii9e7QzakKWBgyYMr9eHYdCivLUdpeLwaGSSP77oOuYhttjpZPjTKuUT2NwmC_O4Z49LPmQDcuH_xg');"></div>
-                    </div>
-                    <div class="p-8 flex flex-col gap-4 flex-1">
-                        <div class="flex items-center gap-3">
-                            <div class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary">
-                                <span class="material-symbols-outlined">mood</span>
-                            </div>
-                            <h3 class="text-xl font-bold text-slate-900 dark:text-slate-100" data-i18n="aiVibeCheck">AI Vibe Check</h3>
-                        </div>
-                        <p class="text-slate-600 dark:text-slate-400 leading-relaxed flex-1 text-base" data-i18n="aiVibeCheckDescFeature">
-                            Match your current mood to the perfect destination. Our AI suggests hidden gems and hotspots based on your aesthetic preferences.
-                        </p>
-                        <a class="inline-flex items-center gap-2 text-primary font-semibold mt-4 hover:text-primary/80 transition-colors w-fit group/link" href="#">
-                            <span data-i18n="learnMore">Learn more</span> 
-                            <span class="material-symbols-outlined text-sm group-hover/link:translate-x-1 transition-transform">arrow_forward</span>
-                        </a>
-                    </div>
-                </div>
-                <div class="flex flex-col bg-white dark:bg-slate-900 rounded-xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] dark:shadow-none border border-slate-100 dark:border-slate-800 overflow-hidden hover:-translate-y-1 hover:shadow-[0_20px_40px_rgb(0,0,0,0.08)] transition-all duration-300 group">
-                    <div class="w-full aspect-video bg-slate-50 dark:bg-slate-800 p-6 flex items-center justify-center relative overflow-hidden">
-                        <div class="absolute inset-0 bg-gradient-to-bl from-primary/20 to-transparent opacity-50 group-hover:opacity-100 transition-opacity duration-500"></div>
-                        <div class="w-full h-full bg-center bg-no-repeat bg-cover rounded-lg relative z-10 shadow-sm transition-transform duration-500 group-hover:scale-105" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuB6gHkz-ebvCsMA2VCvhB3bSrSjIIoApyscCvpSgdvw4uSXUUjOF4BeXi_ZJZv1iNf-LORi83U5cjJiNui0GL_LZSQ7MDJo-jWg5UOkUDo05sbg_MjZ1627LxrQlwOf8bTXD4eHV5k04F2ZhwksMn2wHwPWnPnWkm8WFEq7n91joxhtPjxNSk2QmICU6-P6O5HUX2JD3TB257rcP9Pn0NjGg-6HabO6uYJ4QD615XViI82lMfg2fEHKSVle2qj-APIqFltIR0X8sETr');"></div>
-                    </div>
-                    <div class="p-8 flex flex-col gap-4 flex-1">
-                        <div class="flex items-center gap-3">
-                            <div class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary">
-                                <span class="material-symbols-outlined">history_edu</span>
-                            </div>
-                            <h3 class="text-xl font-bold text-slate-900 dark:text-slate-100" data-i18n="autoMagicTimeline">Auto-Magic Timeline</h3>
-                        </div>
-                        <p class="text-slate-600 dark:text-slate-400 leading-relaxed flex-1 text-base" data-i18n="autoMagicTimelineDescFeature">
-                            Turn your chaotic camera roll into a beautifully narrated story. We automatically organize your photos into a seamless journey.
-                        </p>
-                        <a class="inline-flex items-center gap-2 text-primary font-semibold mt-4 hover:text-primary/80 transition-colors w-fit group/link" href="#">
-                            <span data-i18n="learnMore">Learn more</span> 
-                            <span class="material-symbols-outlined text-sm group-hover/link:translate-x-1 transition-transform">arrow_forward</span>
-                        </a>
-                    </div>
-                </div>
-                <div class="flex flex-col bg-white dark:bg-slate-900 rounded-xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] dark:shadow-none border border-slate-100 dark:border-slate-800 overflow-hidden hover:-translate-y-1 hover:shadow-[0_20px_40px_rgb(0,0,0,0.08)] transition-all duration-300 group">
-                    <div class="w-full aspect-video bg-slate-50 dark:bg-slate-800 p-6 flex items-center justify-center relative overflow-hidden">
-                        <div class="absolute inset-0 bg-gradient-to-t from-primary/20 to-transparent opacity-50 group-hover:opacity-100 transition-opacity duration-500"></div>
-                        <div class="w-full h-full bg-center bg-no-repeat bg-cover rounded-lg relative z-10 shadow-sm transition-transform duration-500 group-hover:scale-105" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuALz_0Xn3D5P8WllVZQSGVFZU8xhSEhXzkuy4itLfkUJBjCaBzTXPUdVjaZGgaYO04PwuxImhMqvYtMa1GJE6zSuQvSV5H0v2X2qdrg66bAO4W1jxRO-CrtujBqTmhkRwLAXO_4kydU8EP9DmVf8HfdQpqUs4FBkEn9aSr-eBZvFWURb_STx0xPgORk8TXkcYj6fdFFBC8wqqaPKYpnSrHLuj5SZHVsiVUyXkZjGtOHPmigqb6Txu2sPotMxHzC9DC0-qVE4gN1LYvX');"></div>
-                    </div>
-                    <div class="p-8 flex flex-col gap-4 flex-1">
-                        <div class="flex items-center gap-3">
-                            <div class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary">
-                                <span class="material-symbols-outlined">share</span>
-                            </div>
-                            <h3 class="text-xl font-bold text-slate-900 dark:text-slate-100" data-i18n="socialSync">Social Sync</h3>
-                        </div>
-                        <p class="text-slate-600 dark:text-slate-400 leading-relaxed flex-1 text-base" data-i18n="socialSyncDescFeature">
-                            Share your epic journeys seamlessly across platforms. Collaborate with friends on itineraries and create shared travel memories.
-                        </p>
-                        <a class="inline-flex items-center gap-2 text-primary font-semibold mt-4 hover:text-primary/80 transition-colors w-fit group/link" href="#">
-                            <span data-i18n="learnMore">Learn more</span> 
-                            <span class="material-symbols-outlined text-sm group-hover/link:translate-x-1 transition-transform">arrow_forward</span>
-                        </a>
-                    </div>
-                </div>
-            </div>
-            <div class="mt-20">
-                <a href="/auth/signup.html" class="bg-primary hover:bg-primary/90 text-white font-bold py-4 px-8 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 flex items-center gap-2 text-lg w-fit mx-auto">
-                    <span data-i18n="startYourJourney">Start Your Journey</span>
-                    <span class="material-symbols-outlined">explore</span>
+<body class="min-h-screen antialiased font-sans">
+    <header class="sticky top-0 z-40 border-b border-white/8 bg-canvas/90 backdrop-blur-xl">
+        <div class="mx-auto flex max-w-content items-center justify-between px-4 py-3 md:px-6">
+            <a href="/index.html" class="flex items-center" aria-label="WanderTale">
+                <img src="../assets/images/logo2.png" alt="WanderTale" class="h-14 sm:h-16 w-auto max-w-[320px] object-contain"/>
+            </a>
+            <nav class="flex items-center gap-3 text-sm">
+                <a href="/index.html#features" class="text-mute hover:text-ink hidden sm:inline">Về trang chủ</a>
+                <a href="https://github.com/manhquang04/MVP_CP3/releases/download/1.0.0/WanderTale.apk"
+                   class="btn-primary inline-flex items-center gap-1.5 rounded-full px-4 py-2 text-sm font-semibold"
+                   download="WanderTale.apk">
+                    <span class="material-symbols-outlined text-[18px]">download</span>
+                    Tải APK
                 </a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="mx-auto max-w-content px-4 py-14 md:px-6 md:py-20">
+        <div class="max-w-2xl">
+            <p class="text-xs font-semibold uppercase tracking-[0.2em] text-primary">Dành cho traveler</p>
+            <h1 class="mt-3 text-4xl font-bold leading-tight text-ink md:text-5xl">
+                Tính năng WanderTale cho người dùng
+            </h1>
+            <p class="mt-4 text-mute leading-relaxed">
+                Website này quảng bá ứng dụng mobile cho traveler. Dưới đây là các nhóm chức năng bạn dùng hàng ngày trên app.
+            </p>
+        </div>
+
+        <div class="mt-12 space-y-4">
+            <article class="feature-row grid gap-6 rounded-2xl p-6 md:grid-cols-[1fr_1.2fr] md:p-8">
+                <div>
+                    <div class="mb-3 flex h-11 w-11 items-center justify-center rounded-xl bg-primary/15 text-primary">
+                        <span class="material-symbols-outlined">route</span>
+                    </div>
+                    <h2 class="text-xl font-semibold">AI Trip Planner</h2>
+                    <p class="mt-1 text-sm text-primary/90">Lập kế hoạch</p>
+                </div>
+                <div class="text-sm leading-relaxed text-mute space-y-2">
+                    <p>Tạo chuyến từ điểm đến, ngày đi/về, ngân sách, số người, sở thích và nhịp độ (thư giãn, cân bằng hoặc dày đặc).</p>
+                    <p>AI gom địa điểm theo khu vực, sắp xếp thời gian hợp lý, gợi ý khách sạn, bữa ăn và hoạt động. Có tọa độ để mở maps.</p>
+                </div>
+            </article>
+
+            <article class="feature-row grid gap-6 rounded-2xl p-6 md:grid-cols-[1fr_1.2fr] md:p-8">
+                <div>
+                    <div class="mb-3 flex h-11 w-11 items-center justify-center rounded-xl bg-primary/15 text-primary">
+                        <span class="material-symbols-outlined">calendar_view_day</span>
+                    </div>
+                    <h2 class="text-xl font-semibold">Lịch trình và quản lý chuyến</h2>
+                    <p class="mt-1 text-sm text-primary/90">Theo dõi chuyến</p>
+                </div>
+                <div class="text-sm leading-relaxed text-mute space-y-2">
+                    <p>Dashboard thống kê, danh sách sắp tới hoặc đã qua, chi tiết agenda theo ngày, nhân bản, xóa và đánh dấu yêu thích.</p>
+                    <p>Theo dõi tiến trình khi AI đang sinh lịch trình để biết app đang xử lý bước nào.</p>
+                </div>
+            </article>
+
+            <article class="feature-row grid gap-6 rounded-2xl p-6 md:grid-cols-[1fr_1.2fr] md:p-8">
+                <div>
+                    <div class="mb-3 flex h-11 w-11 items-center justify-center rounded-xl bg-primary/15 text-primary">
+                        <span class="material-symbols-outlined">map</span>
+                    </div>
+                    <h2 class="text-xl font-semibold">Bản đồ, địa điểm và thời tiết</h2>
+                    <p class="mt-1 text-sm text-primary/90">Ngữ cảnh chuyến đi</p>
+                </div>
+                <div class="text-sm leading-relaxed text-mute space-y-2">
+                    <p>Google Places / Maps, Vietmap. Lọc địa điểm đóng cửa, ưu tiên hot theo mùa, ghi chú thời tiết và cảnh báo khi thời tiết biến động.</p>
+                    <p>Ảnh địa điểm được làm giàu để lịch trình dễ hình dung hơn trước khi lên đường.</p>
+                </div>
+            </article>
+
+            <article class="feature-row grid gap-6 rounded-2xl p-6 md:grid-cols-[1fr_1.2fr] md:p-8">
+                <div>
+                    <div class="mb-3 flex h-11 w-11 items-center justify-center rounded-xl bg-primary/15 text-primary">
+                        <span class="material-symbols-outlined">hotel</span>
+                    </div>
+                    <h2 class="text-xl font-semibold">Khách sạn và đặt chỗ</h2>
+                    <p class="mt-1 text-sm text-primary/90">Đặt chỗ</p>
+                </div>
+                <div class="text-sm leading-relaxed text-mute space-y-2">
+                    <p>Gợi ý khách sạn phù hợp ngân sách, hỗ trợ chọn chỗ nghỉ và thanh toán QR trong app khi bạn sẵn sàng đặt.</p>
+                    <p>Theo dõi trạng thái đặt chỗ ngay trên điện thoại, không cần rời app.</p>
+                </div>
+            </article>
+
+            <article class="feature-row grid gap-6 rounded-2xl p-6 md:grid-cols-[1fr_1.2fr] md:p-8">
+                <div>
+                    <div class="mb-3 flex h-11 w-11 items-center justify-center rounded-xl bg-primary/15 text-primary">
+                        <span class="material-symbols-outlined">confirmation_number</span>
+                    </div>
+                    <h2 class="text-xl font-semibold">Ưu đãi và hồ sơ cá nhân</h2>
+                    <p class="mt-1 text-sm text-primary/90">Cá nhân hóa</p>
+                </div>
+                <div class="text-sm leading-relaxed text-mute space-y-2">
+                    <p>Nhận voucher và ưu đãi gắn với chuyến đi. Lưu chuyến yêu thích, xem lịch sử và cập nhật hồ sơ traveler.</p>
+                    <p>Đăng nhập an toàn để đồng bộ dữ liệu chuyến trên thiết bị của bạn.</p>
+                </div>
+            </article>
+        </div>
+
+        <div class="mt-14 rounded-3xl border border-primary/25 bg-gradient-to-br from-primary/15 to-transparent px-6 py-10 text-center md:px-10">
+            <img src="../assets/images/logo2.png" alt="WanderTale" class="mx-auto h-16 sm:h-20 w-auto max-w-[360px] object-contain"/>
+            <h2 class="mt-4 text-2xl font-bold md:text-3xl">Sẵn sàng trải nghiệm trên điện thoại?</h2>
+            <p class="mx-auto mt-3 max-w-md text-sm text-mute">Tải APK để dùng đầy đủ tính năng traveler trên Android.</p>
+            <a href="https://github.com/manhquang04/MVP_CP3/releases/download/1.0.0/WanderTale.apk"
+               class="btn-primary mt-6 inline-flex items-center gap-2 rounded-full px-8 py-3.5 text-base font-bold"
+               download="WanderTale.apk">
+                <span class="material-symbols-outlined">download</span>
+                Tải xuống WanderTale.apk
+            </a>
+        </div>
+    </main>
+
+    <footer class="border-t border-white/8 py-8">
+        <div class="mx-auto flex max-w-content flex-col items-center gap-3 px-4 text-center text-xs text-mute md:px-6">
+            <div class="flex items-center">
+                <img src="../assets/images/logo2.png" alt="WanderTale" class="h-9 w-auto max-w-[180px] object-contain"/>
             </div>
-        </main>
-    </div>
-    
-    <!-- Footer -->
-    <div id="footer-slot"></div>
-    
-    <script src="/assets/js/auth.js"></script>
-    <script src="/assets/js/i18n.js"></script>
-    <script src="/assets/js/component-loader.js"></script>
-    <script>
-        // Load header and footer
-        ComponentLoader.load('header-public', 'header-slot');
-        ComponentLoader.load('footer-public', 'footer-slot');
-        
-        // Add CSS for header-scrolled dynamically
-        const style = document.createElement('style');
-        style.textContent = `
-            #main-header.header-scrolled {
-                background: rgba(255, 255, 255, 0.9) !important;
-                backdrop-filter: blur(10px) !important;
-                border: 1px solid rgba(226, 232, 240, 0.5) !important;
-            }
-            #main-header.header-scrolled .nav-link {
-                color: #1e293b !important;
-            }
-            #main-header.header-scrolled .nav-link:hover {
-                color: #f48c25 !important;
-            }
-        `;
-        document.head.appendChild(style);
-    </script>
+            <p>
+                <a href="/index.html" class="hover:text-primary">Về trang chủ</a>
+                <span class="mx-2">·</span>
+                <span>© WanderTale. Marketing site cho traveler app</span>
+            </p>
+        </div>
+    </footer>
 </body>
 </html>

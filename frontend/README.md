@@ -1,21 +1,28 @@
-# WanderTale Frontend
+# WanderTale Frontend (MVP_CP3)
 
-Đây là thư mục chứa các giao diện HTML cho ứng dụng WanderTale - nền tảng lập kế hoạch du lịch và kể chuyện bằng AI.
+Website **quảng cáo / marketing** cho app mobile WanderTale, kèm một số trang web phụ (auth, planner demo).
 
-## 📁 Cấu trúc File
+Nội dung landing đã căn theo chức năng app production (EXE202): AI trip planner, storyboard ngày, thời tiết, maps, khách sạn/booking PayOS, voucher & portal Business/Admin.
+
+## Tải APK (giữ nguyên)
+
+```
+https://github.com/manhquang04/MVP_CP3/releases/download/1.0.0/WanderTale.apk
+```
+
+Nút **Tải APK** trên `index.html` và `public/features.html` trỏ đúng URL trên.
+
+## 📁 Cấu trúc chính
 
 ```
 frontend/
-├── index.html          # Trang danh sách tất cả các giao diện
-├── signup.html         # Trang đăng ký
-├── login.html          # Trang đăng nhập
-├── hero.html           # Trang chủ với hero section
-├── map-tour.html       # Bản đồ tour du lịch
-├── ai-assistant.html   # Trợ lý AI chat
-├── ai-features.html    # Giới thiệu tính năng AI
-├── profile.html        # Hồ sơ người dùng
-├── ar-night.html       # Chế độ AR ban đêm
-└── footer.html         # Footer section
+├── index.html              # Landing marketing chuyên nghiệp
+├── public/features.html    # Chi tiết tính năng app
+├── public/community-stories.html
+├── auth/                   # Login / signup (web)
+├── app/                    # Demo pages (planner, map, profile…)
+├── assets/images/          # Logo, mock screens, partner logos
+└── shared/components/      # Header / footer public
 ```
 
 ## 🎨 Công nghệ sử dụng
